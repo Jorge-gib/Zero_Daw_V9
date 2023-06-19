@@ -1,0 +1,29 @@
+{% extends 'base.html' %} 
+
+{% block titulo_principal %} CRUD: Select * {% endblock %}
+
+{% block content %}
+<div>
+    <h1 class="letras">Usuario del sistema</h1>
+</div>
+<h1></h1>
+{% if object_list %}
+{% for user in object_list %}
+    <p class="letras">Nombre usuario: {{ user.username }}</p>
+    <p class="letras">Nombre: {{ user.first_name }}</p>
+    <p class="letras">Apellido: {{ user.last_name }}</p> 
+    <p class="letras">Rut: {{ user.rut }}</p>
+    <p class="letras">Digito verificador: {{ user.dv }}</p>
+    <p class="letras">Edad: {{ user.edad }}</p>
+    <p class="letras">Direccion: {{ user.direccion }}</p>
+    <p class="letras">Telefono: {{ user.telefono }}</p> 
+    <p class="letras">Rol en el sistema: {{ user.tipo_usuario}}</p>                 
+    <br>
+{% endfor %}
+
+{% else %}
+<h1 class="letras">No hay registros de user</h1>
+{% endif %}
+<a href="{% url 'login' %}">Volver</a>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<h1 class="letras">Borrar Usuario</h1>
+
+<form method="POST" action="{% url 'borrar_user' user.id %}">
+    {% csrf_token %}
+    <p class="letras">¿Estás seguro de que deseas borrar este usuario?</p>
+    <p class="letras">ID del Usuario: {{ user.id }}</p>
+    <p class="letras">Nombre usuario: {{ user.username }}</p>
+    <p class="letras">Nombre: {{ user.first_name }}</p>
+    <p class="letras">Apellido: {{ user.last_name }}</p> 
+    <p class="letras">Rut: {{ user.rut }}-{{user.dv}}</p>
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    <input type="submit" value="Borrar">
+</form>
+    <a href="{% url 'login' %}">Volver</a>
+
+{% endblock %}

@@ -1,0 +1,383 @@
+body {
+    background-image: url("images/planeta_limpio.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* Otros estilos opcionales */
+    background-position: center;
+    /* background-color: #f1f1f1; */ /* Si deseas un color de fondo de respaldo */
+}
+#navbar {
+    background-color: rgba(135, 239, 195, 0.5);
+}
+
+.content {
+    width: 100%;
+}
+
+#nav{
+    background-color: rgba(135, 239, 195, 0.5); 
+}
+
+#navbar {
+    background-color: rgba(135, 239, 195, 0.5); /* Cambiar el valor de transparencia en el último número */
+    padding: 1em 1em;
+    display: flex;
+    align-content: center;
+    width: 100%;
+}
+
+#navbar li, #contact li {
+    background-color: rgba(135, 239, 195, 0.5); 
+    list-style-type: none;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    transition-duration: 0.2s;
+}
+
+#navbar li a {
+    background-color: rgba(135, 239, 195, 0.5); 
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    padding: 8px;
+    margin: 3px 3px;
+    display: inline-block;	
+    text-shadow: 1px 1px 2px grey;
+}
+
+#navbar li:hover {
+    background-color: rgba(135, 239, 195, 0.5); 
+    border-radius: 3px;
+}
+
+#contact {
+    background-color: rgba(135, 239, 195, 0.5); 
+    padding: 2em 1em;
+    display: flex;
+    align-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+#contact #p1 {
+    text-align: left;
+    width: 34%;
+}
+
+#contact #p2 {
+    text-align: center;
+    width: 33%;
+}
+
+#contact #p3 {
+    text-align: right;
+    width: 33%;
+}
+
+#main {
+    background-color: white;
+    padding: 2em 1em;
+    display: flex;
+}
+
+#main #rescate {
+    width: 50%;
+    text-align: right;
+    margin-right: 1em;
+}
+
+#main #crowd {
+    width: 50%;
+    text-align: left;
+    margin-left: 1em;
+}
+
+#main h6 {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.btn {
+    background-color: white;
+    color: rgba(10, 10, 10, 0.8);
+    border: 2px solid rgba(10, 10, 10, 0.7);
+    border-radius: 0;
+    font-weight: bold;
+    font-size: 12px;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;  
+}
+
+.btn:hover {
+    background-color: rgba(135, 239, 195, 0.5); 
+}
+
+
+
+
+
+#Galeria{
+    margin:15px;
+    font-size: 14px;
+    display: flex;
+    width: 100%;
+}
+
+.responsive{
+    display: inline-block;
+}
+
+#Galeria li{
+    box-shadow:  1px 2px 5px, 1px 2px 2px  rgba(20, 20, 20, 0.6) inset;    
+    box-sizing: content-box;
+    list-style-type: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#Galeria li:hover{
+    display: inline-block;
+}
+
+
+
+
+
+div.gallery img {
+    width: 150px;
+    height: auto;
+}
+
+#Galeria ul{
+    float: left;
+}
+
+.desc{
+    background-color: white;
+}
+
+.img_galeria{
+    display: inline-block;
+}
+
+
+
+
+.caption {
+	position: relative;
+	bottom: 8px;
+    left: 16px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+.img-fluid{
+    width: 100%;
+    height: auto;
+}
+
+#footer {
+    width: 100%;
+    background-color: #87EFC3;
+    padding: 0em 1em;
+    height: 60px;
+}
+
+.hr-small {
+    border: none;
+    height: 2px;
+    color: rgba(41, 41, 41, 0.6);
+    background-color: rgba(41, 41, 41, 0.6);    
+    width: 45px;
+}
+
+.social {
+    background-color: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    color: #4ECCA0;    
+}
+
+.social img {
+    color: #4ECCA0;
+    margin-top: 25%; 
+}
+
+#carouselIndex {
+    background-color: #87EFC3;
+    padding-top: 6px;    
+}
+
+.carousel-caption {
+	color: black;
+	text-align: left;
+    text-shadow: 1px 0.5px gainsboro;
+    margin-bottom: 5px;    
+}
+
+.carousel-inner img {
+	width: 100%;
+    height: 100%;
+    height: 640px;
+}
+
+.flecha {
+	background-color: rgba(135, 239, 195, 0.5); 
+	padding: 5px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+/* Errores django */
+.bg-danger {
+    /* border: 2px solid red;
+    padding: 10px; */
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+}
+
+/* Pagina envio */
+
+.enviado {
+    background-color: rgba(135, 239, 195, 0.5); 
+    color: white;
+    text-align: center;    
+}
+
+.enviado div {
+    padding-top: 200px;
+}
+
+.enviado a {
+    text-decoration: none;
+}
+
+
+
+.col-md-2 {
+    width: 100%;
+    max-width: 100%;
+}
+
+
+#galeria {
+	background-color: rgba(135, 239, 195, 0.5); 
+	padding: 1em 1em;
+	column-count: 3;
+    column-width: 33%;
+}
+
+.bg-green {
+    background-color: rgba(135, 239, 195, 0.5); 
+}
+
+.item-galeria {
+    position: relative;
+    box-shadow:  1px 2px 5px rgba(20, 20, 20, 0.6) inset;    
+}
+
+.caption {
+	position: absolute;
+	bottom: 8px;
+    left: 16px;
+    color: white;
+    text-shadow: 3px 2px 3px black;
+}
+
+
+
+
+
+/* Media Query */
+
+@media (max-width: 767px) {
+
+    .col-md-2 {
+        width: 40%;
+        max-width: 40%;
+    }
+
+    #navbar {
+        display: inline-block;
+        text-align: center;
+        padding: 0;    
+    }
+
+    #navbar-logo {
+        margin: 6px 0;
+    }
+
+    #navbar li, #contact li {
+        display: block;
+        margin: 0;             
+    }
+
+    #navbar li a {
+        background-color: rgba(135, 239, 195, 0.5);
+        width: 100%;
+        margin: 0;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        padding: 1em 0;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    #contact {
+        display: inline-block;
+        text-align: center;
+        padding: 0;
+        width: 100%;
+    }
+
+    #contact #p1, #contact #p2{
+        display: none;
+    }
+
+    #contact #p3 {
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding-top: 1em;
+        padding-bottom: 1em;        
+    }
+
+    #contact li {
+        display: inline-block;        
+    }
+
+    #main {
+        display: block;
+    }
+
+    #main #rescate {
+        width: 100%;
+        margin-right: 1em;
+        margin-bottom: 3em;
+    }
+    
+    #main #crowd {
+        width: 100%;
+        margin-left: 1em;
+    }
+	
+	.carousel-inner img {
+    height: 50%;    
+    }
+
+    .caption {
+        display: none;    
+    }
+
+}
+.letras2 {
+    color: #ffffff; /* Cambiar a código de color blanco (#ffffff) */
+  }

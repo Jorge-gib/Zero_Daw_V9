@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Pagina de inicio{% endblock title %}
+
+{% block content %} 
+
+
+    <h2></h2>
+    {% if user.is_authenticated  %}
+    <div>
+        <img src="{% static 'images/logo_31.png' %}" alt="home" style="width: 250px; height: 250x;">
+        
+        <h1 class="letras">Bienvenido</h1>
+        <p class="letras">Hola - {{user.first_name}} {{user.last_name}}</p>
+        <p class="letras">Tu tipo de usuario es - {{user.tipo_usuario}}</p>
+        <br><br>
+        
+        
+    </div>
+    {% endif %}
+    {% if user.tipo_usuario == "Ciudadano" %}
+    <div>
+        <li class="nav-item"><a class="link" href="{% url 'orden_reciclaje' %}">Ordenar servicio</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'orden_reserva' %}">Reservar servicio</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'list_user' %}">Ver mi perfil</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'editar_user' user.id %}">Actualizar mi perfil</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'borrar_user' user.id %}">Eliminar mi cuenta</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'geolocalizacion'  %}">Seguimiento de orden</a></li>
+    </div>
+    {% endif %}
+    {% if user.tipo_usuario == "Recolector" %}
+    <div>
+        <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
+    </div>
+    {% endif %}
+    {% if user.tipo_usuario == "Operario_municipalidad" %}
+    <div>
+        <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
+    </div>
+    {% endif %}
+    {% if user.tipo_usuario == "Reciclador" %}
+    <div>
+        <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
+    </div>
+    {% endif %}
+
+
+{% endblock content %}

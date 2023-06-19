@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="blue-background">
+    
+    <h1 class="titulo">Agregar USUARIO</h1>
+    <div class="contenido">
+        <p1>Ingrese sus datos, en caso de tener licencia escriba CLASE B o A, en caso de no tener escriba "NO TENGO"</p1>
+    </div>
+    
+    <div class="content container">
+        <form method="POST">
+            {% csrf_token %} {{ form.as_p }}
+            <button type="submit">GRABAR</button>
+        </form>
+        <a href="{% url 'home' %}">Volver</a>
+    </div>
+</div>
+{% endblock %}

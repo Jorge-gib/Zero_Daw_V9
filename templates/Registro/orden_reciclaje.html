@@ -1,0 +1,97 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+   
+   
+<script>
+  function verificarCampos() {
+      var fecha = document.getElementById("fecha_orden").value;
+      var tipoMaterial = document.getElementById("tipo_material").value;
+      var cantidadMaterial = document.getElementById("cantidad_material").value;
+      var latitud = document.getElementById("latitud_posicion_ciudadano").value;
+      var longitud = document.getElementById("longitud_posicion_ciudadano").value;
+
+      if (fecha === "" || tipoMaterial === "" || cantidadMaterial === "" || latitud === "" || longitud === "") {
+          alert("Por favor, complete todos los campos para registrar la orden.");
+          return false;
+      }
+
+      return true;
+  }
+</script>
+
+<h1 class="letras">Llene la lista para realizar la orden</h1>
+<div>
+  <p1 class="letras">Recuerde que debe esperar a que un recolector acepte su orden</p1>
+</div>
+
+<form method="POST" action="{% url 'orden_reciclaje' %}" onsubmit="return verificarCampos()">
+  {% csrf_token %}
+
+  <!-- Campo oculto para el ID del usuario -->
+  <input type="hidden" name="id_user" value="{{ user.id }}">
+
+  <!-- Campos de entrada para los campos de Orden_reciclaje -->
+
+  <div>
+      <label class="letras" for="fecha_orden">Fecha de orden:</label>
+      <input type="date" name="fecha_orden" id="fecha_orden">
+  </div>
+  <div>
+      <div>
+          <label class="letras" for="tipo_material">Tipo de material:</label>
+          <select name="tipo_material" id="tipo_material">
+              <option value="Plastico">Plastico</option>
+              <option value="Vidrio">Vidrio</option>
+              <option value="Carton">Carton</option>
+              <option value="Aluminio">Aluminio</option>
+          </select>
+      </div>
+      <label class="letras" for="cantidad_material">Cantidad del material:</label>
+      <input type="number" name="cantidad_material" id="cantidad_material">
+  </div>
+
+  <div>
+      <label  class="letras" for="latitud_posicion_ciudadano">Latitud:</label>
+      <input type="text" name="latitud_posicion_ciudadano" id="latitud_posicion_ciudadano">
+  </div>
+  <div>
+      <label class="letras" for="longitud_posicion_ciudadano">Longitud:</label>
+      <input type="text" name="longitud_posicion_ciudadano" id="longitud_posicion_ciudadano">
+  </div>
+
+  <button type="submit">Guardar</button>
+  <button type="reset">Limpiar campos</button>
+  <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
+</form>
+
+<div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
+
+<script>
+  function showSuccessMessage() {
+      document.getElementById("success-message").style.display = "block";
+  }
+</script>
+
+<script>
+  function capturarUbicacion() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+              var latitud = Math.floor(position.coords.latitude);
+              var longitud = Math.floor(position.coords.longitude);
+
+              document.getElementById("latitud_posicion_ciudadano").value = latitud;
+              document.getElementById("longitud_posicion_ciudadano").value = longitud;
+          });
+      } else {
+          alert("Tu navegador no admite la geolocalización.");
+      }
+  }
+</script>
+<div>
+<a class="link" href="{% url 'verOrdenReciclaje' %}">Ver orden reciclaje</a>
+</div>
+<div>
+<a class="link" href="{% url 'login' %}">Volver</a>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+    <h1 class="letras">Gestion de usuario</h1>
+    
+    <div class="content container">
+        <p class="letras">Ups, algo salio mal, la clave o el rut que ingresaste no son validos</p>
+   
+    </div>
+    <a href="{% url 'validacion_pass' %}">Volver</a>
+
+{% endblock %}

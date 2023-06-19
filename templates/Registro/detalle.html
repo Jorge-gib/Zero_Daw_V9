@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %} 
+
+{% block content %}
+<div>
+    <h1 class="letras">Detalle de orden</h1>
+</div>
+
+    {% if object_list %}
+       
+
+    {% for orden_reciclaje in object_list %}
+        <p class="letras">ID de orden: {{ orden_reciclaje.id_orden }}</p>
+        <p class="letras">Fecha de orden: {{ orden_reciclaje.fecha_orden }}</p> 
+        <p class="letras">Tipo material: {{ orden_reciclaje.tipo_material }}</p>    
+        <p class="letras">Cantidad material: {{ orden_reciclaje.cantidad_material }}</p>
+        
+
+        <br>
+    {% endfor %}
+    
+{% else %}
+    <h1 class="letras">No hay registros de ordenes</h1>
+{% endif %}
+<a href="{% url 'orden_reciclaje' %}">Volver</a>
+
+
+  
+
+{% endblock %}
