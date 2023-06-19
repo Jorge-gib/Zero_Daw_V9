@@ -49,8 +49,10 @@ class Orden_reciclaje(models.Model):
     fecha_orden = models.DateField()
     tipo_material = models.CharField(max_length=200, blank=False, null=True, choices=TIPO_MATERIAL)
     cantidad_material = models.IntegerField()
-    latitud_posicion_ciudadano = models.IntegerField(null=True)
-    longitud_posicion_ciudadano = models.IntegerField(null=True)
+    latitud_posicion_ciudadano = models.CharField(max_length=200, null=True)
+    longitud_posicion_ciudadano = models.CharField(max_length=200, null=True)
+    latitud_posicion_recolector = models.CharField(max_length=200, null=True)
+    longitud_posicion_recolector = models.CharField(max_length=200, null=True)
    
      
     

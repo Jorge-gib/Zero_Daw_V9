@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de ordenes{% endblock %}
+
+{% block content %}
+  <h1 class="letras">Toma una orden</h1>
+  {% if orden_reciclaje %}
+    <form method="POST" action="{% url 'tomar_orden' orden_reciclaje.id_orden %}">
+      {% csrf_token %}
+      <div class="letras">
+        <p>ID orden: {{ orden_reciclaje.id_orden }}</p>
+      </div>
+      <div>
+        <label class="letras" for="latitud_posicion_recolector">Latitud:</label>
+        <input type="text" name="latitud_posicion_recolector" value="{{ orden_reciclaje.latitud_posicion_recolector }}" required>
+      </div>
+      <div>
+        <label class="letras" for="longitud_posicion_recolector">Longitud:</label>
+        <input type="text" name="longitud_posicion_recolector" value="{{ orden_reciclaje.longitud_posicion_recolector }}" required>
+      </div>
+      <button type="submit">Actualizar Orden</button>
+      <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
+    </form>
+  {% else %}
+    <p class="letras">No hay órdenes disponibles.</p>
+  {% endif %}
+
+  <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
+
+  <script>
+    function showSuccessMessage() {
+      document.getElementById("success-message").style.display = "block";
+    }
+
+    function capturarUbicacion() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitud = Math.floor(position.coords.latitude);
+          var longitud = Math.floor(position.coords.longitude);
+
+          document.querySelector('input[name="latitud_posicion_recolector"]').value = latitud;
+          document.querySelector('input[name="longitud_posicion_recolector"]').value = longitud;
+        });
+      } else {
+        alert("Tu navegador no admite la geolocalización.");
+      }
+    }
+  </script>
+
+  <div>
+    <a href="{% url 'mostrar_ordenes' %}">Volver</a>
+  </div>
+{% endblock %}

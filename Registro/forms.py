@@ -248,6 +248,16 @@ class Orden_reciclajeForm(forms.ModelForm):
            
            
         }
+class OrdenUpdateForm(forms.ModelForm):
+    latitud_posicion_recolector = forms.FloatField(label='Latitud')
+    longitud_posicion_recolector = forms.FloatField(label='Longitud')
+
+    class Meta:
+        model = Orden_reciclaje
+        fields = [
+            'latitud_posicion_recolector',
+            'longitud_posicion_recolector',
+        ]
         
 
 class Reserva_ordenForm(forms.ModelForm):

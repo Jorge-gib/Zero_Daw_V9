@@ -13,8 +13,8 @@ def geolocalizacion(request):
         if orden_reciclaje is None:
             return render(request, 'Api/error_api.html')
         
-        latitud = orden_reciclaje.latitud_posicion_ciudadano
-        longitud = orden_reciclaje.longitud_posicion_ciudadano
+        latitud = orden_reciclaje.latitud_posicion_recolector
+        longitud = orden_reciclaje.longitud_posicion_recolector
         
         # Llamar a la API de geolocalización con las coordenadas proporcionadas
         response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=AIzaSyAeYeyldDKCcpeYVppGwYKzizbDf_HVnSo')

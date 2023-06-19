@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from .models import Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
-from .forms import  Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from .forms import  OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.views.generic import CreateView
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -19,6 +18,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import FormView
 
 # Create your views here.
 class UserDelete(DeleteView):
@@ -140,6 +141,10 @@ def confirmacion(request):
     context={}
     return render(request, 'Registro/confirmacion_2.html', context)
 
+def confirmacion_posicion_recolector(request):
+    context={}
+    return render(request, 'Registro/confirmacion_posicion_recolector.html', context)
+
 def confirmacion3(request):
     context={}
     return render(request, 'Registro/confirmacion_3.html', context)
@@ -166,11 +171,7 @@ def verRegistroEntregaMaterial(request):
 
 
 
-##################################################################################################################
 
-##class OrdenList(ListView):
-    ##model = Orden_reciclaje
-    ##template_name = 'Registro/detalle.html'
 
 class OrdenList(LoginRequiredMixin, ListView):
     model = Orden_reciclaje
@@ -195,28 +196,29 @@ class Orden_Reserva_List(LoginRequiredMixin, ListView):
         queryset = queryset.filter(id_user=self.request.user.id)
         return queryset
 ####################################################################################################
-
-
-    
-########################################################################################################
-
-
-
-    
-#########################################################################################################
-
+class TomarOrdenView(UpdateView):
+    model = Orden_reciclaje
+    form_class = OrdenUpdateForm
+    template_name = 'Registro/tomar_orden.html'
+    success_url = reverse_lazy('confirmacion_posicion_recolector')
 
     
-############################################################################################################
 
+###############################################################################################################
 
- 
- 
- ###############################################################################################################   
- 
- 
+class MostrarOrdenesView(ListView):
+    model = UserModelo
+    template_name = 'Registro/mostrar_ordenes.html'
 
-    
+    def post(self, request, *args, **kwargs):
+        orden_id = request.POST.get('orden_id')
+        url = reverse('tomar_orden', args=[orden_id])
+        return redirect(url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ordenes'] = Orden_reciclaje.objects.all()
+        return context
 #################################################################################################################
 
 def agregar_calificacion_recolector_ciudadano(request):
@@ -258,6 +260,10 @@ def agregar_registro_entrega_material(request):
         form = Registro_entrega_materialForm()
         return render(request, "Pagina/agregar_registro_entrega_material.html", {'form': form})
     
+############################################################################################################################
+
+
+
 ############################################################################################################################
 
 def agregar_orden_reciclaje(request):
