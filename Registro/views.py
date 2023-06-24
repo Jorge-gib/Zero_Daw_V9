@@ -26,6 +26,13 @@ class UserDelete(DeleteView):
     model = UserModelo
     template_name = 'Registro/borrar_user.html'
     success_url = reverse_lazy('confirmacion3')
+
+################################################
+
+class OrdenDelete(DeleteView):
+    model = Orden_reciclaje
+    template_name = 'Registro/borrar_orden.html'
+    success_url = reverse_lazy('confirmacion4')
     
 ##############################################    
 
@@ -150,6 +157,9 @@ def confirmacion3(request):
     return render(request, 'Registro/confirmacion_3.html', context)
 
 
+def confirmacion4(request):
+    context={}
+    return render(request, 'Registro/confirmacion_4.html', context)
 
 
 
@@ -218,6 +228,20 @@ class MostrarOrdenesView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ordenes'] = Orden_reciclaje.objects.all()
+        return context
+    
+class MostrarOrdenesParaEliminarView(ListView):
+    model = UserModelo
+    template_name = 'Registro/mostrar_ordenes_para_eliminar.html'
+
+    def post(self, request, *args, **kwargs):
+        orden_id = request.POST.get('orden_id')
+        url = reverse_lazy('orden_borrar', args=[orden_id])  # Modificar el nombre de la vista
+        return redirect(url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ordenes_eliminar'] = Orden_reciclaje.objects.all()
         return context
 #################################################################################################################
 

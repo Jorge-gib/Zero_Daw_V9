@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="letras">Concluir orden</h1>
+
+<form method="POST" action="{% url 'orden_borrar' orden.id_orden %}">
+    {% csrf_token %}
+    <p class="letras">¿Estás seguro de que desea concluir esta orden?</p>
+    <p class="letras">ID de orden: {{ orden.id_orden }}</p>
+    <input type="hidden" name="id_orden" value="{{ orden.id_orden }}">
+    <input type="hidden" name="confirmar_borrado">  <!-- Campo de confirmación -->
+    <input type="submit" value="Borrar">
+</form>
+<a href="{% url 'login' %}">Volver</a>
+
+<script>
+    document.getElementById('delete-form').addEventListener('submit', function(event) {
+        var confirmDelete = confirm("¿Estás seguro de que deseas borrar esta orden?");
+
+        if (!confirmDelete) {
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock %}
