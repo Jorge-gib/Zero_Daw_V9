@@ -1,12 +1,14 @@
 from django.urls import path, include
 from .forms import OrdenUpdateForm, PassUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Orden_reciclajeForm, Calificacion_recicladorForm, Registro_entrega_materialForm
 from . import views
-from .views import confirmacion4, OrdenDelete, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
+from .views import agregar_calificacion_recolector_ciudadano, OrdenDelete, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
 
 
 urlpatterns = [
     
     path('mostrar_ordenes/', MostrarOrdenesView.as_view(), name='mostrar_ordenes'),
+    
+   path('agregar_calificacion_recolector_ciudadano/<int:id_orden>/', views.agregar_calificacion_recolector_ciudadano, name='agregar_calificacion_recolector_ciudadano'),
     
     path('mostrar_ordenes_eliminar/', MostrarOrdenesParaEliminarView.as_view(), name='mostrar_ordenes_eliminar'),
     
@@ -36,7 +38,9 @@ urlpatterns = [
     path('mensaje_pass', views.mensaje, name="mensaje_pass"),
     path('error_validacion', views.error_validacion, name='error_validacion'),
     path('confirmacion3', views.confirmacion3, name="confirmacion3"),
-    path('confirmacion4', views.confirmacion4, name="confirmacion4"),
+    
+    
+    
    
     ##path('registro/', views.registro, name='registro'),
 
@@ -59,8 +63,7 @@ urlpatterns = [
 
     
     # agregar una carrera    
-    path('agregar_calificacion_recolector_ciudadano', views.agregar_calificacion_recolector_ciudadano, name="agregar_calificacion_recolector_ciudadano"),
-    
+   
      
     # agregar una carrera    
     path('agregar_calificacion_reciclador', views.agregar_calificacion_reciclador, name="agregar_calificacion_reciclador"),

@@ -20,6 +20,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import FormView
+from django.urls import reverse_lazy
 
 # Create your views here.
 class UserDelete(DeleteView):
@@ -29,11 +30,37 @@ class UserDelete(DeleteView):
 
 ################################################
 
+def agregar_calificacion_recolector_ciudadano(request, id_orden):
+    if request.method == 'POST':
+        form = Calificacion_recolector_ciudadanoForm(request.POST)
+        if form.is_valid():
+            model_instance = form.save(commit=False)
+            model_instance.id_orden = id_orden
+            model_instance.save()
+            return render(request, 'Registro/confirmacion_calificacion.html', {'form': form})
+    else:
+        form = Calificacion_recolector_ciudadanoForm()
+    return render(request, 'Registro/agregar_calificacion_recolector_ciudadano.html', {'form': form})
+
+
 class OrdenDelete(DeleteView):
     model = Orden_reciclaje
     template_name = 'Registro/borrar_orden.html'
-    success_url = reverse_lazy('confirmacion4')
-    
+
+    def get_success_url(self):
+        id_orden = self.kwargs['pk']
+        return reverse_lazy('agregar_calificacion_recolector_ciudadano', kwargs={'id_orden': id_orden})
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        id_orden = self.object.id_orden
+        self.object.delete()
+        return redirect('agregar_calificacion_recolector_ciudadano', id_orden=id_orden)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['orden'] = self.get_object()
+        return context
 ##############################################    
 
 UserModel = get_user_model()
@@ -157,9 +184,7 @@ def confirmacion3(request):
     return render(request, 'Registro/confirmacion_3.html', context)
 
 
-def confirmacion4(request):
-    context={}
-    return render(request, 'Registro/confirmacion_4.html', context)
+
 
 
 
@@ -245,16 +270,7 @@ class MostrarOrdenesParaEliminarView(ListView):
         return context
 #################################################################################################################
 
-def agregar_calificacion_recolector_ciudadano(request):
-    if request.method == "POST":
-        form = Calificacion_recolector_ciudadanoForm(request.POST)
-        if form.is_valid():
-            model_instance = form.save(commit=False)
-            model_instance.save()
-            return redirect("/agregar_calificacion_recolector_ciudadano")
-    else:
-        form = Calificacion_recolector_ciudadanoForm()
-        return render(request, "Pagina/agregar_calificacion_recolector_ciudadano.html", {'form': form})
+
 
 
 #########################################################################################################################

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="letras">Agregar Calificación Recolector Ciudadano</h1>
+
+  <form method="POST" action="{% url 'agregar_calificacion_recolector_ciudadano' orden.id_orden %}">
+    {% csrf_token %}
+    <input type="hidden" name="id_calificacion" value="{{ id_calificacion }}">
+    <div>
+    <label class="letras" for="calificacion_estrellas_ciudadano">Calificación Estrellas Ciudadano:</label>
+    <div id="calificacion_estrellas_ciudadano"></div>
+    <input type="hidden" name="calificacion_estrellas_ciudadano" id="calificacion_estrellas_ciudadano_input" required>
+    </div>
+    <div>
+    <label class="letras" for="calificacion_estrellas_recolector">Calificación Estrellas Recolector:</label>
+    <div id="calificacion_estrellas_recolector"></div>
+    <input type="hidden" name="calificacion_estrellas_recolector" id="calificacion_estrellas_recolector_input" required>
+    </div>
+    <div>
+    <label class="letras" for="opinion_servicio_ciudadano">Opinión Servicio Ciudadano:</label>
+    <textarea name="opinion_servicio_ciudadano" id="opinion_servicio_ciudadano" rows="4" required></textarea>
+    </div>
+    <div>
+    <label class="letras" for="opinion_servicio_recolector">Opinión Servicio Recolector:</label>
+    <textarea name="opinion_servicio_recolector" id="opinion_servicio_recolector" rows="4" required></textarea>
+    </div>
+    <input type="submit" value="Agregar">
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+  <script>
+    $(function() {
+      $("#calificacion_estrellas_ciudadano").rateYo({
+        rating: 0,
+        numStars: 5,
+        precision: 1,
+        minValue: 0,
+        maxValue: 5,
+        onChange: function(rating, rateYoInstance) {
+          $("#calificacion_estrellas_ciudadano_input").val(rating);
+        }
+      });
+
+      $("#calificacion_estrellas_recolector").rateYo({
+        rating: 0,
+        numStars: 5,
+        precision: 1,
+        minValue: 0,
+        maxValue: 5,
+        onChange: function(rating, rateYoInstance) {
+          $("#calificacion_estrellas_recolector_input").val(rating);
+        }
+      });
+    });
+  </script>
+{% endblock %}

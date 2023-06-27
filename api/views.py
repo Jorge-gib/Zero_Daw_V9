@@ -16,6 +16,18 @@ def geolocalizacion(request):
         latitud = orden_reciclaje.latitud_posicion_recolector
         longitud = orden_reciclaje.longitud_posicion_recolector
         
+        # Modificar las coordenadas en mapOptions
+        mapOptions = {
+            "center": {"lat": latitud, "lng": longitud},
+            "fullscreenControl": True,
+            "mapTypeControl": False,
+            "streetViewControl": False,
+            "zoom": 12,
+            "zoomControl": True,
+            "maxZoom": 20,
+            "mapId": ""
+        }
+        
         # Llamar a la API de geolocalización con las coordenadas proporcionadas
         response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=AIzaSyAeYeyldDKCcpeYVppGwYKzizbDf_HVnSo')
 
@@ -25,7 +37,7 @@ def geolocalizacion(request):
             # Procesar los datos de respuesta según tus necesidades
             # Por ejemplo, puedes extraer la dirección u otros detalles de interés
 
-            return render(request, 'Api/geolocalizacion.html', {'data': data})
+            return render(request, 'Api/geolocalizacion.html', {'data': data, 'mapOptions': mapOptions})
         else:
             data = response.json()
             return render(request, 'Api/error_api.html', {'data': data})
@@ -33,4 +45,3 @@ def geolocalizacion(request):
     else:
         data = response.json()
         return render(request, 'Api/error_api.html', {'data': data})
-        

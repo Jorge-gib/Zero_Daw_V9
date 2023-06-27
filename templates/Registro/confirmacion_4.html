@@ -1,13 +1,14 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
    <div>
     <h1 class="letras">Gestion de ordenes</h1>
    </div>
+   <form method="POST" action="{% url 'orden_borrar' orden.pk %}">
+    {% csrf_token %}
     <div class="content container">
-        <p class="letras">Usted a concluido la orden</p>
-   
+        <p class="letras">Usted ha concluido la orden</p>
     </div>
-    <a href="{% url 'home' %}">Volver</a>
-
+   </form>
+    <a href="{% url 'agregar_calificacion_recolector_ciudadano' orden.pk %}">Agregar comentarios de experiencia</a>
 {% endblock %}

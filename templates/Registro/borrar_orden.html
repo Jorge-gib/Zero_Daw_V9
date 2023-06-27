@@ -8,18 +8,9 @@
     <p class="letras">¿Estás seguro de que desea concluir esta orden?</p>
     <p class="letras">ID de orden: {{ orden.id_orden }}</p>
     <input type="hidden" name="id_orden" value="{{ orden.id_orden }}">
-    <input type="hidden" name="confirmar_borrado">  <!-- Campo de confirmación -->
-    <input type="submit" value="Borrar">
+    <button type="submit">Borrar</button>
 </form>
 <a href="{% url 'login' %}">Volver</a>
 
-<script>
-    document.getElementById('delete-form').addEventListener('submit', function(event) {
-        var confirmDelete = confirm("¿Estás seguro de que deseas borrar esta orden?");
 
-        if (!confirmDelete) {
-            event.preventDefault();
-        }
-    });
-</script>
 {% endblock %}
