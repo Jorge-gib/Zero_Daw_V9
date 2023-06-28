@@ -122,12 +122,12 @@ class RegistroForm(UserCreationForm):
 class Calificacion_recolector_ciudadanoForm(forms.ModelForm):
     class Meta:
         model = Calificacion_recolector_ciudadano
-        fields = ['id_orden', 'id', 'calificacion_estrellas_ciudadano', 'calificacion_estrellas_recolector', 'opinion_servicio_ciudadano', 'opinion_servicio_recolector']
+        fields = ['id_orden', 'id_calificacion', 'calificacion_estrellas_ciudadano', 'calificacion_estrellas_recolector', 'opinion_servicio_ciudadano', 'opinion_servicio_recolector']
 
         labels = {
             
             'id_orden': 'ID orden',
-            'id': 'ID calificacion',
+            'id_calificacion': 'ID calificacion',
             'calificacion_estrellas_ciudadano': 'Calificacion estrellas ciudadano',
             'calificacion_estrellas_recolector': 'Calificacion estrellas recolector',
             'opinion_servicio_ciudadano': 'Opinion servicio ciudadano',
@@ -137,7 +137,7 @@ class Calificacion_recolector_ciudadanoForm(forms.ModelForm):
         widgets = {
            
             'id_orden': forms.TextInput(attrs={'class': 'form-control'}),
-            'id': forms.TextInput(attrs={'class': 'form-control'}),
+            'id_calificacion': forms.TextInput(attrs={'class': 'form-control'}),
             'calificacion_estrellas_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
             'calificacion_estrellas_recolector': forms.TextInput(attrs={'class': 'form-control'}),
             'opinion_servicio_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),

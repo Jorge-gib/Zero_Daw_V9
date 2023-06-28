@@ -105,7 +105,7 @@ class Registro_entrega_material(models.Model):
 
 class Calificacion_recolector_ciudadano(models.Model):
     id_orden = models.ForeignKey(Orden_reciclaje, on_delete=models.CASCADE)
-    id = models.AutoField(primary_key=True)
+    id_calificacion = models.AutoField(primary_key=True)
     calificacion_estrellas_ciudadano = models.FloatField()
     calificacion_estrellas_recolector = models.FloatField()
     opinion_servicio_ciudadano = models.CharField(max_length=400)

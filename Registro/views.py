@@ -34,6 +34,7 @@ class UserDelete(DeleteView):
 
 ################################################
 
+
 def agregar_calificacion_recolector_ciudadano(request, id_orden):
     if request.method == 'POST':
         form = Calificacion_recolector_ciudadanoForm(request.POST)
@@ -44,14 +45,16 @@ def agregar_calificacion_recolector_ciudadano(request, id_orden):
             return render(request, 'Registro/confirmacion_calificacion.html', {'form': form})
     else:
         form = Calificacion_recolector_ciudadanoForm()
-    return render(request, 'Registro/agregar_calificacion_recolector_ciudadano.html', {'form': form})
-
+    orden = Orden_reciclaje.objects.get(id_orden=id_orden)
+    return render(request, 'Registro/agregar_calificacion_recolector_ciudadano.html', {'form': form, 'orden': orden})
 
 class ActualizarOrden(UpdateView):
     model = Orden_reciclaje
     form_class = OrdenConcluir
     template_name = 'Registro/actualizar_orden.html'
-    success_url = reverse_lazy('confirmacion4')
+
+    def get_success_url(self):
+        return reverse_lazy('agregar_calificacion_recolector_ciudadano', kwargs={'id_orden': self.object.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
