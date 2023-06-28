@@ -106,10 +106,10 @@ class Registro_entrega_material(models.Model):
 class Calificacion_recolector_ciudadano(models.Model):
     id_orden = models.ForeignKey(Orden_reciclaje, on_delete=models.CASCADE)
     id_calificacion = models.AutoField(primary_key=True)
-    calificacion_estrellas_ciudadano = models.FloatField()
-    calificacion_estrellas_recolector = models.FloatField()
-    opinion_servicio_ciudadano = models.CharField(max_length=400)
-    opinion_servicio_recolector = models.CharField(max_length=400)
+    calificacion_estrellas_ciudadano = models.FloatField(null=True)
+    calificacion_estrellas_recolector = models.FloatField(null=True)
+    opinion_servicio_ciudadano = models.CharField(max_length=400, null=True)
+    opinion_servicio_recolector = models.CharField(max_length=400, null=True)
     def __str__(self):
         return str(self.id_calificacion)
 

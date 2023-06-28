@@ -8,11 +8,13 @@
 {% if ordenes %}
     <ul>
         {% for orden in ordenes %}
+           {% if orden.estado != "Concluido" %}
             <li>
                 <p class="letras">ID de orden: {{ orden.id_orden }}</p>
                 <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
                 <p class="letras">Tipo material: {{ orden.tipo_material }}</p>
                 <p class="letras">Cantidad material: {{ orden.cantidad_material }}</p>
+                <p class="letras">Estado: Diponible</p>
 
                 <!-- Enviar el ID de la orden al hacer clic en el botón -->
                 <form method="POST" action="{% url 'tomar_orden' orden.id_orden %}">
@@ -21,6 +23,7 @@
                     <button type="submit">Seleccionar</button>
                 </form>
             </li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% else %}

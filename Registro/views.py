@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
-from .forms import  OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from .forms import  Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -34,19 +34,24 @@ class UserDelete(DeleteView):
 
 ################################################
 
+def confirmar_comentario(request):
+    context={}
+    return render(request, 'Registro/confirmacion_calificacion.html', context)
 
+#####################################
 def agregar_calificacion_recolector_ciudadano(request, id_orden):
     if request.method == 'POST':
-        form = Calificacion_recolector_ciudadanoForm(request.POST)
-        if form.is_valid():
-            model_instance = form.save(commit=False)
-            model_instance.id_orden = id_orden
-            model_instance.save()
-            return render(request, 'Registro/confirmacion_calificacion.html', {'form': form})
+        calificacion = Calificacion_recolector_ciudadano()
+        calificacion.id_orden_id = id_orden
+        calificacion.calificacion_estrellas_ciudadano = request.POST['calificacion_estrellas_ciudadano']
+        calificacion.opinion_servicio_ciudadano = request.POST['opinion_servicio_ciudadano']
+        calificacion.save()
+        return render(request, 'Registro/confirmacion_calificacion.html', {'calificacion': calificacion})
     else:
-        form = Calificacion_recolector_ciudadanoForm()
+        form = Calificacion_recolectorForm()
     orden = Orden_reciclaje.objects.get(id_orden=id_orden)
     return render(request, 'Registro/agregar_calificacion_recolector_ciudadano.html', {'form': form, 'orden': orden})
+##########################
 
 class ActualizarOrden(UpdateView):
     model = Orden_reciclaje
