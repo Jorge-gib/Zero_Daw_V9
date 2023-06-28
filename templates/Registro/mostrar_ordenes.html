@@ -3,29 +3,42 @@
 {% block content %}
 <div>
     <h1 class="letras">Ordenes vigentes</h1>
+
+</div>
+<div>
+    <p class="letras">Escoja una orden a tomar</p>
 </div>
 
 {% if ordenes %}
-    <ul>
-        {% for orden in ordenes %}
-           {% if orden.estado != "Concluido" %}
-            <li>
-                <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-                <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                <p class="letras">Tipo material: {{ orden.tipo_material }}</p>
-                <p class="letras">Cantidad material: {{ orden.cantidad_material }}</p>
-                <p class="letras">Estado: Diponible</p>
+{% with hay_ordenes_disponibles=False %}
+<ul>
+    {% for orden in ordenes %}
+        {% if orden.estado != "Concluido" %}
+            {% if not hay_ordenes_disponibles %}
+                {% with hay_ordenes_disponibles=True %}
+                    <li>
+                        <p class="letras">ID de orden: {{ orden.id_orden }}</p>
+                        <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
+                        <p class="letras">Tipo material: {{ orden.tipo_material }}</p>
+                        <p class="letras">Cantidad material: {{ orden.cantidad_material }}</p>
+                        <p class="letras">Estado: Disponible</p>
 
-                <!-- Enviar el ID de la orden al hacer clic en el botón -->
-                <form method="POST" action="{% url 'tomar_orden' orden.id_orden %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
-                    <button type="submit">Seleccionar</button>
-                </form>
-            </li>
+                    <!-- Enviar el ID de la orden al hacer clic en el botón -->
+                    <form method="POST" action="{% url 'tomar_orden' orden.id_orden %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
+                        <button type="submit">Seleccionar</button>
+                    </form>
+                </li>
+                {% endwith %}
             {% endif %}
+           {% endif %}
         {% endfor %}
     </ul>
+    {% if not hay_ordenes_disponibles %}
+        <p class="letras">No hay órdenes disponibles</p>
+    {% endif %}
+    {% endwith %}
 {% else %}
     <h1 class="letras">No hay registros de órdenes</h1>
 {% endif %}
