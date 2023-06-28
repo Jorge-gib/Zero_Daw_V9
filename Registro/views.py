@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
-from .forms import  OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from .forms import  OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -21,6 +21,10 @@ from django.utils.encoding import force_bytes
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import FormView
 from django.urls import reverse_lazy
+from django.shortcuts import render
+from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
 
 # Create your views here.
 class UserDelete(DeleteView):
@@ -43,23 +47,16 @@ def agregar_calificacion_recolector_ciudadano(request, id_orden):
     return render(request, 'Registro/agregar_calificacion_recolector_ciudadano.html', {'form': form})
 
 
-class OrdenDelete(DeleteView):
+class ActualizarOrden(UpdateView):
     model = Orden_reciclaje
-    template_name = 'Registro/borrar_orden.html'
-
-    def get_success_url(self):
-        id_orden = self.kwargs['pk']
-        return reverse_lazy('agregar_calificacion_recolector_ciudadano', kwargs={'id_orden': id_orden})
-
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        id_orden = self.object.id_orden
-        self.object.delete()
-        return redirect('agregar_calificacion_recolector_ciudadano', id_orden=id_orden)
+    form_class = OrdenConcluir
+    template_name = 'Registro/actualizar_orden.html'
+    success_url = reverse_lazy('confirmacion4')
+    pk_url_kwarg = 'pk'  # Nombre del parámetro que se espera recibir en la URL
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['orden'] = self.get_object()
+        context['ordenes'] = Orden_reciclaje.objects.all()
         return context
 ##############################################    
 
@@ -183,6 +180,10 @@ def confirmacion3(request):
     context={}
     return render(request, 'Registro/confirmacion_3.html', context)
 
+def confirmacion4(request):
+    context={}
+    return render(request, 'Registro/confirmacion_4.html', context)
+
 
 
 
@@ -261,13 +262,14 @@ class MostrarOrdenesParaEliminarView(ListView):
 
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
-        url = reverse_lazy('orden_borrar', args=[orden_id])  # Modificar el nombre de la vista
+        url = reverse_lazy('actualizar_orden', args=[orden_id])
         return redirect(url)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ordenes_eliminar'] = Orden_reciclaje.objects.all()
+        context['ordenes'] = Orden_reciclaje.objects.all()
         return context
+
 #################################################################################################################
 
 

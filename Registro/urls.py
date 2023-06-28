@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .forms import OrdenUpdateForm, PassUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Orden_reciclajeForm, Calificacion_recicladorForm, Registro_entrega_materialForm
 from . import views
-from .views import agregar_calificacion_recolector_ciudadano, OrdenDelete, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
+from .views import confirmacion4, agregar_calificacion_recolector_ciudadano, ActualizarOrden, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
 
 
 urlpatterns = [
@@ -38,7 +38,7 @@ urlpatterns = [
     path('mensaje_pass', views.mensaje, name="mensaje_pass"),
     path('error_validacion', views.error_validacion, name='error_validacion'),
     path('confirmacion3', views.confirmacion3, name="confirmacion3"),
-    
+      path('confirmacion4', views.confirmacion4, name="confirmacion4"),
     
     
    
@@ -108,7 +108,7 @@ urlpatterns = [
     path('borrar_user/<int:pk>', UserDelete.as_view(), name="borrar_user"),
     
     
-    path('orden_borrar/<int:pk>', OrdenDelete.as_view(), name="orden_borrar"),
+    path('actualizar_orden/<int:pk>', ActualizarOrden.as_view(), name="actualizar_orden"),
     
     
    

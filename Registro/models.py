@@ -53,6 +53,7 @@ class Orden_reciclaje(models.Model):
     longitud_posicion_ciudadano = models.CharField(max_length=200, null=True)
     latitud_posicion_recolector = models.CharField(max_length=200, null=True)
     longitud_posicion_recolector = models.CharField(max_length=200, null=True)
+    estado = models.CharField(max_length=200, null=True)
    
      
     
@@ -73,6 +74,7 @@ class Reserva_orden(models.Model):
     longitud_posicion_ciudadano = models.CharField(max_length=200, null=True)
     latitud_posicion_recolector = models.CharField(max_length=200, null=True)
     longitud_posicion_recolector = models.CharField(max_length=200, null=True)
+    estado = models.CharField(max_length=200, null=True)
    
      
     

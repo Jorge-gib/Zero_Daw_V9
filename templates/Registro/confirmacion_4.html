@@ -4,11 +4,10 @@
    <div>
     <h1 class="letras">Gestion de ordenes</h1>
    </div>
-   <form method="POST" action="{% url 'orden_borrar' orden.pk %}">
+  
     {% csrf_token %}
     <div class="content container">
         <p class="letras">Usted ha concluido la orden</p>
     </div>
-   </form>
-    <a href="{% url 'agregar_calificacion_recolector_ciudadano' orden.pk %}">Agregar comentarios de experiencia</a>
+    <a href="{% url 'login' %}">Agregar comentarios de experiencia</a>
 {% endblock %}

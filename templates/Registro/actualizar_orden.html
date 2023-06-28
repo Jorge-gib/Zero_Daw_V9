@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Concluir orden{% endblock %}
+
+{% block content %}
+  <h1 class="letras">Confirme el término de orden</h1>
+  {% if ordenes %}
+    {% for orden in ordenes %}
+      <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}">
+        {% csrf_token %}
+        <div class="letras">
+          <p>ID orden: {{ orden.id_orden }}</p>
+        </div>
+
+        <!-- Agregar campo "estado" oculto con valor "Concluido" -->
+        <input type="hidden" name="estado" value="Concluido">
+
+        <button type="submit">Concluir orden</button>
+      </form>
+    {% endfor %}
+  {% else %}
+    <p class="letras">No hay órdenes disponibles.</p>
+  {% endif %}
+
+  <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
+
+  <div>
+    <a href="{% url 'login' %}">Volver</a>
+  </div>
+{% endblock %}

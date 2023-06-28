@@ -259,6 +259,16 @@ class OrdenUpdateForm(forms.ModelForm):
             'longitud_posicion_recolector',
         ]
         
+class OrdenConcluir(forms.ModelForm):
+    
+
+    class Meta:
+        model = Orden_reciclaje
+        fields = [
+            'estado',
+            
+        ]
+        
 
 class Reserva_ordenForm(forms.ModelForm):
     class Meta:

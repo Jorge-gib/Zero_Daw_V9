@@ -6,9 +6,9 @@
     <p class="letras">Seleccione la orden que desee concluir</p>
 </div>
 
-{% if ordenes_eliminar %}
+{% if ordenes %}
     <ul>
-        {% for orden in ordenes_eliminar %}
+        {% for orden in ordenes %}
             <li>
                 <p class="letras">ID de orden: {{ orden.id_orden }}</p>
                 <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
@@ -16,7 +16,7 @@
                 <p class="letras">Cantidad material: {{ orden.cantidad_material }}</p>
 
                 <!-- Enviar el ID de la orden al hacer clic en el botón -->
-                <form method="POST" action="{% url 'orden_borrar' orden.id_orden %}">
+                <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}">
                     {% csrf_token %}
                     <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
                     <button type="submit">Seleccionar</button>
