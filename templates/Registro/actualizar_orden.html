@@ -4,22 +4,24 @@
 
 {% block content %}
   <h1 class="letras">Confirme el término de orden</h1>
-  {% if ordenes %}
-    {% for orden in ordenes %}
-      <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}">
-        {% csrf_token %}
-        <div class="letras">
-          <p>ID orden: {{ orden.id_orden }}</p>
-        </div>
 
-        <!-- Agregar campo "estado" oculto con valor "Concluido" -->
-        <input type="hidden" name="estado" value="Concluido">
-
-        <button type="submit">Concluir orden</button>
-      </form>
-    {% endfor %}
+  {% if orden %}
+  <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}">
+    {% csrf_token %}
+    <div class="letras">
+      <p class="letras">ID de orden: {{ orden.id_orden }}</p>
+      <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
+      <p class="letras">Tipo material: {{ orden.tipo_material }}</p>
+      <p class="letras">Cantidad material: {{ orden.cantidad_material }}</p>
+    </div>
+  
+    <!-- Agregar campo "estado" oculto con valor "Concluido" -->
+    <input type="hidden" name="estado" value="Concluido">
+  
+    <button type="submit">Concluir orden</button>
+  </form>
   {% else %}
-    <p class="letras">No hay órdenes disponibles.</p>
+    <p class="letras">No se ha encontrado la orden especificada.</p>
   {% endif %}
 
   <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>

@@ -52,11 +52,10 @@ class ActualizarOrden(UpdateView):
     form_class = OrdenConcluir
     template_name = 'Registro/actualizar_orden.html'
     success_url = reverse_lazy('confirmacion4')
-    pk_url_kwarg = 'pk'  # Nombre del parámetro que se espera recibir en la URL
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ordenes'] = Orden_reciclaje.objects.all()
+        context['orden'] = self.object
         return context
 ##############################################    
 
