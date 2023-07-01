@@ -172,6 +172,33 @@ class Calificacion_recolectorForm(forms.ModelForm):
            
         }
 
+class Calificacion_ciudadanoForm(forms.ModelForm):
+    class Meta:
+        model = Calificacion_recolector_ciudadano
+        fields = ['id_orden', 'id_calificacion', 'calificacion_estrellas_recolector', 'opinion_servicio_recolector']
+
+        labels = {
+            
+            'id_orden': 'ID orden',
+            'id_calificacion': 'ID calificacion',
+            'calificacion_estrellas_recolector': 'Calificacion estrellas recolector',
+            
+            'opinion_servicio_recolector': 'Opinion servicio recolector',
+           
+
+        }
+        widgets = {
+           
+            'id_orden': forms.TextInput(attrs={'class': 'form-control'}),
+            'id_calificacion': forms.TextInput(attrs={'class': 'form-control'}),
+            'calificacion_estrellas_recolector': forms.TextInput(attrs={'class': 'form-control'}),
+           
+            'opinion_servicio_recolector': forms.TextInput(attrs={'class': 'form-control'}),
+           
+           
+           
+        }
+
 
 
 class Calificacion_recicladorForm(forms.ModelForm):

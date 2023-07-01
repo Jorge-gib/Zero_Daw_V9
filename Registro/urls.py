@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .forms import OrdenUpdateForm, PassUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Orden_reciclajeForm, Calificacion_recicladorForm, Registro_entrega_materialForm
 from . import views
-from .views import confirmar_comentario, confirmacion4, agregar_calificacion_recolector_ciudadano, ActualizarOrden, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
+from .views import MostrarOrdenesCalificarRecolectorView, agregar_calificacion_recolector_ciudadano2, MostrarOrdenesParaEliminarView, confirmar_comentario, confirmacion4, agregar_calificacion_recolector_ciudadano, ActualizarOrden, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
 
 
 urlpatterns = [
@@ -12,7 +12,11 @@ urlpatterns = [
     
    path('agregar_calificacion_recolector_ciudadano/<int:id_orden>/', views.agregar_calificacion_recolector_ciudadano, name='agregar_calificacion_recolector_ciudadano'),
     
+    path('agregar_calificacion_recolector_ciudadano2/<int:id_orden>/', views.agregar_calificacion_recolector_ciudadano2, name='agregar_calificacion_recolector_ciudadano2'),
+    
     path('mostrar_ordenes_eliminar/', MostrarOrdenesParaEliminarView.as_view(), name='mostrar_ordenes_eliminar'),
+    
+    path('mostrar_ordenes_calificar_reciclador/', MostrarOrdenesCalificarRecolectorView.as_view(), name='mostrar_ordenes_calificar_reciclador'),
     
     path('tomar_orden/<int:pk>/', TomarOrdenView.as_view(), name='tomar_orden'),
     

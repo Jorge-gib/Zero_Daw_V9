@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
-from .forms import  Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from .forms import  Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -51,6 +51,26 @@ def agregar_calificacion_recolector_ciudadano(request, id_orden):
         form = Calificacion_recolectorForm()
     orden = Orden_reciclaje.objects.get(id_orden=id_orden)
     return render(request, 'Registro/agregar_calificacion_recolector_ciudadano.html', {'form': form, 'orden': orden})
+
+###########################################
+
+def agregar_calificacion_recolector_ciudadano2(request, id_orden):
+    try:
+        calificacion = Calificacion_recolector_ciudadano.objects.get(id_orden_id=id_orden)
+    except Calificacion_recolector_ciudadano.DoesNotExist:
+        calificacion = Calificacion_recolector_ciudadano(id_orden_id=id_orden)
+
+    if request.method == 'POST':
+        calificacion.calificacion_estrellas_recolector = request.POST.get('calificacion_estrellas_recolector')
+        calificacion.opinion_servicio_recolector = request.POST.get('opinion_servicio_recolector')
+        calificacion.save()
+        return render(request, 'Registro/confirmacion_calificacion.html', {'calificacion': calificacion})
+    else:
+        orden = Orden_reciclaje.objects.get(id_orden=id_orden)
+        return render(request, 'Registro/agregar_calificacion_recolector_ciudadano2.html', {'calificacion': calificacion, 'orden': orden})
+
+
+
 ##########################
 
 class ActualizarOrden(UpdateView):
@@ -65,6 +85,7 @@ class ActualizarOrden(UpdateView):
         context = super().get_context_data(**kwargs)
         context['orden'] = self.object
         return context
+
 ##############################################    
 
 UserModel = get_user_model()
@@ -276,6 +297,23 @@ class MostrarOrdenesParaEliminarView(ListView):
         context = super().get_context_data(**kwargs)
         context['ordenes'] = Orden_reciclaje.objects.all()
         return context
+    
+#######################################################################################
+
+class MostrarOrdenesCalificarRecolectorView(ListView):
+    model = UserModelo
+    template_name = 'Registro/mostrar_ordenes_para_calificar_recolector.html'
+
+    def post(self, request, *args, **kwargs):
+        orden_id = request.POST.get('orden_id')
+        url = reverse_lazy('agregar_calificacion_recolector_ciudadano2', args=[orden_id])
+        return redirect(url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ordenes'] = Orden_reciclaje.objects.all()
+        return context
+
 
 #################################################################################################################
 
