@@ -102,7 +102,6 @@ class Registro_entrega_material(models.Model):
         return str(self.ID_registro)
     
     
-
 class Calificacion_recolector_ciudadano(models.Model):
     id_orden = models.ForeignKey(Orden_reciclaje, on_delete=models.CASCADE)
     id_calificacion = models.AutoField(primary_key=True)
@@ -112,6 +111,7 @@ class Calificacion_recolector_ciudadano(models.Model):
     opinion_servicio_recolector = models.CharField(max_length=400, null=True)
     def __str__(self):
         return str(self.id_calificacion)
+
 
 class Calificacion_reciclador(models.Model):
     id_registro = models.ForeignKey(Registro_entrega_material, on_delete=models.CASCADE)

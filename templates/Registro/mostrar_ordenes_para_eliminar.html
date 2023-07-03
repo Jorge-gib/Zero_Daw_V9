@@ -48,11 +48,11 @@
             {% endfor %}
         </ul>
         {% if not hay_ordenes_disponibles %}
-            <p class="letras">No hay órdenes disponibles</p>
+            <p class="letras">No hay mas órdenes disponibles</p>
         {% endif %}
     {% endwith %}
 {% else %}
-    <h1 class="letras">No hay registros de órdenes</h1>
+    <h1 class="letras">No hay mas registros de órdenes</h1>
 {% endif %}
 
 <a href="{% url 'login' %}">Volver</a>

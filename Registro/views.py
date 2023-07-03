@@ -25,6 +25,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from django.shortcuts import redirect
 
 # Create your views here.
 class UserDelete(DeleteView):
@@ -54,20 +55,28 @@ def agregar_calificacion_recolector_ciudadano(request, id_orden):
 
 ###########################################
 
+
+
+
+
 def agregar_calificacion_recolector_ciudadano2(request, id_orden):
+    orden = Orden_reciclaje.objects.get(id_orden=id_orden)
+    
     try:
         calificacion = Calificacion_recolector_ciudadano.objects.get(id_orden_id=id_orden)
     except Calificacion_recolector_ciudadano.DoesNotExist:
         calificacion = Calificacion_recolector_ciudadano(id_orden_id=id_orden)
 
     if request.method == 'POST':
-        calificacion.calificacion_estrellas_recolector = request.POST.get('calificacion_estrellas_recolector')
-        calificacion.opinion_servicio_recolector = request.POST.get('opinion_servicio_recolector')
-        calificacion.save()
-        return render(request, 'Registro/confirmacion_calificacion.html', {'calificacion': calificacion})
+        form = Calificacion_ciudadanoForm(request.POST, instance=calificacion)  # Agregar 'instance=calificacion' aquí
+        if form.is_valid():
+            form.save()
+            return render(request, 'Registro/confirmacion_calificacion.html', {'calificacion': calificacion})
+        else:
+            return render(request, 'Registro/agregar_calificacion_recolector_ciudadano2.html', {'form': form, 'orden': orden})
     else:
-        orden = Orden_reciclaje.objects.get(id_orden=id_orden)
-        return render(request, 'Registro/agregar_calificacion_recolector_ciudadano2.html', {'calificacion': calificacion, 'orden': orden})
+        form = Calificacion_ciudadanoForm(instance=calificacion)
+        return render(request, 'Registro/agregar_calificacion_recolector_ciudadano2.html', {'form': form, 'orden': orden})
 
 
 
