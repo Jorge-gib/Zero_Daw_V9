@@ -16,7 +16,7 @@ urlpatterns = [
     
     path('mostrar_ordenes_eliminar/', MostrarOrdenesParaEliminarView.as_view(), name='mostrar_ordenes_eliminar'),
     
-    path('mostrar_ordenes_calificar_reciclador/', MostrarOrdenesCalificarRecolectorView.as_view(), name='mostrar_ordenes_calificar_reciclador'),
+    path('mostrar_ordenes_calificar_recolector/', MostrarOrdenesCalificarRecolectorView.as_view(), name='mostrar_ordenes_calificar_recolector'),
     
     path('tomar_orden/<int:pk>/', TomarOrdenView.as_view(), name='tomar_orden'),
     

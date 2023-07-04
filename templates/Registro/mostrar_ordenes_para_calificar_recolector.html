@@ -20,7 +20,7 @@
                             <p class="letras">Estado: {{ orden.estado }}</p>
 
                             <!-- Enviar el ID de la orden al hacer clic en el botón -->
-                            <form method="POST" action="{% url 'agregar_calificacion_recolector_ciudadano2' orden.id_orden %}">
+                            <form method="POST" action="{% url 'mostrar_ordenes_calificar_recolector' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
                                 <button type="submit">Seleccionar</button>
@@ -31,11 +31,11 @@
             {% endfor %}
         </ul>
         {% if not hay_ordenes_disponibles %}
-        <p class="letras">No hay mas órdenes disponibles</p>
+        <p class="letras">No hay más órdenes disponibles</p>
     {% endif %}
     {% endwith %}
 {% else %}
-    <h1 class="letras">No hay mas registros de órdenes</h1>
+    <h1 class="letras">No hay más registros de órdenes</h1>
 {% endif %}
 
 <a href="{% url 'login' %}">Volver</a>

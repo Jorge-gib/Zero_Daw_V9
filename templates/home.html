@@ -28,7 +28,7 @@
         <li class="nav-item"><a class="link" href="{% url 'editar_user' user.id %}">Actualizar mi perfil</a></li>
         <li class="nav-item"><a class="link" href="{% url 'borrar_user' user.id %}">Eliminar mi cuenta</a></li>
         <li class="nav-item"><a class="link" href="{% url 'geolocalizacion'  %}">Seguimiento de orden</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes_calificar_reciclador'  %}">Calificacion a recolector</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes_calificar_recolector'  %}">Calificacion a recolector</a></li>
     </div>
     {% endif %}
     {% if user.tipo_usuario == "Recolector" %}

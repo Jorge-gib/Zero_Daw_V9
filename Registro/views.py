@@ -316,6 +316,12 @@ class MostrarOrdenesCalificarRecolectorView(ListView):
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
         url = reverse_lazy('agregar_calificacion_recolector_ciudadano2', args=[orden_id])
+        
+        # Actualizar el atributo 'estado' del modelo
+        orden = Orden_reciclaje.objects.get(id_orden=orden_id)
+        orden.estado = 'Calificado'
+        orden.save()
+        
         return redirect(url)
 
     def get_context_data(self, **kwargs):
