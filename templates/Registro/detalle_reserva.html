@@ -1,32 +1,26 @@
-
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <div>
     <h1 class="letras">Detalle de reserva de orden</h1>
 </div>
 
-    {% if object_list %}
-       
+{% if object_list %}
 
-    {% for Reserva_orden in object_list %}
-        <p class="letras">ID de orden: {{ Reserva_orden.id_orden }}</p>
-        <p class="letras">Fecha de orden: {{ Reserva_orden.fecha_orden }}</p> 
-        <p class="letras">Desde la hora: {{ Reserva_orden.hora_inicio }}</p> 
-        <p class="letras">Hasta la hora: {{ Reserva_orden.hora_fin }}</p> 
-        <p class="letras">Tipo material: {{ Reserva_orden.tipo_material }}</p>    
-        <p class="letras">Cantidad material: {{ Reserva_orden_reciclaje.cantidad_material }}</p>
-        
+{% for Reserva_orden in object_list %}
+    <p class="letras">ID de orden: {{ Reserva_orden.id_orden }}</p>
+    <p class="letras">Fecha de orden: {{ Reserva_orden.fecha_orden }}</p>
+    <p class="letras">Desde la hora: {{ Reserva_orden.hora_inicio }}</p>
+    <p class="letras">Hasta la hora: {{ Reserva_orden.hora_fin }}</p>
+    <p class="letras">Tipo material: {{ Reserva_orden.tipo_material }}</p>
+    <p class="letras">Cantidad material: {{ Reserva_orden.cantidad_material }}</p>
 
-        <br>
-    {% endfor %}
-    
+    <br>
+{% endfor %}
+
 {% else %}
     <p class="letras">No hay registros de ordenes</p>
 {% endif %}
 <a href="{% url 'orden_reserva' %}">Volver</a>
-
-
-  
 
 {% endblock %}

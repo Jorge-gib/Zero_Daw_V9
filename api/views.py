@@ -13,8 +13,8 @@ def geolocalizacion(request):
         if orden_reciclaje is None:
             return render(request, 'Api/error_api.html')
         
-        latitud = orden_reciclaje.latitud_posicion_recolector
-        longitud = orden_reciclaje.longitud_posicion_recolector
+        latitud = float(orden_reciclaje.latitud_posicion_recolector)
+        longitud = float(orden_reciclaje.longitud_posicion_recolector)
         
         # Modificar las coordenadas en mapOptions
         mapOptions = {

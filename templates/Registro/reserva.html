@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <script>
@@ -61,11 +61,11 @@
 
   <div>
       <label class="letras" for="latitud_posicion_ciudadano">Latitud:</label>
-      <input type="text" name="latitud_posicion_ciudadano" id="latitud_posicion_ciudadano">
+      <input type="number" name="latitud_posicion_ciudadano" id="latitud_posicion_ciudadano" step="0.000001" placeholder="Latitud">
   </div>
   <div>
       <label class="letras" for="longitud_posicion_ciudadano">Longitud:</label>
-      <input type="text" name="longitud_posicion_ciudadano" id="longitud_posicion_ciudadano">
+      <input type="number" name="longitud_posicion_ciudadano" id="longitud_posicion_ciudadano" step="0.000001" placeholder="Longitud">
   </div>
 
   <button type="submit">Guardar</button>
@@ -83,8 +83,8 @@
   function capturarUbicacion() {
       if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function (position) {
-              var latitud = Math.floor(position.coords.latitude);
-              var longitud = Math.floor(position.coords.longitude);
+              var latitud = position.coords.latitude.toFixed(6);
+              var longitud = position.coords.longitude.toFixed(6);
 
               document.getElementById("latitud_posicion_ciudadano").value = latitud;
               document.getElementById("longitud_posicion_ciudadano").value = longitud;

@@ -7,6 +7,18 @@ from itertools import chain
 import datetime
 from django.contrib.auth.forms import UserCreationForm
 from django.db import models
+from django.forms import NumberInput
+
+
+
+TIPO_MATERIAL = (
+    ('Plastico', 'Plastico'),
+    ('Vidrio', 'Vidrio'),
+    ('Carton', 'Carton'),
+    ('Aluminio', 'Aluminio'),
+)
+
+
 class UserUpdateForm(forms.ModelForm):
     
     class Meta:
@@ -241,37 +253,33 @@ class Registro_entrega_materialForm(forms.ModelForm):
            
         }
 class Posicion_recolectorForm(forms.ModelForm):
-    class Meta:
-        Model = Orden_reciclaje
-        fields = ['latitud_posicion_recolector',
-                  'longitud_posicion_recolector']
+    latitud_posicion_recolector = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
+    )
+    longitud_posicion_recolector = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Longitud'})
+    )
 
+    class Meta:
+        model = Orden_reciclaje
+        fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector']
         labels = {
-           
             'latitud_posicion_recolector': 'Latitud_posicion_recolector',
             'longitud_posicion_recolector': 'Longitud_posicion_recolector',
-           
-
         }
-        widgets = {
-            
-            'latitud_posicion_recolector': forms.TextInput(attrs={'class': 'form-control'}),
-            'longitud_posicion_recolector': forms.TextInput(attrs={'class': 'form-control'}),
-            
-           
-           
-        }
-        
-         
         
         
 class Orden_reciclajeForm(forms.ModelForm):
+    latitud_posicion_ciudadano = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
+    )
+    longitud_posicion_ciudadano = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Longitud'})
+    )
+
     class Meta:
         model = Orden_reciclaje
-        fields = ['id_user', 'id_orden',
-                  'fecha_orden', 'tipo_material', 'cantidad_material', 'latitud_posicion_ciudadano',
-                  'longitud_posicion_ciudadano']
-
+        fields = ['id_user', 'id_orden', 'fecha_orden', 'tipo_material', 'cantidad_material', 'latitud_posicion_ciudadano', 'longitud_posicion_ciudadano']
         labels = {
             'id_user': 'ID user',
             'id_orden': 'ID_orden',
@@ -280,32 +288,25 @@ class Orden_reciclajeForm(forms.ModelForm):
             'cantidad_material': 'Cantidad_material',
             'latitud_posicion_ciudadano': 'Latitud_posicion_ciudadano',
             'longitud_posicion_ciudadano': 'Longitud_posicion_ciudadano',
-           
-
         }
         widgets = {
             'id_user': forms.TextInput(attrs={'class': 'form-control'}),
             'id_orden': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha_orden': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_material':forms.Select(choices="TIPO_MATERIAL",attrs={'class':'form-control'}),
+            'tipo_material': forms.Select(choices=TIPO_MATERIAL, attrs={'class': 'form-control'}),
             'cantidad_material': forms.TextInput(attrs={'class': 'form-control'}),
-            'latitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
-            'longitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
-            
-           
-           
         }
 class OrdenUpdateForm(forms.ModelForm):
-    latitud_posicion_recolector = forms.FloatField(label='Latitud')
-    longitud_posicion_recolector = forms.FloatField(label='Longitud')
-    
+    latitud_posicion_recolector = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
+    )
+    longitud_posicion_recolector = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Longitud'})
+    )
 
     class Meta:
         model = Orden_reciclaje
-        fields = [
-            'latitud_posicion_recolector',
-            'longitud_posicion_recolector',
-        ]
+        fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector']
         
 class OrdenConcluir(forms.ModelForm):
     
@@ -319,24 +320,26 @@ class OrdenConcluir(forms.ModelForm):
         
 
 class Reserva_ordenForm(forms.ModelForm):
+    latitud_posicion_ciudadano = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
+    )
+    longitud_posicion_ciudadano = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Longitud'})
+    )
+
     class Meta:
         model = Reserva_orden
-        fields = ['id_user', 'id_orden',
-                  'fecha_orden','hora_inicio', 'hora_fin', 'tipo_material', 'cantidad_material', 'latitud_posicion_ciudadano',
-                  'longitud_posicion_ciudadano']
-
+        fields = ['id_user', 'id_orden', 'fecha_orden', 'hora_inicio', 'hora_fin', 'tipo_material', 'cantidad_material', 'latitud_posicion_ciudadano', 'longitud_posicion_ciudadano']
         labels = {
             'id_user': 'ID user',
             'id_orden': 'ID_orden',
             'fecha_orden': 'Fecha_orden',
             'hora_inicio': 'Hora de inicio reserva',
-            'hora_inicio': 'Hora de termino de reserva', 
+            'hora_fin': 'Hora de termino de reserva', 
             'tipo_material': 'Tipo_material',
             'cantidad_material': 'Cantidad_material',
             'latitud_posicion_ciudadano': 'Latitud_posicion_ciudadano',
             'longitud_posicion_ciudadano': 'Longitud_posicion_ciudadano',
-           
-
         }
         widgets = {
             'id_user': forms.TextInput(attrs={'class': 'form-control'}),
@@ -344,16 +347,6 @@ class Reserva_ordenForm(forms.ModelForm):
             'fecha_orden': forms.TextInput(attrs={'class': 'form-control'}),
             'hora_inicio': forms.TextInput(attrs={'class': 'form-control'}),
             'hora_fin': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_material':forms.Select(choices="TIPO_MATERIAL",attrs={'class':'form-control'}),
+            'tipo_material': forms.Select(choices=TIPO_MATERIAL, attrs={'class': 'form-control'}),
             'cantidad_material': forms.TextInput(attrs={'class': 'form-control'}),
-            'latitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
-            'longitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
-            
-           
-           
         }
-
-
-
-
-

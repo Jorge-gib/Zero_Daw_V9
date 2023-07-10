@@ -1702,16 +1702,16 @@
     }
     </script>
     <script>
-      const latitud = '{{ data.results.0.geometry.location.lat }}';
-      const longitud = '{{ data.results.0.geometry.location.lng }}';
+      const latitud = parseFloat('{{ data.results.0.geometry.location.lat }}');
+      const longitud = parseFloat('{{ data.results.0.geometry.location.lng }}');
     
       const CONFIGURATION = {
         "defaultTravelMode": "DRIVING",
         "distanceMeasurementType": "IMPERIAL",
         "mapOptions": {
           "center": {
-            "lat": parseFloat(latitud),
-            "lng": parseFloat(longitud)
+            "lat": latitud,
+            "lng": longitud
           },
           "fullscreenControl": true,
           "mapTypeControl": false,
@@ -1721,13 +1721,14 @@
           "maxZoom": 20,
           "mapId": ""
         },
-        "mapsApiKey": "TU_CLAVE_DE_API"
+        "mapsApiKey": "AIzaSyAeYeyldDKCcpeYVppGwYKzizbDf_HVnSo"
       };
     
       function initMap() {
         new Commutes(CONFIGURATION);
       }
     </script>
+    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeYeyldDKCcpeYVppGwYKzizbDf_HVnSo&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_commutes_v2_c" async defer></script>
   </body>
 </html>

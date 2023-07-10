@@ -12,11 +12,11 @@
       </div>
       <div>
         <label class="letras" for="latitud_posicion_recolector">Latitud:</label>
-        <input type="text" name="latitud_posicion_recolector" value="{{ orden_reciclaje.latitud_posicion_recolector }}" required>
+        <input type="number" name="latitud_posicion_recolector" value="{{ orden_reciclaje.latitud_posicion_recolector }}" step="0.000001" placeholder="Latitud" required>
       </div>
       <div>
         <label class="letras" for="longitud_posicion_recolector">Longitud:</label>
-        <input type="text" name="longitud_posicion_recolector" value="{{ orden_reciclaje.longitud_posicion_recolector }}" required>
+        <input type="number" name="longitud_posicion_recolector" value="{{ orden_reciclaje.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
       </div>
       <button type="submit">Actualizar Orden</button>
       <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
@@ -35,8 +35,8 @@
     function capturarUbicacion() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-          var latitud = Math.floor(position.coords.latitude);
-          var longitud = Math.floor(position.coords.longitude);
+          var latitud = position.coords.latitude.toFixed(6);
+          var longitud = position.coords.longitude.toFixed(6);
 
           document.querySelector('input[name="latitud_posicion_recolector"]').value = latitud;
           document.querySelector('input[name="longitud_posicion_recolector"]').value = longitud;
