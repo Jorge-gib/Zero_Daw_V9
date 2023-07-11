@@ -172,6 +172,10 @@ def video_reciclaje(request):
     context={}
     return render(request, 'Registro/video.html', context)
 
+def zero_daw(request):
+    context={}
+    return render(request, 'Registro/zero_daw.html', context)
+
 def error_validacion(request):
     context={}
     return render(request, 'Registro/error_validacion.html', context)
