@@ -168,6 +168,10 @@ def mensaje(request):
 def somos(request):
     context={}
     return render(request, 'Usuario/somos.html', context)
+def video_reciclaje(request):
+    context={}
+    return render(request, 'Registro/video.html', context)
+
 def error_validacion(request):
     context={}
     return render(request, 'Registro/error_validacion.html', context)

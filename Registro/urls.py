@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .forms import OrdenUpdateForm, PassUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Orden_reciclajeForm, Calificacion_recicladorForm, Registro_entrega_materialForm
 from . import views
-from .views import MostrarOrdenesCalificarRecolectorView, agregar_calificacion_recolector_ciudadano2, MostrarOrdenesParaEliminarView, confirmar_comentario, confirmacion4, agregar_calificacion_recolector_ciudadano, ActualizarOrden, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
+from .views import video_reciclaje, MostrarOrdenesCalificarRecolectorView, agregar_calificacion_recolector_ciudadano2, MostrarOrdenesParaEliminarView, confirmar_comentario, confirmacion4, agregar_calificacion_recolector_ciudadano, ActualizarOrden, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
 
 
 urlpatterns = [
@@ -27,7 +27,7 @@ urlpatterns = [
     path('validacion_pass/', views.validacion_pass, name='validacion_pass'),
 
     path('somos', views.somos, name='somos'),
-
+    path('video', views.video_reciclaje, name='video'),
     # localhost:8000/listar
     path('listar', UserList.as_view(), name="list_user"),
     
