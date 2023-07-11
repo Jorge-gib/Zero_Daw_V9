@@ -26,6 +26,7 @@ body {
     width: 100%;
 }
 
+
 #navbar li, #contact li {
     background-color: rgba(135, 239, 195, 0.5); 
     list-style-type: none;

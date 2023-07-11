@@ -9,9 +9,6 @@
         <link rel="stylesheet" href="{% static 'css/fondo.css' %}">
         <link rel="stylesheet" href="{% static 'css/registro.css' %}">
         <link rel="stylesheet" href="{% static 'favicon.ico' %}">
-       
-   
-        
     </head>
     <body>
     {% block navbar %}
@@ -24,8 +21,6 @@
 
             <div>
                 <ul>            
-                    
-
                     {% if not user.is_authenticated %}
                     <li class="nav-item"><a href="{% url 'zero_daw' %}">Zero Daw</a></li>      
                     <li class="nav-item"><a href="{% url 'somos' %}">Ley de reciclaje</a></li>
@@ -54,8 +49,10 @@
             </div>
         </div>
     </div>
-    <div>
-        {% block footer %} {% endblock %}
+    <div class="cabezera">
+        <div id="navbar">
+        <p class="letras">Sistema de reciclaje sin fines de lucro</p>
+        </div>
     </div>
     {% block javascript %} {% endblock javascript %}
     </body>
