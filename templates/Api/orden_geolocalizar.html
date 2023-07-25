@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <h1 class="letras">Ordenes que hizo</h1>
+    <p class="letras">Seleccione la orden para buscar la ubicacion del recolector</p>
+</div>
+
+{% if ordenes %}
+    {% with hay_ordenes_concluidas=False %}
+        <ul>
+            {% for orden in ordenes %}
+            {% if orden.estado != "Concluido" and orden.estado != "Calificado" %}
+                    {% with hay_ordenes_concluidas=True %}
+                        <li>
+                            <p class="letras">ID de orden: {{ orden.id_orden }}</p>
+                            <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
+                            <p class="letras">Tipo material: {{ orden.tipo_material }}</p>
+                            <p class="letras">Cantidad material: {{ orden.cantidad_material }}</p>
+                            <p class="letras">En ejecucion</p>
+
+                            <!-- Enviar el ID de la orden al hacer clic en el botón -->
+                            <form method="POST" action="{% url 'geolocalizacion' orden.id_orden %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
+                                <button type="submit">Seleccionar</button>
+                            </form>
+                        </li>
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% if not hay_ordenes_disponibles %}
+        <p class="letras">No hay más órdenes disponibles</p>
+    {% endif %}
+    {% endwith %}
+{% else %}
+    <h1 class="letras">No hay más registros de órdenes</h1>
+{% endif %}
+
+<a href="{% url 'login' %}">Volver</a>
+<footer>
+    <div id="navbar" class="video2">
+        <div class="video">
+        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
+        </div>
+        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+    </div>
+    
+</footer>
+{% endblock %}
