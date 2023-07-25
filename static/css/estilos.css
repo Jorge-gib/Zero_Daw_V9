@@ -1,11 +1,11 @@
 body {
-    background-image: url("images/planeta_limpio.jpg");
+    background-image: url("../images/planeta_limpio.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     /* Otros estilos opcionales */
     background-position: center;
-    /* background-color: #f1f1f1; */ /* Si deseas un color de fondo de respaldo */
-}
+    /*background-color: #f1f1f1;  /* Si deseas un color de fondo de respaldo */
+  }
 #navbar {
     background-color: rgba(135, 239, 195, 0.5);
 }
@@ -25,7 +25,6 @@ body {
     align-content: center;
     width: 100%;
 }
-
 
 #navbar li, #contact li {
     background-color: rgba(135, 239, 195, 0.5); 
@@ -382,3 +381,22 @@ div.gallery img {
 .letras2 {
     color: #ffffff; /* Cambiar a código de color blanco (#ffffff) */
   }
+
+#footer {
+    width: 100%;
+    background-color: rgba(135, 239, 195, 0.5); /* Cambiar el valor del canal alfa a 0.5 */
+    padding: 0em 1em;
+    height: 60px;
+}
+
+#footer .navbar {
+    background-color: rgba(135, 239, 195, 0.5); /* Cambiar el valor del canal alfa a 0.5 */
+    padding: 1em 1em;
+    display: flex;
+    align-content: center;
+    width: 100%;
+}
+
+#footer .navbar .letras2 {
+    color: #ffffff;
+}

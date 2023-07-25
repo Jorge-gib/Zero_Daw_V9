@@ -26,7 +26,7 @@
                     <li class="nav-item"><a href="{% url 'somos' %}">Ley de reciclaje</a></li>
                     <li class="nav-item"><a href="{% url 'video' %}">Introduccion al reciclaje</a></li>  
                     <li class="nav-item"><a href="{% url 'registrar' %}">registrarse</a></li>
-                    <li class="nav-item"><a href="{% url 'login' %}">iniciar sesión</a></li>
+                    <li class="nav-item"><a href="{% url 'login' %}">iniciar sesion</a></li>
                     {% endif %}
 
                     {% if user.is_authenticated %}
@@ -34,7 +34,7 @@
                     <li class="nav-item"><a style="color: red;" href="{% url 'list_user' %}">Listar usuarios</a></li>
                     {% endif %}
 
-                    <li class="nav-item"><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                    <li class="nav-item"><a href="{% url 'logout' %}">Cerrar sesion</a></li>
                     <span class="ml-md-5" style="color: blue;"><strong>Usuario: {{ user.get_username }}</strong></span>
                     {% endif %}                
                 </ul>
@@ -49,11 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="cabezera">
-        <div id="navbar">
-        <p class="letras">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-    </div>
+   
     {% block javascript %} {% endblock javascript %}
     </body>
 </html>

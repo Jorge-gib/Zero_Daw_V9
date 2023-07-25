@@ -24,7 +24,7 @@ body {
 }
 .letras {
   color: white;
-  text-align: center;
+ 
 }
 
 .cabezera {
@@ -39,5 +39,26 @@ color:black
 }
 #t {
   text-align: center;
+}
+#i {
+  display: flex;
+  align-items: center; /* Centrar verticalmente la imagen */
+  width: 60px;
+  height: 60px;
+  margin: 0 auto; /* Alinear la imagen horizontalmente al centro */
+}
+.video{
+  display: flex;
+  align-items: center; /* Centrar verticalmente la imagen */
+  margin: 0 auto; /* Alinear la imagen horizontalmente al centro */
+}
+#t_v{
+  text-align: center;
+}
+.video2 {
+  display: flex;
+  align-items: center; /* Centrar verticalmente la imagen */
+  justify-content: flex-end; /* Alinear el contenido a la derecha */
+  margin: 0 auto; /* Alinear el contenido horizontalmente al centro */
 }
 

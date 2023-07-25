@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="blue-background">
     
@@ -16,4 +16,13 @@
         <a href="{% url 'home' %}">Volver</a>
     </div>
 </div>
+<footer>
+    <div id="navbar" class="video2">
+        <div class="video">
+        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
+        </div>
+        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+    </div>
+    
+</footer>
 {% endblock %}
