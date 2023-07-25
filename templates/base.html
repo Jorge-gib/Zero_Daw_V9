@@ -51,5 +51,17 @@
     </div>
    
     {% block javascript %} {% endblock javascript %}
+    <script>
+        window.addEventListener("scroll", function () {
+          var header = document.querySelector(".cabezera");
+          var scrollPosition = window.scrollY;
+      
+          if (scrollPosition > 0) {
+            header.classList.add("fixed-header");
+          } else {
+            header.classList.remove("fixed-header");
+          }
+        });
+      </script>
     </body>
 </html>
