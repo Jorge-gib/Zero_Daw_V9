@@ -28,8 +28,22 @@ body {
 }
 
 .cabezera {
-  background-color: rgba(135, 239, 195, 0.5);
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px; /* Añade un relleno si lo deseas */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Efecto de sombra */
+  z-index: 1000; /* Asegura que la cabecera esté por encima de otros elementos */
 }
+
+/* Ajusta este valor según la altura de tu cabecera */
+body {
+  padding-top: 80px;
+}
+/* Opcional: Añade un efecto de sombra o borde para resaltar la cabecera fija */
+
+
 
 #navbar{
 background-color: rgba(135, 239, 195, 0.5);
