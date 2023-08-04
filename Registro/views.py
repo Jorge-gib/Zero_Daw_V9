@@ -55,7 +55,10 @@ def agregar_calificacion_recolector_ciudadano(request, id_orden):
 
 ###########################################
 
-def agregar_calificacion_recolector_ciudadano_reserva(request, id_orden):
+
+###########################################
+
+def agregar_calificacion_ciudadano_reserva(request, id_orden):
     if request.method == 'POST':
         calificacion = Calificacion_recolector_ciudadano_reserva()
         calificacion.id_orden_id = id_orden
@@ -64,9 +67,9 @@ def agregar_calificacion_recolector_ciudadano_reserva(request, id_orden):
         calificacion.save()
         return render(request, 'Registro/confirmacion_calificacion.html', {'calificacion': calificacion})
     else:
-        form = Calificacion_recolector_reservaForm()
+        form = Calificacion_ciudadanoForm()
     orden = Reserva_orden.objects.get(id_orden=id_orden)
-    return render(request, 'Registro/agregar_calificacion_recolector_ciudadano_reserva.html', {'form': form, 'orden': orden})
+    return render(request, 'Registro/agregar_calificacion_ciudadano_reserva.html', {'form': form, 'orden': orden})
 
 ###########################################
 
@@ -92,7 +95,26 @@ def agregar_calificacion_recolector_ciudadano2(request, id_orden):
     else:
         form = Calificacion_ciudadanoForm(instance=calificacion)
         return render(request, 'Registro/agregar_calificacion_recolector_ciudadano2.html', {'form': form, 'orden': orden})
+###############################################################################
+def agregar_calificacion_recolector_reserva(request, id_orden):
+    orden = Reserva_orden.objects.get(id_orden=id_orden)
+    
+    try:
+        calificacion = Calificacion_recolector_ciudadano_reserva.objects.get(id_orden_id=id_orden)
+    except Calificacion_recolector_ciudadano.DoesNotExist:
+        calificacion = Calificacion_recolector_ciudadano_reserva(id_orden_id=id_orden)
 
+    if request.method == 'POST':
+        form = Calificacion_recolector_reservaForm(request.POST, instance=calificacion)  # Agregar 'instance=calificacion' aquí
+        if form.is_valid():
+            form.save()
+            return render(request, 'Registro/confirmacion_calificacion.html', {'calificacion': calificacion})
+        else:
+            return render(request, 'Registro/agregar_calificacion_recolector_ciudadano3.html', {'form': form, 'orden': orden})
+    else:
+        form = Calificacion_recolector_reservaForm(instance=calificacion)
+        return render(request, 'Registro/agregar_calificacion_recolector_ciudadano3.html', {'form': form, 'orden': orden})
+###########################################################################
 
 
 ##########################
@@ -118,7 +140,7 @@ class ActualizarReserva(UpdateView):
     template_name = 'Registro/actualizar_reserva.html'
 
     def get_success_url(self):
-        return reverse_lazy('agregar_calificacion_recolector_ciudadano_reserva', kwargs={'id_orden': self.object.pk})
+        return reverse_lazy('agregar_calificacion_ciudadano_reserva', kwargs={'id_orden': self.object.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -382,7 +404,7 @@ class MostrarReservaParaEliminarView(ListView):
 
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
-        url = reverse_lazy('actualizar_reserva', args=[orden_id])
+        url = reverse_lazy('agregar_calificacion_ciudadano_reserva', args=[orden_id])
         return redirect(url)
 
     def get_context_data(self, **kwargs):
@@ -413,8 +435,80 @@ class MostrarOrdenesCalificarRecolectorView(ListView):
         context['ordenes'] = Orden_reciclaje.objects.all()
         return context
 
+###############################################################################################################3
+
+class MostrarOrdenesCalificarRecolectorReservaView(ListView):
+    model = UserModelo
+    template_name = 'Registro/mostrar_para_finalizar_calificacion.html'
+
+    def post(self, request, *args, **kwargs):
+        orden_id = request.POST.get('orden_id')
+        url = reverse_lazy('agregar_calificacion_recolector_ciudadano_reserva', args=[orden_id])
+        
+        # Actualizar el atributo 'estado' del modelo
+        orden = Reserva_orden.objects.get(id_orden=orden_id)
+        orden.estado = 'Calificado'
+        orden.save()
+        
+        return redirect(url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ordenes'] = Orden_reciclaje.objects.all()
+        return context
+
+
+
 
 #################################################################################################################
+
+
+class MostrarOrdenesCalificarRecolectorReservaView(ListView):
+    model = UserModelo
+    template_name = 'Registro/mostrar_ordenes_para_calificar_recolector_reserva.html'
+
+    def post(self, request, *args, **kwargs):
+        orden_id = request.POST.get('orden_id')
+        url = reverse_lazy('agregar_calificacion_recolector_ciudadano3', args=[orden_id])
+        
+        # Actualizar el atributo 'estado' del modelo
+        orden = Reserva_orden.objects.get(id_orden=orden_id)
+        orden.estado = 'Calificado'
+        orden.save()
+        
+        return redirect(url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ordenes'] = Reserva_orden.objects.all()
+        return context
+
+##################################################################################################################
+
+class MostrarOrdenesCalificarCiudadanoReservaView(ListView):
+    model = UserModelo
+    template_name = 'Registro/mostrar_ordenes_para_calificar_recolector_reserva.html'
+
+    def post(self, request, *args, **kwargs):
+        orden_id = request.POST.get('orden_id')
+        url = reverse_lazy('agregar_calificacion_ciudadano_reserva', args=[orden_id])
+        
+        # Actualizar el atributo 'estado' del modelo
+        orden = Reserva_orden.objects.get(id_orden=orden_id)
+        orden.estado = 'Calificado'
+        orden.save()
+        
+        return redirect(url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ordenes'] = Reserva_orden.objects.all()
+        return context
+
+
+#################################################################################################################
+
+
 
 
 

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <h1 class="letras">Agregar una calificación al Recolector</h1>
+
+  <form method="POST" action="{% url 'agregar_calificacion_recolector_ciudadano3' orden.id_orden %}">
+    {% csrf_token %}
+    <input type="hidden" name="id_calificacion" value="{{ calificacion.id }}">
+    
+    <div>
+      <label class="letras" for="calificacion_estrellas_recolector">Calificación Estrellas Recolector:</label>
+      <div class="rateyo" id="calificacion_estrellas_recolector"></div>
+      <input type="hidden" name="calificacion_estrellas_recolector" id="calificacion_estrellas_recolector_input" step="0.1" value="{{ calificacion.calificacion_estrellas_recolector }}" required>
+    </div>
+   
+    <div>
+      <label class="letras" for="opinion_servicio_recolector">Opinión Servicio Recolector:</label>
+      <div>
+        <textarea name="opinion_servicio_recolector" id="opinion_servicio_recolector" rows="4" style="width: 100mm;" required>{{ calificacion.opinion_servicio_recolector }}</textarea>
+      </div>
+    </div>
+    
+    <input type="submit" value="Calificar">
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+  <script>
+    $(function() {
+      $("#calificacion_estrellas_recolector").rateYo({
+        rating: "{{ calificacion.calificacion_estrellas_recolector }}",
+        numStars: 5,
+        precision: 1,
+        minValue: 0,
+        maxValue: 5,
+        onChange: function(rating, rateYoInstance) {
+          $("#calificacion_estrellas_recolector_input").val(rating);
+        }
+      });
+
+      // Añadir estilo para mostrar las estrellas en una fila horizontal
+      $(".rateyo").css("display", "flex");
+      $(".rateyo").css("justify-content", "center");
+    });
+  </script>
+  <footer>
+    <div id="navbar" class="video2">
+        <div class="video">
+        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
+        </div>
+        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+    </div>
+    
+</footer>
+{% endblock %}

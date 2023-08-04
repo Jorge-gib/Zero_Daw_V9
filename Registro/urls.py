@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .forms import OrdenUpdateForm, PassUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Orden_reciclajeForm, Calificacion_recicladorForm, Registro_entrega_materialForm
 from . import views
-from .views import  MostrarReservaParaEliminarView, ActualizarReserva, MostrarReservaView, TomarReservaView, zero_daw, video_reciclaje, MostrarOrdenesCalificarRecolectorView, agregar_calificacion_recolector_ciudadano2, MostrarOrdenesParaEliminarView, confirmar_comentario, confirmacion4, agregar_calificacion_recolector_ciudadano, ActualizarOrden, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
+from .views import  MostrarOrdenesCalificarCiudadanoReservaView, MostrarOrdenesCalificarRecolectorReservaView, MostrarReservaParaEliminarView, ActualizarReserva, MostrarReservaView, TomarReservaView, zero_daw, video_reciclaje, MostrarOrdenesCalificarRecolectorView, agregar_calificacion_recolector_ciudadano2, MostrarOrdenesParaEliminarView, confirmar_comentario, confirmacion4, agregar_calificacion_recolector_ciudadano, ActualizarOrden, MostrarOrdenesParaEliminarView, confirmacion_posicion_recolector, MostrarOrdenesView, TomarOrdenView,somos, validacion_pass, enviar_correo_pass, mensaje, confirmacion3, UserDelete, UserUpdate, confirmacion, Orden_Reserva_List, Autenticar_us, RegistroUsuario, UserList, OrdenList, agregar_orden_reciclaje, registro, agregar_orden_reserva
 
 
 urlpatterns = [
@@ -14,18 +14,31 @@ urlpatterns = [
     
     path('zero_daw', views.zero_daw, name='zero_daw'),
     
+   path('agregar_calificacion_recolector/<int:id_orden>/', views.agregar_calificacion_recolector_reserva, name='agregar_calificacion_recolector_ciudadano'),
+   
+   path('agregar_calificacion_ciudadano_reserva/<int:id_orden>/', views.agregar_calificacion_ciudadano_reserva, name='agregar_calificacion_ciudadano_reserva'),
+   
    path('agregar_calificacion_recolector_ciudadano/<int:id_orden>/', views.agregar_calificacion_recolector_ciudadano, name='agregar_calificacion_recolector_ciudadano'),
-   
-   path('agregar_calificacion_recolector_ciudadano_reserva/<int:id_orden>/', views.agregar_calificacion_recolector_ciudadano_reserva, name='agregar_calificacion_recolector_ciudadano_reserva'),
-   
     
     path('agregar_calificacion_recolector_ciudadano2/<int:id_orden>/', views.agregar_calificacion_recolector_ciudadano2, name='agregar_calificacion_recolector_ciudadano2'),
+    
+    path('agregar_calificacion_recolector_ciudadano3/<int:id_orden>/', views.agregar_calificacion_recolector_reserva, name='agregar_calificacion_recolector_ciudadano3'),
+    
     
     path('mostrar_ordenes_eliminar/', MostrarOrdenesParaEliminarView.as_view(), name='mostrar_ordenes_eliminar'),
     
     path('mostrar_ordenes_eliminar_reserva/', MostrarReservaParaEliminarView.as_view(), name='mostrar_ordenes_eliminar_reserva'),
     
     path('mostrar_ordenes_calificar_recolector/', MostrarOrdenesCalificarRecolectorView.as_view(), name='mostrar_ordenes_calificar_recolector'),
+    
+    
+    path('mostrar_ordenes_calificar_recolector_reserva/', MostrarOrdenesCalificarRecolectorReservaView.as_view(), name='mostrar_ordenes_calificar_recolector_reserva'),
+    
+    
+    
+    path('mostrar_ordenes_calificar_recolector_reserva/', MostrarOrdenesCalificarRecolectorReservaView.as_view(), name='mostrar_ordenes_calificar_recolector_reserva'),
+    
+    path('mostrar_ordenes_calificar_ciudadano_reserva/', MostrarOrdenesCalificarCiudadanoReservaView.as_view(), name='mostrar_ordenes_calificar_ciudadano_reserva'),
     
     path('tomar_orden/<int:pk>/', TomarOrdenView.as_view(), name='tomar_orden'),
     

@@ -29,6 +29,7 @@
         <li class="nav-item"><a class="link" href="{% url 'borrar_user' user.id %}">Eliminar mi cuenta</a></li>
         <li class="nav-item"><a class="link" href="{% url 'OrdenListGeolocalizar'  %}">Seguimiento de orden</a></li>
         <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes_calificar_recolector'  %}">Calificacion a recolector</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes_calificar_recolector_reserva'  %}">Calificacion a recolector por la reserva</a></li>
     </div>
     {% endif %}
     {% if user.tipo_usuario == "Recolector" %}
