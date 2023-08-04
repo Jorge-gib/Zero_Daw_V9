@@ -314,6 +314,19 @@ class OrdenUpdateForm(forms.ModelForm):
         model = Orden_reciclaje
         fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector']
         
+
+class ReservaUpdateForm(forms.ModelForm):
+    latitud_posicion_recolector = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
+    )
+    longitud_posicion_recolector = forms.DecimalField(
+        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Longitud'})
+    )
+
+    class Meta:
+        model = Reserva_orden
+        fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector']
+        
 class OrdenConcluir(forms.ModelForm):
     
 

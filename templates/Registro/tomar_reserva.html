@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Lista de ordenes{% endblock %}
+
+{% block content %}
+  <h1 class="letras">Toma una orden de reserva</h1>
+  {% if reserva_orden %}
+    <form method="POST" action="{% url 'tomar_reserva' reserva_orden.id_orden %}">
+      {% csrf_token %}
+      <div class="letras">
+        <p>ID orden: {{ reserva_orden.id_orden }}</p>
+      </div>
+      <div>
+        <label class="letras" for="latitud_posicion_recolector">Latitud:</label>
+        <input type="number" name="latitud_posicion_recolector" value="{{ reserva_orden.latitud_posicion_recolector }}" step="0.000001" placeholder="Latitud" required>
+      </div>
+      <div>
+        <label class="letras" for="longitud_posicion_recolector">Longitud:</label>
+        <input type="number" name="longitud_posicion_recolector" value="{{ reserva_orden.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
+      </div>
+      <button type="submit">Actualizar Orden</button>
+      <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
+    </form>
+  {% else %}
+    <p class="letras">No hay órdenes disponibles.</p>
+  {% endif %}
+
+  <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
+
+  <script>
+    function showSuccessMessage() {
+      document.getElementById("success-message").style.display = "block";
+    }
+
+    function capturarUbicacion() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitud = position.coords.latitude.toFixed(6);
+          var longitud = position.coords.longitude.toFixed(6);
+
+          document.querySelector('input[name="latitud_posicion_recolector"]').value = latitud;
+          document.querySelector('input[name="longitud_posicion_recolector"]').value = longitud;
+        });
+      } else {
+        alert("Tu navegador no admite la geolocalización.");
+      }
+    }
+  </script>
+
+  <div>
+    <a href="{% url 'login' %}">Volver</a>
+  </div>
+  <footer>
+    <div id="navbar" class="video2">
+        <div class="video">
+        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
+        </div>
+        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+    </div>
+    
+</footer>
+{% endblock %}

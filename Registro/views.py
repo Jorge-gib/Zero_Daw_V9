@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
-from .forms import  Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from .forms import  ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -287,6 +287,17 @@ class TomarOrdenView(UpdateView):
 
 ###############################################################################################################
 
+class TomarReservaView(UpdateView):
+    model = Reserva_orden
+    form_class = ReservaUpdateForm
+    template_name = 'Registro/tomar_reserva.html'
+    success_url = reverse_lazy('confirmacion_posicion_recolector')
+
+    
+
+###############################################################################################################
+
+
 class MostrarOrdenesView(ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_ordenes.html'
@@ -300,7 +311,25 @@ class MostrarOrdenesView(ListView):
         context = super().get_context_data(**kwargs)
         context['ordenes'] = Orden_reciclaje.objects.all()
         return context
-    
+
+###########################################################################################################
+
+class MostrarReservaView(ListView):
+    model = UserModelo
+    template_name = 'Registro/mostrar_reserva.html'
+
+    def post(self, request, *args, **kwargs):
+        orden_id = request.POST.get('orden_id')
+        url = reverse('tomar_reserva', args=[orden_id])
+        return redirect(url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ordenes'] = Reserva_orden.objects.all()
+        return context
+
+###########################################################################################################
+
 class MostrarOrdenesParaEliminarView(ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_ordenes_para_eliminar.html'
