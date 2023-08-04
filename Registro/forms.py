@@ -11,12 +11,6 @@ from django.forms import NumberInput
 
 
 
-TIPO_MATERIAL = (
-    ('Plastico', 'Plastico'),
-    ('Vidrio', 'Vidrio'),
-    ('Carton', 'Carton'),
-    ('Aluminio', 'Aluminio'),
-)
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -233,22 +227,26 @@ class Registro_entrega_materialForm(forms.ModelForm):
     class Meta:
         model = Registro_entrega_material
         fields = ['id_user', 'id_registro', 'fecha_registro',
-                  'tipo_material', 'cantidad_material']
+                  'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton', 'cantidad_aluminio']
 
         labels = {
             'id_user': 'ID_user',
             'id_registro': 'ID_registro',
             'fecha_registro': 'Fecha_registro',
-            'tipo_material': 'Tipo_material',
-            'cantidad_material': 'Cantidad_material',
+            'cantidad_plastico': 'Cantidad plastico',
+            'cantidad_vidrio': 'Cantidad vidrio',
+            'cantidad_carton': 'Cantidad carton',
+            'cantidad_aluminio': 'Cantidad aluminio',
 
         }
         widgets = {
             'id_user': forms.TextInput(attrs={'class': 'form-control'}),
             'id_registro': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha_registro': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_material': forms.TextInput(attrs={'class': 'form-control'}),
-            'cantidad_material': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_plastico': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_vidrio': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_carton': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_aluminio': forms.TextInput(attrs={'class': 'form-control'}),
            
            
         }
@@ -279,22 +277,30 @@ class Orden_reciclajeForm(forms.ModelForm):
 
     class Meta:
         model = Orden_reciclaje
-        fields = ['id_user', 'id_orden', 'fecha_orden', 'tipo_material', 'cantidad_material', 'latitud_posicion_ciudadano', 'longitud_posicion_ciudadano']
+        fields = ['id_user', 'id_orden', 'fecha_orden', 'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton',
+                  'cantidad_aluminio', 'latitud_posicion_ciudadano', 'longitud_posicion_ciudadano', 'estado']
         labels = {
             'id_user': 'ID user',
             'id_orden': 'ID_orden',
             'fecha_orden': 'Fecha_orden',
-            'tipo_material': 'Tipo_material',
-            'cantidad_material': 'Cantidad_material',
+            'cantidad_plastico': 'Cantidad plastico',
+            'cantidad_vidrio': 'Cantidad vidrio',
+            'cantidad_carton': 'Cantidad carton',
+            'cantidad_aluminio': 'Cantidad aluminio',
             'latitud_posicion_ciudadano': 'Latitud_posicion_ciudadano',
             'longitud_posicion_ciudadano': 'Longitud_posicion_ciudadano',
+            'estado': 'Estado',
+            
         }
         widgets = {
             'id_user': forms.TextInput(attrs={'class': 'form-control'}),
             'id_orden': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha_orden': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_material': forms.Select(choices=TIPO_MATERIAL, attrs={'class': 'form-control'}),
-            'cantidad_material': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_plastico': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_vidrio': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_carton': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_aluminio': forms.TextInput(attrs={'class': 'form-control'}),
+            'estado': forms.TextInput(attrs={'class': 'form-control'}),
         }
 class OrdenUpdateForm(forms.ModelForm):
     latitud_posicion_recolector = forms.DecimalField(
@@ -329,17 +335,23 @@ class Reserva_ordenForm(forms.ModelForm):
 
     class Meta:
         model = Reserva_orden
-        fields = ['id_user', 'id_orden', 'fecha_orden', 'hora_inicio', 'hora_fin', 'tipo_material', 'cantidad_material', 'latitud_posicion_ciudadano', 'longitud_posicion_ciudadano']
+        fields = ['id_user', 'id_orden', 'fecha_orden', 'hora_inicio', 'hora_fin', 
+                  'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton', 'cantidad_aluminio', 'latitud_posicion_ciudadano', 
+                  'longitud_posicion_ciudadano', 
+                  'estado']
         labels = {
             'id_user': 'ID user',
             'id_orden': 'ID_orden',
             'fecha_orden': 'Fecha_orden',
             'hora_inicio': 'Hora de inicio reserva',
             'hora_fin': 'Hora de termino de reserva', 
-            'tipo_material': 'Tipo_material',
-            'cantidad_material': 'Cantidad_material',
+            'cantidad_plastico': 'Cantidad plastico',
+            'cantidad_vidrio': 'Cantidad vidrio',
+            'cantidad_carton': 'Cantidad carton',
+            'cantidad_aluminio': 'Cantidad aluminio',
             'latitud_posicion_ciudadano': 'Latitud_posicion_ciudadano',
             'longitud_posicion_ciudadano': 'Longitud_posicion_ciudadano',
+            'estado': 'estado'
         }
         widgets = {
             'id_user': forms.TextInput(attrs={'class': 'form-control'}),
@@ -347,6 +359,11 @@ class Reserva_ordenForm(forms.ModelForm):
             'fecha_orden': forms.TextInput(attrs={'class': 'form-control'}),
             'hora_inicio': forms.TextInput(attrs={'class': 'form-control'}),
             'hora_fin': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_material': forms.Select(choices=TIPO_MATERIAL, attrs={'class': 'form-control'}),
-            'cantidad_material': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_plastico': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_vidrio': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_carton': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_aluminio': forms.TextInput(attrs={'class': 'form-control'}),
+            'latitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
+            'longitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
+            'estado': forms.TextInput(attrs={'class': 'form-control'}),
         }

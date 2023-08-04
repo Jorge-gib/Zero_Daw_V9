@@ -6,14 +6,13 @@ from Registro.models import Orden_reciclaje
 
 
 def geolocalizacion(request, id_orden):
-    
     orden_reciclaje = Orden_reciclaje.objects.filter(id_orden=id_orden).first()
 
     if orden_reciclaje is None:
         return render(request, 'Api/error_api.html')
 
-    latitud = float(orden_reciclaje.latitud_posicion_recolector)
-    longitud = float(orden_reciclaje.longitud_posicion_recolector)
+    latitud = orden_reciclaje.latitud_posicion_recolector
+    longitud = orden_reciclaje.longitud_posicion_recolector
 
     mapOptions = {
         "center": {"lat": latitud, "lng": longitud},
@@ -34,9 +33,8 @@ def geolocalizacion(request, id_orden):
     else:
         data = response.json()
         return render(request, 'Api/error_api.html', {'data': data})
-
-
-
+    
+    
 class OrdenListGeolocalizar(ListView):
     model = Orden_reciclaje
     template_name = 'Api/orden_geolocalizar.html'

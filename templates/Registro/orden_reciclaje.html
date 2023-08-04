@@ -3,20 +3,28 @@
 
 {% block content %}
 <script>
-  function verificarCampos() {
-      var fecha = document.getElementById("fecha_orden").value;
-      var tipoMaterial = document.getElementById("tipo_material").value;
-      var cantidadMaterial = document.getElementById("cantidad_material").value;
-      var latitud = document.getElementById("latitud_posicion_ciudadano").value;
-      var longitud = document.getElementById("longitud_posicion_ciudadano").value;
+    function verificarCampos() {
+        var fecha = document.getElementById("fecha_orden").value;
+        var cantidad_plastico = document.getElementById("cantidad_plastico").value;
+        var cantidad_vidrio = document.getElementById("cantidad_vidrio").value;
+        var cantidad_carton = document.getElementById("cantidad_carton").value;
+        var cantidad_aluminio = document.getElementById("cantidad_aluminio").value;
+        var latitud = document.getElementById("latitud_posicion_ciudadano").value;
+        var longitud = document.getElementById("longitud_posicion_ciudadano").value;
 
-      if (fecha === "" || tipoMaterial === "" || cantidadMaterial === "" || latitud === "" || longitud === "") {
-          alert("Por favor, complete todos los campos para registrar la orden.");
-          return false;
-      }
+        if (fecha === "" || cantidad_plastico === "" || cantidad_vidrio === "" || cantidad_carton === "" || cantidad_aluminio === "" || latitud === "" || longitud === "") {
+            alert("Por favor, complete todos los campos para registrar la orden, en la cantidad de materiales si no reciclara nada coloque 0");
+            return false;
+        }
 
-      return true;
-  }
+        // Asignar la fecha actual al campo de fecha
+        document.getElementById("fecha_orden").value = new Date().toISOString().split('T')[0];
+
+        // Asignar el estado "Iniciado" al campo oculto
+        document.getElementById("estado").value = "Iniciado";
+
+        return true;
+    }
 </script>
 
 <h1 class="letras">Llene la lista para realizar la orden</h1>
@@ -33,22 +41,27 @@
   <!-- Campos de entrada para los campos de Orden_reciclaje -->
 
   <div>
-      <label class="letras" for="fecha_orden">Fecha de orden:</label>
-      <input type="date" name="fecha_orden" id="fecha_orden">
+    <label class="letras" for="fecha_orden">Fecha de orden:</label>
+    <input type="date" name="fecha_orden" id="fecha_orden">
   </div>
   <div>
       <div>
-          <label class="letras" for="tipo_material">Tipo de material:</label>
-          <select name="tipo_material" id="tipo_material">
-              <option value="Plastico">Plastico</option>
-              <option value="Vidrio">Vidrio</option>
-              <option value="Carton">Carton</option>
-              <option value="Aluminio">Aluminio</option>
-          </select>
+          <label class="letras" for="cantidad_plastico">Cantidad de plastico:</label>
+          <input type="number" name="cantidad_plastico" id="cantidad_plastico" placeholder="Ingrese cantidad">
       </div>
-      <label class="letras" for="cantidad_material">Cantidad del material:</label>
-      <input type="number" name="cantidad_material" id="cantidad_material">
-  </div>
+      <div>
+        <label class="letras" for="cantidad_vidrio">Cantidad de vidrio:</label>
+        <input type="number" name="cantidad_vidrio" id="cantidad_vidrio" placeholder="Ingrese cantidad">
+    </div>
+    <div>
+        <label class="letras" for="cantidad_carton">Cantidad de carton:</label>
+        <input type="number" name="cantidad_carton" id="cantidad_carton" placeholder="Ingrese cantidad">
+    </div>
+    <div>
+        <label class="letras" for="cantidad_aluminio">Cantidad de aluminio:</label>
+        <input type="number" name="cantidad_aluminio" id="cantidad_aluminio" placeholder="Ingrese cantidad">
+    </div>
+     
 
   <div>
       <label class="letras" for="latitud_posicion_ciudadano">Latitud:</label>
@@ -58,6 +71,7 @@
       <label class="letras" for="longitud_posicion_ciudadano">Longitud:</label>
       <input type="number" name="longitud_posicion_ciudadano" id="longitud_posicion_ciudadano" step="0.000001" placeholder="Longitud">
   </div>
+  <input type="hidden" name="estado" value="Iniciado">
 
   <button type="submit">Guardar</button>
   <button type="reset">Limpiar campos</button>
@@ -86,6 +100,16 @@
       }
   }
 </script>
+<script>
+    // Obtener el campo de entrada de fecha por su ID
+    const fechaOrdenInput = document.getElementById('fecha_orden');
+  
+    // Obtener la fecha actual en formato ISO (AAAA-MM-DD)
+    const fechaActual = new Date().toISOString().split('T')[0];
+  
+    // Asignar la fecha actual al campo de entrada de fecha
+    fechaOrdenInput.value = fechaActual;
+  </script>
 
 <div>
 <a class="link" href="{% url 'verOrdenReciclaje' %}">Ver orden reciclaje</a>

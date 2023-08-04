@@ -5,12 +5,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
-TIPO_MATERIAL = (
-    ('Plastico', 'Plastico'),
-    ('Vidrio', 'Vidrio'),
-    ('Carton', 'Carton'),
-    ('Aluminio', 'Aluminio'),
-)
 
 class UserModelo(AbstractUser):
     TIPO_USUARIO = (
@@ -47,8 +41,10 @@ class Orden_reciclaje(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
     id_orden = models.AutoField(primary_key=True)
     fecha_orden = models.DateField()
-    tipo_material = models.CharField(max_length=200, blank=False, null=True, choices=TIPO_MATERIAL)
-    cantidad_material = models.IntegerField()
+    cantidad_plastico = models.IntegerField(default=0)
+    cantidad_vidrio = models.IntegerField(default=0)
+    cantidad_carton = models.IntegerField(default=0)
+    cantidad_aluminio = models.IntegerField(default=0)
     latitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -67,8 +63,10 @@ class Reserva_orden(models.Model):
     fecha_orden = models.DateField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-    tipo_material = models.CharField(max_length=200, blank=False, null=True, choices=TIPO_MATERIAL)
-    cantidad_material = models.IntegerField()
+    cantidad_plastico = models.IntegerField(default=0)
+    cantidad_vidrio = models.IntegerField(default=0)
+    cantidad_carton = models.IntegerField(default=0)
+    cantidad_aluminio = models.IntegerField(default=0)
     latitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -95,8 +93,10 @@ class Registro_entrega_material(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
     id_registro = models.AutoField(primary_key=True)
     fecha_registro = models.DateField()
-    tipo_material = models.CharField(max_length=60)
-    cantidad_material = models.IntegerField()
+    cantidad_plastico = models.IntegerField(default=0)
+    cantidad_vidrio = models.IntegerField(default=0)
+    cantidad_carton = models.IntegerField(default=0)
+    cantidad_aluminio = models.IntegerField(default=0)
     def __str__(self):
         return str(self.ID_registro)
     

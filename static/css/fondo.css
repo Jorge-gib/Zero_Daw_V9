@@ -7,8 +7,15 @@ body {
   /*background-color: #f1f1f1;  /* Si deseas un color de fondo de respaldo */
 }
 .blue-background {
-  background-color: rgba(0, 191, 255, 0.5); /* Celeste con transparencia */
+  background-color: rgba(0, 191, 255, 0.5); /* Azul claro con transparencia */
   display: inline-block;
+  margin: 10mm; /* Margen de 10 milímetros */
+  
+}
+.margen{
+  background-color: rgba(30, 8, 87, 0.5); /* Azul claro con transparencia */
+  display: inline-block;
+  margin: 10mm; /* Margen de 10 milímetros */
 }
 .titulo{
   text-align: center;

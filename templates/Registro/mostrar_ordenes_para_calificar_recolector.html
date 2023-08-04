@@ -15,9 +15,12 @@
                         <li>
                             <p class="letras">ID de orden: {{ orden.id_orden }}</p>
                             <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                            <p class="letras">Tipo material: {{ orden.tipo_material }}</p>
-                            <p class="letras">Cantidad material: {{ orden.cantidad_material }}</p>
-                            <p class="letras">Estado: {{ orden.estado }}</p>
+                            <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+                            <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
+                            <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
+                            <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+                            <p class="letras">Estado: {{ orden.estado }} </p>
+
 
                             <!-- Enviar el ID de la orden al hacer clic en el botón -->
                             <form method="POST" action="{% url 'mostrar_ordenes_calificar_recolector' %}">
