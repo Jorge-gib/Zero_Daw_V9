@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Concluir orden{% endblock %}
+
+{% block content %}
+  <h1 class="letras">Confirme el término de orden</h1>
+
+  {% if orden %}
+  <form method="POST" action="{% url 'actualizar_reserva' orden.id_orden %}">
+    {% csrf_token %}
+    <div class="letras">
+        <p class="letras">ID de orden: {{ orden.id_orden }}</p>
+        <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
+        <p class="letras">hora inicio: {{ orden.hora_inicio}}</p>
+        <p class="letras">hora fin: {{ orden.hora_fin}}</p>
+        <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+        <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
+        <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
+        <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+        <p class="letras">Estado: {{ orden.estado }} </p>
+
+    </div>
+  
+    <!-- Agregar campo "estado" oculto con valor "Concluido" -->
+    <input type="hidden" name="estado" value="Concluido">
+  
+    <button type="submit">Concluir orden</button>
+  </form>
+  {% else %}
+    <p class="letras">No se ha encontrado la orden especificada.</p>
+  {% endif %}
+
+  <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
+
+  <div>
+    <a href="{% url 'login' %}">Volver</a>
+  </div>
+  <footer>
+    <div id="navbar" class="video2">
+        <div class="video">
+        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
+        </div>
+        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+    </div>
+    
+</footer>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
-from .forms import  ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from .models import Calificacion_recolector_ciudadano_reserva, Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
+from .forms import  Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -55,6 +55,21 @@ def agregar_calificacion_recolector_ciudadano(request, id_orden):
 
 ###########################################
 
+def agregar_calificacion_recolector_ciudadano_reserva(request, id_orden):
+    if request.method == 'POST':
+        calificacion = Calificacion_recolector_ciudadano_reserva()
+        calificacion.id_orden_id = id_orden
+        calificacion.calificacion_estrellas_ciudadano = request.POST['calificacion_estrellas_ciudadano']
+        calificacion.opinion_servicio_ciudadano = request.POST['opinion_servicio_ciudadano']
+        calificacion.save()
+        return render(request, 'Registro/confirmacion_calificacion.html', {'calificacion': calificacion})
+    else:
+        form = Calificacion_recolector_reservaForm()
+    orden = Reserva_orden.objects.get(id_orden=id_orden)
+    return render(request, 'Registro/agregar_calificacion_recolector_ciudadano_reserva.html', {'form': form, 'orden': orden})
+
+###########################################
+
 
 
 
@@ -89,6 +104,21 @@ class ActualizarOrden(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('agregar_calificacion_recolector_ciudadano', kwargs={'id_orden': self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['orden'] = self.object
+        return context
+
+##############################################  
+
+class ActualizarReserva(UpdateView):
+    model = Reserva_orden
+    form_class = ReservaConcluir
+    template_name = 'Registro/actualizar_reserva.html'
+
+    def get_success_url(self):
+        return reverse_lazy('agregar_calificacion_recolector_ciudadano_reserva', kwargs={'id_orden': self.object.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -345,6 +375,23 @@ class MostrarOrdenesParaEliminarView(ListView):
         return context
     
 #######################################################################################
+
+class MostrarReservaParaEliminarView(ListView):
+    model = UserModelo
+    template_name = 'Registro/mostrar_reserva_para_eliminar.html'
+
+    def post(self, request, *args, **kwargs):
+        orden_id = request.POST.get('orden_id')
+        url = reverse_lazy('actualizar_reserva', args=[orden_id])
+        return redirect(url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ordenes'] = Reserva_orden.objects.all()
+        return context
+    
+#######################################################################################
+
 
 class MostrarOrdenesCalificarRecolectorView(ListView):
     model = UserModelo

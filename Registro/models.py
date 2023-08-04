@@ -110,7 +110,17 @@ class Calificacion_recolector_ciudadano(models.Model):
     opinion_servicio_recolector = models.CharField(max_length=400, null=True)
     def __str__(self):
         return str(self.id_calificacion)
-
+    
+class Calificacion_recolector_ciudadano_reserva(models.Model):
+    id_orden = models.ForeignKey(Reserva_orden, on_delete=models.CASCADE)
+    id_calificacion = models.AutoField(primary_key=True)
+    calificacion_estrellas_ciudadano = models.FloatField(null=True)
+    calificacion_estrellas_recolector = models.FloatField(null=True)
+    opinion_servicio_ciudadano = models.CharField(max_length=400, null=True)
+    opinion_servicio_recolector = models.CharField(max_length=400, null=True)
+    def __str__(self):
+        return str(self.id_calificacion)
+    
 
 class Calificacion_reciclador(models.Model):
     id_registro = models.ForeignKey(Registro_entrega_material, on_delete=models.CASCADE)

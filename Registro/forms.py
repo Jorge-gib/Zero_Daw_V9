@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
+from .models import Calificacion_recolector_ciudadano_reserva, Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 import itertools
@@ -178,6 +178,34 @@ class Calificacion_recolectorForm(forms.ModelForm):
            
         }
 
+class Calificacion_recolector_reservaForm(forms.ModelForm):
+    class Meta:
+        model = Calificacion_recolector_ciudadano_reserva
+        fields = ['id_orden', 'id_calificacion', 'calificacion_estrellas_ciudadano', 'opinion_servicio_ciudadano']
+
+        labels = {
+            
+            'id_orden': 'ID orden',
+            'id_calificacion': 'ID calificacion',
+            'calificacion_estrellas_ciudadano': 'Calificacion estrellas ciudadano',
+            
+            'opinion_servicio_ciudadano': 'Opinion servicio ciudadano',
+           
+
+        }
+        widgets = {
+           
+            'id_orden': forms.TextInput(attrs={'class': 'form-control'}),
+            'id_calificacion': forms.TextInput(attrs={'class': 'form-control'}),
+            'calificacion_estrellas_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
+           
+            'opinion_servicio_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
+           
+           
+           
+        }
+
+
 class Calificacion_ciudadanoForm(forms.ModelForm):
     class Meta:
         model = Calificacion_recolector_ciudadano
@@ -325,13 +353,22 @@ class ReservaUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Reserva_orden
-        fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector']
+        fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector', 'estado']
         
 class OrdenConcluir(forms.ModelForm):
     
 
     class Meta:
         model = Orden_reciclaje
+        fields = [
+            'estado',
+            
+        ]
+class ReservaConcluir(forms.ModelForm):
+    
+
+    class Meta:
+        model = Reserva_orden
         fields = [
             'estado',
             

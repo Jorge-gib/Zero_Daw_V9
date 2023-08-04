@@ -18,6 +18,7 @@
         <label class="letras" for="longitud_posicion_recolector">Longitud:</label>
         <input type="number" name="longitud_posicion_recolector" value="{{ reserva_orden.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
       </div>
+      <input type="hidden" name="estado" value="Orden tomada">
       <button type="submit">Actualizar Orden</button>
       <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
     </form>
