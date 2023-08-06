@@ -10,7 +10,7 @@
     {% with hay_ordenes_disponibles=False %}
         <ul>
             {% for orden in ordenes %}
-                {% if orden.estado != "Concluido" %}
+                {% if orden.estado != "Concluido" and orden.estado != "Calificado" %}
                     {% if not hay_ordenes_disponibles %}
                         {% with hay_ordenes_disponibles=True %}
                             <li>

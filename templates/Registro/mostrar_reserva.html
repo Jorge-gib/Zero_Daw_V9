@@ -12,7 +12,7 @@
     {% with hay_ordenes_disponibles=False %}
     <ul>
         {% for orden in ordenes %}
-            {% if orden.estado != "Concluido" and orden.latitud_posicion_recolector is null %}
+            {% if orden.estado != "Concluido" and orden.latitud_posicion_recolector is null and orden.estado != "Calificado"%}
                 {% with hay_ordenes_disponibles=True %}
                     <li>
                         <p class="letras">ID de orden: {{ orden.id_orden }}</p>
