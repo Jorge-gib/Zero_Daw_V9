@@ -35,7 +35,8 @@
                     {% endif %}
 
                     <li class="nav-item"><a href="{% url 'logout' %}">Cerrar sesion</a></li>
-                    <span class="ml-md-5" style="color: blue;"><strong>Usuario: {{ user.get_username }}</strong></span>
+                    <span class="ml-md-5" style="color: blue;"><strong>Bienvenido: {{ user.get_username }}</strong></span>
+                    <img src="{% static 'images/logo_reciclaje.png' %}" alt="logo" style="width: 60px; height: 60px;">
                     {% endif %}                
                 </ul>
             </div>                                 
