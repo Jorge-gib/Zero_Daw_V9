@@ -4,7 +4,8 @@ from django.urls import reverse
 from django.views.generic import ListView
 from Registro.models import Orden_reciclaje
 from Registro.models import Reserva_orden
-
+from Registro.models import UserModelo
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def geolocalizacion(request, id_orden):
     orden_reciclaje = Orden_reciclaje.objects.filter(id_orden=id_orden).first()
@@ -36,20 +37,23 @@ def geolocalizacion(request, id_orden):
         return render(request, 'Api/error_api.html', {'data': data})
     
     
-class OrdenListGeolocalizar(ListView):
+class OrdenListGeolocalizar(LoginRequiredMixin, ListView):
     model = Orden_reciclaje
     template_name = 'Api/orden_geolocalizar.html'
+    login_url = '/login/'  # Define la URL de inicio de sesión si el usuario no está autenticado
 
-    def post(self, request, *args, **kwargs):
-        orden_id = request.POST.get('orden_id')
-        return redirect('geolocalizacion', id_orden=orden_id)
+    def get_queryset(self):
+        # Obtén el id del usuario de los parámetros de la URL
+        id_user = self.kwargs.get('id_user')
+        # Filtra las órdenes por el id_user_id proporcionado
+        queryset = Orden_reciclaje.objects.filter(id_user_id=id_user)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ordenes'] = Orden_reciclaje.objects.all()
+        # Agrega las órdenes filtradas al contexto con el nombre 'ordenes'
+        context['ordenes'] = self.get_queryset()
         return context
-    
-    
 ##########################################################################################
 
 def geolocalizacion_ciudadano_orden_normal(request, id_orden):
@@ -114,32 +118,28 @@ def geolocalizacion_recolector(request, id_orden):
     
 
 ######################################################################
-class OrdenListGeolocalizar(ListView):
-    model = Orden_reciclaje
-    template_name = 'Api/orden_geolocalizar.html'
 
-    def post(self, request, *args, **kwargs):
-        orden_id = request.POST.get('orden_id')
-        return redirect('geolocalizacion', id_orden=orden_id)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['ordenes'] = Orden_reciclaje.objects.all()
-        return context
-
-####################################################################################
-
-class ReservaListGeolocalizar_recolector(ListView):
+class ReservaListGeolocalizar_recolector(LoginRequiredMixin, ListView):
     model = Reserva_orden
     template_name = 'Api/orden_geolocalizar_reserva_recolector.html'
+    login_url = '/login/'  # Define la URL de inicio de sesión si el usuario no está autenticado
 
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
         return redirect('geolocalizacion_reserva_recolector', id_orden=orden_id)
 
+    def get_queryset(self):
+        # Obtiene el ID del usuario actual
+        id_user = self.request.user.id
+        # Filtra las órdenes por el ID del usuario actual
+        queryset = Reserva_orden.objects.filter(id_user_id=id_user)
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ordenes'] = Reserva_orden.objects.all()
+        # Agrega las órdenes filtradas al contexto con el nombre 'ordenes'
+        context['ordenes'] = self.get_queryset()
         return context
 
 
@@ -176,19 +176,7 @@ def geolocalizacion_ciudadano(request, id_orden):
         return render(request, 'Api/error_api.html', {'data': data})
     
     
-class OrdenListGeolocalizar(ListView):
-    model = Orden_reciclaje
-    template_name = 'Api/orden_geolocalizar.html'
 
-    def post(self, request, *args, **kwargs):
-        orden_id = request.POST.get('orden_id')
-        return redirect('geolocalizacion', id_orden=orden_id)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['ordenes'] = Orden_reciclaje.objects.all()
-        return context
-    
 ######################################################################################
 
 class OrdenListGeolocalizar_para_ubicar_ciudadano(ListView):

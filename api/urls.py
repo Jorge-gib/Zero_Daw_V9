@@ -13,7 +13,7 @@ urlpatterns = [
      path('geolocalizacion_ciudadano_orden/<int:id_orden>/', views.geolocalizacion_ciudadano_orden_normal, name='geolocalizacion_ciudadano_orden'),
      
     # Resto de tus URLs
-    path('OrdenListGeolocalizar', views.OrdenListGeolocalizar.as_view(), name='OrdenListGeolocalizar'),
+    path('OrdenListGeolocalizar/<int:id_user>/', views.OrdenListGeolocalizar.as_view(), name='OrdenListGeolocalizar'),
     
     path('ReservaListGeolocalizar', views.ReservaListGeolocalizar.as_view(), name='ReservaListGeolocalizar'),
     
@@ -21,5 +21,5 @@ urlpatterns = [
     
     ################################################################################################################
     
-    path('OrdenListGeolocalizar_para_ubicar_recolector', views.ReservaListGeolocalizar_recolector.as_view(), name='OrdenListGeolocalizar_para_ubicar_recolector'),
+    path('OrdenListGeolocalizar_para_ubicar_recolector/<int:id_user>/', views.ReservaListGeolocalizar_recolector.as_view(), name='OrdenListGeolocalizar_para_ubicar_recolector'),
 ]

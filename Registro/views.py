@@ -415,9 +415,10 @@ class MostrarReservaParaEliminarView(ListView):
 #######################################################################################
 
 
-class MostrarOrdenesCalificarRecolectorView(ListView):
+class MostrarOrdenesCalificarRecolectorView(LoginRequiredMixin, ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_ordenes_para_calificar_recolector.html'
+    login_url = '/login/'  # Define la URL de inicio de sesión si el usuario no está autenticado
 
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
@@ -430,16 +431,25 @@ class MostrarOrdenesCalificarRecolectorView(ListView):
         
         return redirect(url)
 
+    def get_queryset(self):
+        # Obtiene el ID del usuario actual
+        id_user = self.request.user.id
+        # Filtra las órdenes por el ID del usuario actual
+        queryset = Orden_reciclaje.objects.filter(id_user_id=id_user)
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ordenes'] = Orden_reciclaje.objects.all()
+        # Agrega las órdenes filtradas al contexto con el nombre 'ordenes'
+        context['ordenes'] = self.get_queryset()
         return context
 
 ###############################################################################################################3
 
-class MostrarOrdenesCalificarRecolectorReservaView(ListView):
+class MostrarOrdenesCalificarRecolectorReservaView(LoginRequiredMixin, ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_para_finalizar_calificacion.html'
+    login_url = '/login/'  # Define la URL de inicio de sesión si el usuario no está autenticado
 
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
@@ -452,9 +462,17 @@ class MostrarOrdenesCalificarRecolectorReservaView(ListView):
         
         return redirect(url)
 
+    def get_queryset(self):
+        # Obtiene el ID del usuario actual
+        id_user = self.request.user.id
+        # Filtra las órdenes por el ID del usuario actual
+        queryset = Reserva_orden.objects.filter(id_user_id=id_user)
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ordenes'] = Orden_reciclaje.objects.all()
+        # Agrega las órdenes filtradas al contexto con el nombre 'ordenes'
+        context['ordenes'] = self.get_queryset()
         return context
 
 
@@ -463,25 +481,6 @@ class MostrarOrdenesCalificarRecolectorReservaView(ListView):
 #################################################################################################################
 
 
-class MostrarOrdenesCalificarRecolectorReservaView(ListView):
-    model = UserModelo
-    template_name = 'Registro/mostrar_ordenes_para_calificar_recolector_reserva.html'
-
-    def post(self, request, *args, **kwargs):
-        orden_id = request.POST.get('orden_id')
-        url = reverse_lazy('agregar_calificacion_recolector_ciudadano3', args=[orden_id])
-        
-        # Actualizar el atributo 'estado' del modelo
-        orden = Reserva_orden.objects.get(id_orden=orden_id)
-        orden.estado = 'Calificado'
-        orden.save()
-        
-        return redirect(url)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['ordenes'] = Reserva_orden.objects.all()
-        return context
 
 ##################################################################################################################
 
