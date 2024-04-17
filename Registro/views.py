@@ -27,19 +27,19 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.shortcuts import redirect
 
-# Create your views here.
+# Clase para borrar un usuario
 class UserDelete(DeleteView):
     model = UserModelo
     template_name = 'Registro/borrar_user.html'
     success_url = reverse_lazy('confirmacion3')
 
 ################################################
-
+# funcion para redirigir confirmacion calificacion
 def confirmar_comentario(request):
     context={}
     return render(request, 'Registro/confirmacion_calificacion.html', context)
 
-#####################################
+# funcion para agregar calificacion de un recolector a un cudadano
 def agregar_calificacion_recolector_ciudadano(request, id_orden):
     if request.method == 'POST':
         calificacion = Calificacion_recolector_ciudadano()
@@ -56,8 +56,8 @@ def agregar_calificacion_recolector_ciudadano(request, id_orden):
 ###########################################
 
 
-###########################################
 
+# funcion para agregar calificacion de un recolector a un cudadano por reserva
 def agregar_calificacion_ciudadano_reserva(request, id_orden):
     if request.method == 'POST':
         calificacion = Calificacion_recolector_ciudadano_reserva()
@@ -75,7 +75,7 @@ def agregar_calificacion_ciudadano_reserva(request, id_orden):
 
 
 
-
+# Agegrar calificacion de un ciudadano a recoletor
 
 def agregar_calificacion_recolector_ciudadano2(request, id_orden):
     orden = Orden_reciclaje.objects.get(id_orden=id_orden)
@@ -95,7 +95,9 @@ def agregar_calificacion_recolector_ciudadano2(request, id_orden):
     else:
         form = Calificacion_ciudadanoForm(instance=calificacion)
         return render(request, 'Registro/agregar_calificacion_recolector_ciudadano2.html', {'form': form, 'orden': orden})
-###############################################################################
+    
+    
+# Agregar calificacion de un ciudadano a recolestor por reserva
 def agregar_calificacion_recolector_reserva(request, id_orden):
     orden = Reserva_orden.objects.get(id_orden=id_orden)
     
@@ -114,10 +116,10 @@ def agregar_calificacion_recolector_reserva(request, id_orden):
     else:
         form = Calificacion_recolector_reservaForm(instance=calificacion)
         return render(request, 'Registro/agregar_calificacion_recolector_ciudadano3.html', {'form': form, 'orden': orden})
-###########################################################################
 
 
-##########################
+
+#Actualiza la orden de reciclaje
 
 class ActualizarOrden(UpdateView):
     model = Orden_reciclaje
@@ -133,7 +135,7 @@ class ActualizarOrden(UpdateView):
         return context
 
 ##############################################  
-
+#Actualiza la orden de reciclaje reserva
 class ActualizarReserva(UpdateView):
     model = Reserva_orden
     form_class = ReservaConcluir
@@ -150,7 +152,7 @@ class ActualizarReserva(UpdateView):
 ##############################################    
 
 UserModel = get_user_model()
-
+# Funcon para actualizar password
 def validacion_pass(request):
     if request.method == 'POST':
         form = PassUpdateForm(request.POST)
@@ -184,7 +186,7 @@ def validacion_pass(request):
 
 
   
-
+# funcion para crear un usuario
 
 class RegistroUsuario(CreateView):
     model = UserModelo
@@ -210,36 +212,41 @@ class RegistroUsuario(CreateView):
         self.object = form.save()
 
         return super().form_valid(form)
-
+# funcion para redireccionar en caso de que el rut que se ingrese ya exista
 def key(request):
     context={}
     return render(request, 'Registro/primarykey.html', context)
+
+#funcion para redireccionar en caso de que el cambio de clave sea exitoso
 def mensaje(request):
     context={}
     return render(request, 'Registro/mensaje_pass_exitoso.html', context)
+#Funcion para redireccionar a la presentacion de la organizacion
 def somos(request):
     context={}
     return render(request, 'Usuario/somos.html', context)
+
+#Funcion para llevar a la explicacion del mundo de reciclaje
 def video_reciclaje(request):
     context={}
     return render(request, 'Registro/video.html', context)
-
+#Funcion que lleva a la pagina del logo
 def zero_daw(request):
     context={}
     return render(request, 'Registro/zero_daw.html', context)
-
+# funcion que lleva a error de validacion
 def error_validacion(request):
     context={}
     return render(request, 'Registro/error_validacion.html', context)
-
+# funcion que lleva a la pagina de recuperacion de pass
 def enviar_correo_pass(request):
     context={}
     return render(request, 'Registro/recuperar_pass.html', context)
- 
+ # clase para validar usuario
 class Autenticar_us(ListView):
     model = UserModelo
     template_name = 'Registro/autenticar_us.html'
-
+#funcion para listar usuarios
 class UserList(ListView):
     model = UserModelo
     template_name = 'Usuario/list_user.html'
@@ -256,27 +263,25 @@ class UserList(ListView):
             return redirect(reverse_lazy('autenticar_us'))
 
         return queryset
-#############
 
-# Create your views here.
 
-       
+# funcion de redireccionaiento a home
 def registro(request):
     context={}
     return render(request, 'home.html', context)
-
+#Funcion de redireccionamiento a confirmacion de perfil actualizado con exito
 def confirmacion(request):
     context={}
     return render(request, 'Registro/confirmacion_2.html', context)
-
+# funcion que redirecciona a confirmacion posicion recoletor
 def confirmacion_posicion_recolector(request):
     context={}
     return render(request, 'Registro/confirmacion_posicion_recolector.html', context)
-
+# conformacion de elemimnacion de cuenta
 def confirmacion3(request):
     context={}
     return render(request, 'Registro/confirmacion_3.html', context)
-
+# Conclusion de la orden
 def confirmacion4(request):
     context={}
     return render(request, 'Registro/confirmacion_4.html', context)
@@ -287,16 +292,16 @@ def confirmacion4(request):
 
 
 
-
+# Ver calificacion recoletor
 def verCalificacionRecolectorCiudadano(request):
     calificacion_recolector_ciudadano = Calificacion_recolector_ciudadano.objects.all()
     return render(request, "Pagina/ver_calificacion_recolector_ciudadano.html", {'calificacion_recolector_ciudadano': calificacion_recolector_ciudadano})
 
-
+# Esta funcion ya no es valida
 def verCalificacionReciclador(request):
     calificacion_reciclador = Calificacion_reciclador.objects.all()
     return render(request, "Pagina/ver_calificacion_reciclador.html", {'calificacion_reciclador': calificacion_reciclador})
-
+# Funcion para ver registro material
 def verRegistroEntregaMaterial(request):
     registro_entrega_material = Registro_entrega_material.objects.all()
     return render(request, "Pagina/ver_registro_entrega_material.html", {'registro_entrega_material': registro_entrega_material})
@@ -305,7 +310,7 @@ def verRegistroEntregaMaterial(request):
 
 
 
-
+#Listar todo en ordenes de reciclaje
 class OrdenList(LoginRequiredMixin, ListView):
     model = Orden_reciclaje
     template_name = 'Registro/detalle.html'
@@ -318,7 +323,7 @@ class OrdenList(LoginRequiredMixin, ListView):
 
     
 #####################################################################################################
-
+#Listar todo en ordenes de reciclaje reserva
 class Orden_Reserva_List(LoginRequiredMixin, ListView):
     model = Reserva_orden
     template_name = 'Registro/detalle_reserva.html'
@@ -329,6 +334,7 @@ class Orden_Reserva_List(LoginRequiredMixin, ListView):
         queryset = queryset.filter(id_user=self.request.user.id)
         return queryset
 ####################################################################################################
+# Actualiza la orden
 class TomarOrdenView(UpdateView):
     model = Orden_reciclaje
     form_class = OrdenUpdateForm
@@ -338,7 +344,7 @@ class TomarOrdenView(UpdateView):
     
 
 ###############################################################################################################
-
+#Actualiza la reserva
 class TomarReservaView(UpdateView):
     model = Reserva_orden
     form_class = ReservaUpdateForm
@@ -349,7 +355,7 @@ class TomarReservaView(UpdateView):
 
 ###############################################################################################################
 
-
+# Actualiza reserva
 class MostrarOrdenesView(ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_ordenes.html'
@@ -365,7 +371,7 @@ class MostrarOrdenesView(ListView):
         return context
 
 ###########################################################################################################
-
+#Mostrar las reservas
 class MostrarReservaView(ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_reserva.html'
@@ -381,7 +387,7 @@ class MostrarReservaView(ListView):
         return context
 
 ###########################################################################################################
-
+# Muestras las ordenes para ser actualizadas
 class MostrarOrdenesParaEliminarView(ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_ordenes_para_eliminar.html'
@@ -397,7 +403,7 @@ class MostrarOrdenesParaEliminarView(ListView):
         return context
     
 #######################################################################################
-
+# Muestra reservas a actualzar
 class MostrarReservaParaEliminarView(ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_reserva_para_eliminar.html'
@@ -414,7 +420,7 @@ class MostrarReservaParaEliminarView(ListView):
     
 #######################################################################################
 
-
+#Mostrar ordenes calificar recolector
 class MostrarOrdenesCalificarRecolectorView(LoginRequiredMixin, ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_ordenes_para_calificar_recolector.html'
@@ -445,7 +451,7 @@ class MostrarOrdenesCalificarRecolectorView(LoginRequiredMixin, ListView):
         return context
 
 ###############################################################################################################3
-
+#mostrar reservas para calificar recolector
 class MostrarOrdenesCalificarRecolectorReservaView(LoginRequiredMixin, ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_para_finalizar_calificacion.html'
@@ -478,12 +484,9 @@ class MostrarOrdenesCalificarRecolectorReservaView(LoginRequiredMixin, ListView)
 
 
 
-#################################################################################################################
-
-
 
 ##################################################################################################################
-
+# Mosrar ordenes oara calificar al ciudadano por reserva
 class MostrarOrdenesCalificarCiudadanoReservaView(ListView):
     model = UserModelo
     template_name = 'Registro/mostrar_ordenes_para_calificar_recolector_reserva.html'
@@ -507,13 +510,7 @@ class MostrarOrdenesCalificarCiudadanoReservaView(ListView):
 
 #################################################################################################################
 
-
-
-
-
-
-#########################################################################################################################
-
+#Funicion eliminada
 
 def agregar_calificacion_reciclador(request):
     if request.method == "POST":
@@ -527,7 +524,7 @@ def agregar_calificacion_reciclador(request):
         return render(request, "Pagina/agregar_calificacion_reciclador.html", {'form': form})
     
 ##########################################################################################################################
-
+# funcion para agregar registro entrega material
 def agregar_registro_entrega_material(request):
     if request.method == "POST":
         form = Registro_entrega_materialForm(request.POST)
@@ -539,12 +536,10 @@ def agregar_registro_entrega_material(request):
         form = Registro_entrega_materialForm()
         return render(request, "Pagina/agregar_registro_entrega_material.html", {'form': form})
     
-############################################################################################################################
-
 
 
 ############################################################################################################################
-
+# Funcion para realizar una orden de reciclaje
 def agregar_orden_reciclaje(request):
     if request.method == 'POST':
         form = Orden_reciclajeForm(request.POST)
@@ -561,7 +556,7 @@ def agregar_orden_reciclaje(request):
     return render(request, 'Registro/orden_reciclaje.html', {'form': form})
 
 #############################################
-
+# Realizar reserva
 def agregar_orden_reserva(request):
     if request.method == 'POST':
         form = Reserva_ordenForm(request.POST)
@@ -578,7 +573,7 @@ def agregar_orden_reserva(request):
     return render(request, 'Registro/reserva.html', {'form': form})
 
 ##############################################################################################################################
-
+# Funcion que borra un ususario
 def borrar_user(request, user_id):
     # Recuperamos la instancia de la carrera y la borramos
     instancia = User.objects.get(id=user_id)
@@ -589,36 +584,7 @@ def borrar_user(request, user_id):
 
 #################################################################################################################################
 
-
-
-
-#################################################################################################################################
-
-
-
-
-
-##################################################################################################################################
-
-
-
-
-
-################################################################################################################################
-
-
-
-
-
-################################################################################################################################
-
-
-
-
-
-####################################################################################################################################
-
-
+#funcion eliminada
 def borrar_calificacion_recolector_ciudadano(request, calificacion_recolector_ciudadano_id):
     # Recuperamos la instancia de la carrera y la borramos
     instancia = Calificacion_recolector_ciudadano.objects.get(id=calificacion_recolector_ciudadano_id)
@@ -629,7 +595,7 @@ def borrar_calificacion_recolector_ciudadano(request, calificacion_recolector_ci
 
 
 ####################################################################################################################################
-
+#Funcion eliminada
 def borrar_calificacion_reciclador(request, calificacion_reciclador_id):
     # Recuperamos la instancia de la carrera y la borramos
     instancia = Calificacion_reciclador.objects.get(id=calificacion_reciclador_id)
@@ -640,7 +606,7 @@ def borrar_calificacion_reciclador(request, calificacion_reciclador_id):
 
 
 ###################################################################################################################################
-
+#funcion eliminada
 def borrar_registro_entrega_material(request, registro_entrega_material_id):
     # Recuperamos la instancia de la carrera y la borramos
     instancia = Registro_entrega_material.objects.get(id=registro_entrega_material_id)
@@ -652,7 +618,7 @@ def borrar_registro_entrega_material(request, registro_entrega_material_id):
 
 #####################################################################################################################################
 
-
+#Funcion eliminada
 def borrar_orden_reciclaje(request, orden_reciclaje_id):
     # Recuperamos la instancia de la carrera y la borramos
     instancia = Orden_reciclaje.objects.get(id=orden_reciclaje_id)
@@ -665,7 +631,7 @@ def borrar_orden_reciclaje(request, orden_reciclaje_id):
 
 
 
-
+#Funcion para actualizar los datos del usuario
 class UserUpdate(UpdateView):
     model = UserModelo
     form_class = UserUpdateForm
@@ -679,36 +645,7 @@ class UserUpdate(UpdateView):
 #####################################################################################################################################
 
 
-
-
-##########################################################################################################################
-
-
-
-
-#################################################################################################################################
-
-
-
-################################################################################################################################
-
-
-
-
-#################################################################################################################################
-
-
-
-
-
-#######################################################################################################################
-
-
-
-
-#######################################################################################################################
-
-
+#Funcion eliminada
 def editar_calificacion_recolector_ciudadano(request, calificacion_recolector_ciudadano_id):
     # Recuperamos la instancia de la carrera
     instancia = Calificacion_recolector_ciudadano.objects.get(id=calificacion_recolector_ciudadano_id)
@@ -734,7 +671,7 @@ def editar_calificacion_recolector_ciudadano(request, calificacion_recolector_ci
 
 ############################################################################################################################
 
-
+# Funcion eliminada
 def editar_calificacion_reciclador(request, calificacion_reciclador_id):
     # Recuperamos la instancia de la carrera
     instancia = Calificacion_reciclador.objects.get(id=calificacion_reciclador_id)
@@ -761,7 +698,7 @@ def editar_calificacion_reciclador(request, calificacion_reciclador_id):
 ######################################################################################################################
 
 
-
+# Funcion eliminada
 def editar_registro_entrega_matrial(request, registro_entrega_material_id):
     # Recuperamos la instancia de la carrera
     instancia = Registro_entrega_material.objects.get(id=registro_entrega_material_id)
@@ -787,7 +724,7 @@ def editar_registro_entrega_matrial(request, registro_entrega_material_id):
 
 #########################################################################################################################
 
-
+#funcion eliminada
 def editar_orden_reciclaje(request, orden_reciclaje_id):
     # Recuperamos la instancia de la carrera
     instancia = Orden_reciclaje.objects.get(id=orden_reciclaje_id)

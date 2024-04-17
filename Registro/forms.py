@@ -12,7 +12,7 @@ from django.forms import NumberInput
 
 
 
-
+#Forms de usuario actualizacion
 class UserUpdateForm(forms.ModelForm):
     
     class Meta:
@@ -27,7 +27,7 @@ class UserUpdateForm(forms.ModelForm):
             'licencia_automotriz'
             
         ]
-        
+#Forms de actualizacion de password
 class PassUpdateForm(forms.ModelForm):
     new_password1 = forms.CharField(label='Nueva contraseña', widget=forms.PasswordInput)
     new_password2 = forms.CharField(label='Repetir nueva contraseña', widget=forms.PasswordInput)
@@ -50,7 +50,7 @@ class PassUpdateForm(forms.ModelForm):
 
 
 
-
+#Forms para crear un usuario
 class RegistroForm(UserCreationForm):
     rut = forms.CharField(max_length=10)
     dv = forms.IntegerField()
@@ -124,7 +124,7 @@ class RegistroForm(UserCreationForm):
 
 
 
-        
+# Forms para calificar recolector ciudadano        
 class Calificacion_recolector_ciudadanoForm(forms.ModelForm):
     class Meta:
         model = Calificacion_recolector_ciudadano
@@ -151,6 +151,7 @@ class Calificacion_recolector_ciudadanoForm(forms.ModelForm):
            
            
         }
+#Forms para calificar recolector
 class Calificacion_recolectorForm(forms.ModelForm):
     class Meta:
         model = Calificacion_recolector_ciudadano
@@ -177,7 +178,9 @@ class Calificacion_recolectorForm(forms.ModelForm):
            
            
         }
-
+        
+        
+# Forms para calificar recoletor por reserva
 class Calificacion_recolector_reservaForm(forms.ModelForm):
     class Meta:
         model = Calificacion_recolector_ciudadano_reserva
@@ -203,7 +206,7 @@ class Calificacion_recolector_reservaForm(forms.ModelForm):
            
         }
 
-
+#Forms para calificar ciudadano
 class Calificacion_ciudadanoForm(forms.ModelForm):
     class Meta:
         model = Calificacion_recolector_ciudadano
@@ -226,7 +229,7 @@ class Calificacion_ciudadanoForm(forms.ModelForm):
         }
 
 
-
+#Forms anulado
 class Calificacion_recicladorForm(forms.ModelForm):
     class Meta:
         model = Calificacion_reciclador
@@ -248,7 +251,7 @@ class Calificacion_recicladorForm(forms.ModelForm):
            
         }
 
-
+#Forms para registrtar material entregado
 class Registro_entrega_materialForm(forms.ModelForm):
     class Meta:
         model = Registro_entrega_material
@@ -276,6 +279,7 @@ class Registro_entrega_materialForm(forms.ModelForm):
            
            
         }
+#forms para pocision recolector
 class Posicion_recolectorForm(forms.ModelForm):
     latitud_posicion_recolector = forms.DecimalField(
         widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
@@ -292,7 +296,7 @@ class Posicion_recolectorForm(forms.ModelForm):
             'longitud_posicion_recolector': 'Longitud_posicion_recolector',
         }
         
-        
+#Forms para hacer una orden de reciclaje 
 class Orden_reciclajeForm(forms.ModelForm):
     latitud_posicion_ciudadano = forms.DecimalField(
         widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
@@ -328,6 +332,7 @@ class Orden_reciclajeForm(forms.ModelForm):
             'cantidad_aluminio': forms.TextInput(attrs={'class': 'form-control'}),
             'estado': forms.TextInput(attrs={'class': 'form-control'}),
         }
+#Forms para actualizar orden
 class OrdenUpdateForm(forms.ModelForm):
     latitud_posicion_recolector = forms.DecimalField(
         widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
@@ -340,7 +345,7 @@ class OrdenUpdateForm(forms.ModelForm):
         model = Orden_reciclaje
         fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector']
         
-
+#Forms para actualizar reserva
 class ReservaUpdateForm(forms.ModelForm):
     latitud_posicion_recolector = forms.DecimalField(
         widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
@@ -352,7 +357,7 @@ class ReservaUpdateForm(forms.ModelForm):
     class Meta:
         model = Reserva_orden
         fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector', 'estado']
-        
+#Forms para cambiar el estado de la orden      
 class OrdenConcluir(forms.ModelForm):
     
 
@@ -362,6 +367,8 @@ class OrdenConcluir(forms.ModelForm):
             'estado',
             
         ]
+        
+#Forms para cambiar el estado de la reserva
 class ReservaConcluir(forms.ModelForm):
     
 
@@ -372,7 +379,7 @@ class ReservaConcluir(forms.ModelForm):
             
         ]
         
-
+#Forms para crear reserva
 class Reserva_ordenForm(forms.ModelForm):
     latitud_posicion_ciudadano = forms.DecimalField(
         widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})

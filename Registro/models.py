@@ -1,11 +1,7 @@
 from django.db import models
-from datetime import datetime
-#from Usuario.models import User
-from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
-
-
+# Modelo extendido de usuario que hereda de AbstractUser
 class UserModelo(AbstractUser):
     TIPO_USUARIO = (
         ('Recolector', 'Recolector'),
@@ -13,30 +9,25 @@ class UserModelo(AbstractUser):
         ('Ciudadano', 'Ciudadano'),
         ('Operario_municipalidad', 'Operario_municipalidad'),
     )
-   
     rut = models.CharField(max_length=10)
     dv = models.IntegerField()
     nombre = models.CharField(max_length=100)
-    edad = models.IntegerField()  # Cálculo aproximado de la edad en años
+    edad = models.IntegerField()  
     direccion = models.CharField(max_length=50)
     codigo_postal = models.IntegerField()
     telefono = models.IntegerField()
-    licencia_automotriz = models.ImageField(
-        'Licencia automotriz', upload_to='licencias/', blank=True, null=True)
+    licencia_automotriz = models.ImageField(upload_to='licencias/', blank=True, null=True)
     segundo_nombre_madre = models.CharField(max_length=100)
-    tipo_usuario = models.CharField(
-        max_length=200, blank=False, null=True, choices=TIPO_USUARIO)
+    tipo_usuario = models.CharField(max_length=200, blank=False, null=True, choices=TIPO_USUARIO)
     new_password1 = models.CharField(max_length=50, null=True)
     new_password2 = models.CharField(max_length=50, null=True)
     groups = models.ManyToManyField(Group, related_name='usuarios')
     user_permissions = models.ManyToManyField(Permission, related_name='usuarios')
-    
-    
+
     def __str__(self):
         return self.rut
-    
-    
 
+# Modelo para las órdenes de reciclaje
 class Orden_reciclaje(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
     id_orden = models.AutoField(primary_key=True)
@@ -50,13 +41,11 @@ class Orden_reciclaje(models.Model):
     latitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     estado = models.CharField(max_length=200, null=True)
-     
-    
-
 
     def __str__(self):
         return str(self.id_orden)
-    
+
+# Modelo para las reservas de órdenes
 class Reserva_orden(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
     id_orden = models.AutoField(primary_key=True)
@@ -72,23 +61,11 @@ class Reserva_orden(models.Model):
     latitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     estado = models.CharField(max_length=200, null=True)
-   
-     
-    
-
 
     def __str__(self):
         return str(self.id_orden)
-    
 
-     
-    
-
-
-    
-    
-
-    
+# Modelo para los registros de entrega de material
 class Registro_entrega_material(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
     id_registro = models.AutoField(primary_key=True)
@@ -97,10 +74,11 @@ class Registro_entrega_material(models.Model):
     cantidad_vidrio = models.IntegerField(default=0)
     cantidad_carton = models.IntegerField(default=0)
     cantidad_aluminio = models.IntegerField(default=0)
+
     def __str__(self):
-        return str(self.ID_registro)
-    
-    
+        return str(self.id_registro)
+
+# Modelo para las calificaciones de recolector y ciudadano
 class Calificacion_recolector_ciudadano(models.Model):
     id_orden = models.ForeignKey(Orden_reciclaje, on_delete=models.CASCADE)
     id_calificacion = models.AutoField(primary_key=True)
@@ -108,9 +86,11 @@ class Calificacion_recolector_ciudadano(models.Model):
     calificacion_estrellas_recolector = models.FloatField(null=True)
     opinion_servicio_ciudadano = models.CharField(max_length=400, null=True)
     opinion_servicio_recolector = models.CharField(max_length=400, null=True)
+
     def __str__(self):
         return str(self.id_calificacion)
-    
+
+# Modelo para las calificaciones de recolector y ciudadano en reserva
 class Calificacion_recolector_ciudadano_reserva(models.Model):
     id_orden = models.ForeignKey(Reserva_orden, on_delete=models.CASCADE)
     id_calificacion = models.AutoField(primary_key=True)
@@ -118,14 +98,16 @@ class Calificacion_recolector_ciudadano_reserva(models.Model):
     calificacion_estrellas_recolector = models.FloatField(null=True)
     opinion_servicio_ciudadano = models.CharField(max_length=400, null=True)
     opinion_servicio_recolector = models.CharField(max_length=400, null=True)
+
     def __str__(self):
         return str(self.id_calificacion)
-    
 
+# Modelo para las calificaciones del reciclador
 class Calificacion_reciclador(models.Model):
     id_registro = models.ForeignKey(Registro_entrega_material, on_delete=models.CASCADE)
     id_calificacion = models.AutoField(primary_key=True)
     calificacion_estrellas = models.FloatField()
     opinion_servicio = models.CharField(max_length=400)
+
     def __str__(self):
         return str(self.id_calificacion)

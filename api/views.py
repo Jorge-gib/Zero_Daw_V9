@@ -2,20 +2,23 @@ import requests
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView
-from Registro.models import Orden_reciclaje
-from Registro.models import Reserva_orden
-from Registro.models import UserModelo
+from Registro.models import Orden_reciclaje, Reserva_orden, UserModelo
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+# Función para mostrar la geolocalización de una orden de reciclaje
 def geolocalizacion(request, id_orden):
+    # Obtener la orden de reciclaje por su ID
     orden_reciclaje = Orden_reciclaje.objects.filter(id_orden=id_orden).first()
 
+    # Verificar si la orden existe
     if orden_reciclaje is None:
         return render(request, 'Api/error_api.html')
 
+    # Obtener la latitud y longitud de la posición del recolector
     latitud = orden_reciclaje.latitud_posicion_recolector
     longitud = orden_reciclaje.longitud_posicion_recolector
 
+    # Opciones para el mapa
     mapOptions = {
         "center": {"lat": latitud, "lng": longitud},
         "fullscreenControl": True,
@@ -25,9 +28,10 @@ def geolocalizacion(request, id_orden):
         "zoomControl": True,
         "maxZoom": 20,
         "mapId": ""
-        }
+    }
 
-    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=AIzaSyAeYeyldDKCcpeYVppGwYKzizbDf_HVnSo')
+    # Obtener los datos de geocodificación
+    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=API_KEY')
 
     if response.status_code == 200:
         data = response.json()
@@ -35,8 +39,8 @@ def geolocalizacion(request, id_orden):
     else:
         data = response.json()
         return render(request, 'Api/error_api.html', {'data': data})
-    
-    
+
+# Vista basada en clase para listar órdenes de reciclaje y su geolocalización
 class OrdenListGeolocalizar(LoginRequiredMixin, ListView):
     model = Orden_reciclaje
     template_name = 'Api/orden_geolocalizar.html'
@@ -54,17 +58,21 @@ class OrdenListGeolocalizar(LoginRequiredMixin, ListView):
         # Agrega las órdenes filtradas al contexto con el nombre 'ordenes'
         context['ordenes'] = self.get_queryset()
         return context
-##########################################################################################
 
+# Función para mostrar la geolocalización de una orden de reciclaje de un ciudadano
 def geolocalizacion_ciudadano_orden_normal(request, id_orden):
+    # Obtener la orden de reciclaje por su ID
     orden_reciclaje = Orden_reciclaje.objects.filter(id_orden=id_orden).first()
 
+    # Verificar si la orden existe
     if orden_reciclaje is None:
         return render(request, 'Api/error_api.html')
 
+    # Obtener la latitud y longitud de la posición del ciudadano
     latitud = orden_reciclaje.latitud_posicion_ciudadano
     longitud = orden_reciclaje.longitud_posicion_ciudadano
 
+    # Opciones para el mapa
     mapOptions = {
         "center": {"lat": latitud, "lng": longitud},
         "fullscreenControl": True,
@@ -74,9 +82,10 @@ def geolocalizacion_ciudadano_orden_normal(request, id_orden):
         "zoomControl": True,
         "maxZoom": 20,
         "mapId": ""
-        }
+    }
 
-    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=AIzaSyAeYeyldDKCcpeYVppGwYKzizbDf_HVnSo')
+    # Obtener los datos de geocodificación
+    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=API_KEY')
 
     if response.status_code == 200:
         data = response.json()
@@ -84,17 +93,21 @@ def geolocalizacion_ciudadano_orden_normal(request, id_orden):
     else:
         data = response.json()
         return render(request, 'Api/error_api.html', {'data': data})
-    
-############################################################
+
+# Función para mostrar la geolocalización de un recolector
 def geolocalizacion_recolector(request, id_orden):
+    # Obtener la orden de reserva por su ID
     orden_reciclaje = Reserva_orden.objects.filter(id_orden=id_orden).first()
 
+    # Verificar si la orden existe
     if orden_reciclaje is None:
         return render(request, 'Api/error_api.html')
 
+    # Obtener la latitud y longitud de la posición del recolector
     latitud = orden_reciclaje.latitud_posicion_recolector
     longitud = orden_reciclaje.longitud_posicion_recolector
 
+    # Opciones para el mapa
     mapOptions = {
         "center": {"lat": latitud, "lng": longitud},
         "fullscreenControl": True,
@@ -104,9 +117,10 @@ def geolocalizacion_recolector(request, id_orden):
         "zoomControl": True,
         "maxZoom": 20,
         "mapId": ""
-        }
+    }
 
-    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=AIzaSyAeYeyldDKCcpeYVppGwYKzizbDf_HVnSo')
+    # Obtener los datos de geocodificación
+    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=API_KEY')
 
     if response.status_code == 200:
         data = response.json()
@@ -114,12 +128,8 @@ def geolocalizacion_recolector(request, id_orden):
     else:
         data = response.json()
         return render(request, 'Api/error_api.html', {'data': data})
-    
-    
 
-######################################################################
-
-
+# Vista basada en clase para listar órdenes de reserva y su geolocalización del recolector
 class ReservaListGeolocalizar_recolector(LoginRequiredMixin, ListView):
     model = Reserva_orden
     template_name = 'Api/orden_geolocalizar_reserva_recolector.html'
@@ -142,19 +152,20 @@ class ReservaListGeolocalizar_recolector(LoginRequiredMixin, ListView):
         context['ordenes'] = self.get_queryset()
         return context
 
-
-
-    
-#####################################################################################
+# Función para mostrar la geolocalización de un ciudadano
 def geolocalizacion_ciudadano(request, id_orden):
+    # Obtener la orden de reserva por su ID
     orden_reciclaje = Reserva_orden.objects.filter(id_orden=id_orden).first()
 
+    # Verificar si la orden existe
     if orden_reciclaje is None:
         return render(request, 'Api/error_api.html')
 
+    # Obtener la latitud y longitud de la posición del ciudadano
     latitud = orden_reciclaje.latitud_posicion_ciudadano
     longitud = orden_reciclaje.longitud_posicion_ciudadano
 
+    # Opciones para el mapa
     mapOptions = {
         "center": {"lat": latitud, "lng": longitud},
         "fullscreenControl": True,
@@ -164,9 +175,10 @@ def geolocalizacion_ciudadano(request, id_orden):
         "zoomControl": True,
         "maxZoom": 20,
         "mapId": ""
-        }
+    }
 
-    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=AIzaSyAeYeyldDKCcpeYVppGwYKzizbDf_HVnSo')
+    # Obtener los datos de geocodificación
+    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitud},{longitud}&key=API_KEY')
 
     if response.status_code == 200:
         data = response.json()
@@ -174,11 +186,8 @@ def geolocalizacion_ciudadano(request, id_orden):
     else:
         data = response.json()
         return render(request, 'Api/error_api.html', {'data': data})
-    
-    
 
-######################################################################################
-
+# Vista basada en clase para listar órdenes de reciclaje y su geolocalización del ciudadano
 class OrdenListGeolocalizar_para_ubicar_ciudadano(ListView):
     model = Orden_reciclaje
     template_name = 'Api/orden_geolocalizar_ciudadano.html'
@@ -191,9 +200,8 @@ class OrdenListGeolocalizar_para_ubicar_ciudadano(ListView):
         context = super().get_context_data(**kwargs)
         context['ordenes'] = Orden_reciclaje.objects.all()
         return context
-    
-######################################################################################
 
+# Vista basada en clase para listar órdenes de reserva y su geolocalización del ciudadano
 class ReservaListGeolocalizar(ListView):
     model = Reserva_orden
     template_name = 'Api/reserva_geolocalizar.html'
