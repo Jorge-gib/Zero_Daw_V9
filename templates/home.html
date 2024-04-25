@@ -44,6 +44,7 @@
         <li class="nav-item"><a class="link" href="{% url 'OrdenListGeolocalizar_para_ubicar_ciudadano' %}">Buscar ubicacion ordenes</a></li>
     </div>
     {% endif %}
+    
     {% if user.tipo_usuario == "Operario_municipalidad" %}
     <div>
         <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>

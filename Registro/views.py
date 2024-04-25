@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Calificacion_recolector_ciudadano_reserva, Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
-from .forms import  Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from .models import *
+from .forms import  Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -297,10 +297,7 @@ def verCalificacionRecolectorCiudadano(request):
     calificacion_recolector_ciudadano = Calificacion_recolector_ciudadano.objects.all()
     return render(request, "Pagina/ver_calificacion_recolector_ciudadano.html", {'calificacion_recolector_ciudadano': calificacion_recolector_ciudadano})
 
-# Esta funcion ya no es valida
-def verCalificacionReciclador(request):
-    calificacion_reciclador = Calificacion_reciclador.objects.all()
-    return render(request, "Pagina/ver_calificacion_reciclador.html", {'calificacion_reciclador': calificacion_reciclador})
+
 # Funcion para ver registro material
 def verRegistroEntregaMaterial(request):
     registro_entrega_material = Registro_entrega_material.objects.all()
@@ -459,7 +456,7 @@ class MostrarOrdenesCalificarRecolectorReservaView(LoginRequiredMixin, ListView)
 
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
-        url = reverse_lazy('agregar_calificacion_recolector_ciudadano_reserva', args=[orden_id])
+        url = reverse_lazy('agregar_calificacion_recolector_reserva', args=[orden_id])
         
         # Actualizar el atributo 'estado' del modelo
         orden = Reserva_orden.objects.get(id_orden=orden_id)
@@ -510,18 +507,7 @@ class MostrarOrdenesCalificarCiudadanoReservaView(ListView):
 
 #################################################################################################################
 
-#Funicion eliminada
 
-def agregar_calificacion_reciclador(request):
-    if request.method == "POST":
-        form = Calificacion_recicladorForm(request.POST)
-        if form.is_valid():
-            model_instance = form.save(commit=False)
-            model_instance.save()
-            return redirect("/agregar_calificacion_reciclador")
-    else:
-        form = Calificacion_recicladorForm()
-        return render(request, "Pagina/agregar_calificacion_reciclador.html", {'form': form})
     
 ##########################################################################################################################
 # funcion para agregar registro entrega material
@@ -595,14 +581,6 @@ def borrar_calificacion_recolector_ciudadano(request, calificacion_recolector_ci
 
 
 ####################################################################################################################################
-#Funcion eliminada
-def borrar_calificacion_reciclador(request, calificacion_reciclador_id):
-    # Recuperamos la instancia de la carrera y la borramos
-    instancia = Calificacion_reciclador.objects.get(id=calificacion_reciclador_id)
-    instancia.delete()
-
-    # Después redireccionamos de nuevo a la lista
-    return redirect('verCalificacionReciclador')
 
 
 ###################################################################################################################################
@@ -672,27 +650,7 @@ def editar_calificacion_recolector_ciudadano(request, calificacion_recolector_ci
 ############################################################################################################################
 
 # Funcion eliminada
-def editar_calificacion_reciclador(request, calificacion_reciclador_id):
-    # Recuperamos la instancia de la carrera
-    instancia = Calificacion_reciclador.objects.get(id=calificacion_reciclador_id)
 
-    # Creamos el formulario con los datos de la instancia
-    form = Calificacion_recicladorForm(instance=instancia)
-
-    # Comprobamos si se ha enviado el formulario
-    if request.method == "POST":
-        # Actualizamos el formulario con los datos recibidos
-        form = Calificacion_recicladorForm(request.POST, instance=instancia)
-        # Si el formulario es válido...
-        if form.is_valid():
-            # Guardamos el formulario pero sin confirmarlo,
-            # así conseguiremos una instancia para manipular antes de grabar
-            instancia = form.save(commit=False)
-            # Podemos guardar cuando queramos
-            instancia.save()
-
-    # Si llegamos al final renderizamos el formulario
-    return render(request, "Pagina/calificacion_reciclador.html", {'form': form})
 
 
 ######################################################################################################################

@@ -3,7 +3,7 @@
 {% block content %}
   <h1 class="letras">Agrege una calificacion al Recolector</h1>
 
-  <form method="POST" action="{% url 'agregar_calificacion_recolector_reserva' orden.id_orden %}">
+  <form method="POST" action="{% url '' orden.id_orden %}">
     {% csrf_token %}
     <input type="hidden" name="id_calificacion" value="{{ id_calificacion }}">
     <div>

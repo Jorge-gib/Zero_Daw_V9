@@ -52,8 +52,10 @@ urlpatterns = [
     # Página Zero DAW
     path('zero_daw', views.zero_daw, name='zero_daw'),
     
+    
+    
     # Agregar calificación para recolector
-    path('agregar_calificacion_recolector/<int:id_orden>/', views.agregar_calificacion_recolector_reserva, name='agregar_calificacion_recolector_ciudadano'),
+    path('agregar_calificacion_recolector_reserva/<int:id_orden>/', views.agregar_calificacion_recolector_reserva, name='agregar_calificacion_recolector_reserva'),
     
     # Agregar calificación para ciudadano en reserva
     path('agregar_calificacion_ciudadano_reserva/<int:id_orden>/', views.agregar_calificacion_ciudadano_reserva, name='agregar_calificacion_ciudadano_reserva'),
@@ -142,14 +144,12 @@ urlpatterns = [
     # Ver calificación de recolector por ciudadano
     path('verCalificacionRecolectorCiudadano', views.verCalificacionRecolectorCiudadano, name="verCalificacionRecolectorCiudadano"),
     
-    # Ver calificación de reciclador
-    path('verCalificacionReciclador', views.verCalificacionReciclador, name="verCalificacionReciclador"),
+   
     
     # Ver registro de entrega de material
     path('verRegistroEntregaMaterial', views.verRegistroEntregaMaterial, name="verRegistroEntregaMaterial"),
     
-    # Agregar calificación de reciclador
-    path('agregar_calificacion_reciclador', views.agregar_calificacion_reciclador, name="agregar_calificacion_reciclador"),
+    
     
     # Agregar registro de entrega de material
     path('agregar_registro_entrega_material', views.agregar_registro_entrega_material, name="agregar_registro_entrega_material"),
@@ -160,8 +160,7 @@ urlpatterns = [
     # Editar calificación de recolector por ciudadano
     path('editar_calificacion_recolector_ciudadano/<int:calificacion_recolector_ciudadano_id>', views.editar_calificacion_recolector_ciudadano, name="editar_calificacion_recolector_ciudadano"),
     
-    # Editar calificación de reciclador
-    path('editar_calificacion_reciclador/<int:calificacion_reciclador_id>', views.editar_calificacion_reciclador, name="editar_calificacion_reciclador"),
+  
     
     # Editar registro de entrega de material
     path('editar_registro_entrega_matrial/<int:registro_entrega_matrial_id>', views.editar_registro_entrega_matrial, name="editar_registro_entrega_matrial"),
@@ -178,8 +177,7 @@ urlpatterns = [
     # Borrar calificación de recolector por ciudadano
     path('borrar_calificacion_recolector_ciudadano/<int:calificacion_recolector_ciudadano_id>', views.borrar_calificacion_recolector_ciudadano, name="borrar_calificacion_recolector_ciudadano"),
     
-    # Borrar calificación de reciclador
-    path('borrar_calificacion_reciclador/<int:calificacion_reciclador_id>', views.borrar_calificacion_reciclador, name="borrar_calificacion_reciclador"),
+    
     
     # Borrar registro de entrega de material
     path('borrar_registro_entrega_material/<int:registro_entrega_material_id>', views.borrar_registro_entrega_material, name="borrar_registro_entrega_material"),

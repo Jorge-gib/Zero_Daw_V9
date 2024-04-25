@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
 {% block titulo_principal %} CRUD: Select * {% endblock %}
 
@@ -12,12 +12,12 @@
     <p class="letras">Nombre usuario: {{ user.username }}</p>
     <p class="letras">Nombre: {{ user.first_name }}</p>
     <p class="letras">Apellido: {{ user.last_name }}</p> 
-    <p class="letras">Rut: {{ user.rut }}</p>
-    <p class="letras">Digito verificador: {{ user.dv }}</p>
+    <p class="letras">Rut: {{ user.rut }}-{{ user.dv }}</p>
     <p class="letras">Edad: {{ user.edad }}</p>
     <p class="letras">Direccion: {{ user.direccion }}</p>
+    <p class="letras">Comuna: {{ user.comuna }}</p>
     <p class="letras">Telefono: {{ user.telefono }}</p> 
-    <p class="letras">Rol en el sistema: {{ user.tipo_usuario}}</p>                 
+    <p class="letras">Rol en el sistema: {{ user.tipo_usuario }}</p>                 
     <br>
 {% endfor %}
 

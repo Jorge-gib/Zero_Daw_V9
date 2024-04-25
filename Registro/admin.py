@@ -1,22 +1,13 @@
+# admin.py
 from django.contrib import admin
-from .models import Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
+from .models import Reserva_orden, UserModelo, Registro_pago_reserva, Registro_pago, Calificacion_recolector_ciudadano_reserva, Calificacion_recolector_ciudadano, Orden_reciclaje, Recepcion_desechos, Recepcion_desechos_reserva
 
-# Registrar los modelos en el panel de administración de Django
-
-# Registrar el modelo Calificacion_recolector_ciudadano
 admin.site.register(Calificacion_recolector_ciudadano)
-
-# Registrar el modelo Orden_reciclaje
+admin.site.register(Calificacion_recolector_ciudadano_reserva)
 admin.site.register(Orden_reciclaje)
-
-# Registrar el modelo Calificacion_reciclador
-admin.site.register(Calificacion_reciclador)
-
-# Registrar el modelo Registro_entrega_material
-admin.site.register(Registro_entrega_material)
-
-# Registrar el modelo UserModelo
+admin.site.register(Recepcion_desechos)
+admin.site.register(Recepcion_desechos_reserva)
 admin.site.register(UserModelo)
-
-# Registrar el modelo Reserva_orden
 admin.site.register(Reserva_orden)
+admin.site.register(Registro_pago_reserva)
+admin.site.register(Registro_pago)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Calificacion_recolector_ciudadano_reserva, Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
+from .models import Calificacion_recolector_ciudadano_reserva, Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Recepcion_desechos_reserva, Recepcion_desechos
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 import itertools
@@ -56,6 +56,7 @@ class RegistroForm(UserCreationForm):
     dv = forms.IntegerField()
     edad = forms.IntegerField()
     direccion = forms.CharField(max_length=50)
+    comuna = models.CharField(max_length=80)
     codigo_postal = forms.IntegerField()
     telefono = forms.IntegerField()
     licencia_automotriz = models.CharField(max_length=200, null=True)
@@ -75,6 +76,7 @@ class RegistroForm(UserCreationForm):
             'dv',
             'edad',
             'direccion',
+            'comuna',
             'codigo_postal',
             'telefono',
             'licencia_automotriz',
@@ -92,6 +94,7 @@ class RegistroForm(UserCreationForm):
             'dv': 'DV',
             'edad': 'Edad',
             'direccion': 'Dirección',
+            'comuna': 'Comuna',
             'codigo_postal': 'Código postal',
             'telefono': 'Teléfono',
             'licencia_automotriz': 'Licencia automotriz',
@@ -109,6 +112,7 @@ class RegistroForm(UserCreationForm):
             'dv': forms.TextInput(attrs={'class': 'form-control'}),
             'edad': forms.NumberInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'comuna': forms.TextInput(attrs={'class': 'form-control'}),
             'codigo_postal': forms.NumberInput(attrs={'class': 'form-control'}),
             'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
             'licencia_automotriz': forms.FileInput(attrs={'class': 'form-control'}),
@@ -229,53 +233,36 @@ class Calificacion_ciudadanoForm(forms.ModelForm):
         }
 
 
-#Forms anulado
-class Calificacion_recicladorForm(forms.ModelForm):
-    class Meta:
-        model = Calificacion_reciclador
-        fields = ['id_registro', 'id_calificacion', 'calificacion_estrellas', 'opinion_servicio']
-
-        labels = {
-            'id_registro': 'ID registro',
-            'id_calificacion': 'ID calificacion',
-            'calificacion_estrellas': 'Calificacion_estrellas',
-            'opinion_servicio': 'Opinion_servicio',
-
-        }
-        widgets = {
-            'id_registro': forms.TextInput(attrs={'class': 'form-control'}),
-            'id_calificacion': forms.TextInput(attrs={'class': 'form-control'}),
-            'calificacion_estrellas': forms.TextInput(attrs={'class': 'form-control'}),
-            'opinion_servicio': forms.TextInput(attrs={'class': 'form-control'}),
-           
-           
-        }
 
 #Forms para registrtar material entregado
 class Registro_entrega_materialForm(forms.ModelForm):
     class Meta:
-        model = Registro_entrega_material
-        fields = ['id_user', 'id_registro', 'fecha_registro',
-                  'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton', 'cantidad_aluminio']
+        model = Recepcion_desechos
+        fields = ['id_orden', 'id_registro', 'fecha_registro',
+                  'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton', 'cantidad_aluminio', 'cantidad_metal', 'cantidad_electrodomesticos']
 
         labels = {
-            'id_user': 'ID_user',
+            'id_orden': 'ID orden',
             'id_registro': 'ID_registro',
             'fecha_registro': 'Fecha_registro',
             'cantidad_plastico': 'Cantidad plastico',
             'cantidad_vidrio': 'Cantidad vidrio',
             'cantidad_carton': 'Cantidad carton',
             'cantidad_aluminio': 'Cantidad aluminio',
+            'cantidad_metal' : 'Cantidad metal',
+            'cantidad_electrodomesticos' : 'Cantidad electrodomesticos',
 
         }
         widgets = {
-            'id_user': forms.TextInput(attrs={'class': 'form-control'}),
+            'id_orden': forms.TextInput(attrs={'class': 'form-control'}),
             'id_registro': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha_registro': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad_plastico': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad_vidrio': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad_carton': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad_aluminio': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_metal': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_electrodomesticos': forms.TextInput(attrs={'class': 'form-control'}),
            
            
         }
@@ -308,7 +295,7 @@ class Orden_reciclajeForm(forms.ModelForm):
     class Meta:
         model = Orden_reciclaje
         fields = ['id_user', 'id_orden', 'fecha_orden', 'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton',
-                  'cantidad_aluminio', 'latitud_posicion_ciudadano', 'longitud_posicion_ciudadano', 'estado']
+                  'cantidad_aluminio', 'cantidad_metal', 'cantidad_electrodomesticos', 'latitud_posicion_ciudadano', 'longitud_posicion_ciudadano', 'estado']
         labels = {
             'id_user': 'ID user',
             'id_orden': 'ID_orden',
@@ -317,6 +304,8 @@ class Orden_reciclajeForm(forms.ModelForm):
             'cantidad_vidrio': 'Cantidad vidrio',
             'cantidad_carton': 'Cantidad carton',
             'cantidad_aluminio': 'Cantidad aluminio',
+            'cantidad_metal' : 'Cantidad metal',
+            'cantidad_electrodomesticos' : 'Cantidad electrodomesticos',
             'latitud_posicion_ciudadano': 'Latitud_posicion_ciudadano',
             'longitud_posicion_ciudadano': 'Longitud_posicion_ciudadano',
             'estado': 'Estado',
@@ -330,6 +319,8 @@ class Orden_reciclajeForm(forms.ModelForm):
             'cantidad_vidrio': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad_carton': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad_aluminio': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_metal': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_electrodomesticos': forms.TextInput(attrs={'class': 'form-control'}),
             'estado': forms.TextInput(attrs={'class': 'form-control'}),
         }
 #Forms para actualizar orden
@@ -391,12 +382,12 @@ class Reserva_ordenForm(forms.ModelForm):
     class Meta:
         model = Reserva_orden
         fields = ['id_user', 'id_orden', 'fecha_orden', 'hora_inicio', 'hora_fin', 
-                  'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton', 'cantidad_aluminio', 'latitud_posicion_ciudadano', 
+                  'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton', 'cantidad_aluminio', 'cantidad_metal', 'cantidad_electrodomesticos', 'latitud_posicion_ciudadano', 
                   'longitud_posicion_ciudadano', 
                   'estado']
         labels = {
             'id_user': 'ID user',
-            'id_orden': 'ID_orden',
+            'id_orden': 'ID orden reserva',
             'fecha_orden': 'Fecha_orden',
             'hora_inicio': 'Hora de inicio reserva',
             'hora_fin': 'Hora de termino de reserva', 
@@ -404,6 +395,8 @@ class Reserva_ordenForm(forms.ModelForm):
             'cantidad_vidrio': 'Cantidad vidrio',
             'cantidad_carton': 'Cantidad carton',
             'cantidad_aluminio': 'Cantidad aluminio',
+            'cantidad_metal': 'Cantidad metal',
+            'cantidad_electrodomesticos': 'Cantidad electrodomesticos',
             'latitud_posicion_ciudadano': 'Latitud_posicion_ciudadano',
             'longitud_posicion_ciudadano': 'Longitud_posicion_ciudadano',
             'estado': 'estado'
@@ -418,6 +411,8 @@ class Reserva_ordenForm(forms.ModelForm):
             'cantidad_vidrio': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad_carton': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad_aluminio': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_metal': forms.TextInput(attrs={'class': 'form-control'}),
+            'cantidad_electrodomesticos': forms.TextInput(attrs={'class': 'form-control'}),
             'latitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
             'longitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
             'estado': forms.TextInput(attrs={'class': 'form-control'}),
