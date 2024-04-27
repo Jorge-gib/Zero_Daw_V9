@@ -22,5 +22,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(template_name='Usuario/logout.html'), name='logout'),
     
     # Ruta de inicio, muestra la plantilla home.html
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),        
+    path('', TemplateView.as_view(template_name='Registro/zero_daw.html'), name='home'),        
 ]
