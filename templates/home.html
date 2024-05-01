@@ -48,6 +48,8 @@
     {% if user.tipo_usuario == "Operario_municipalidad" %}
     <div>
         <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
+        <li class="nav-item"><a href="{% url 'mostrar_resepciones_desechos' %}">Ver los registros de desechos</a></li>
+        <li class="nav-item"><a href="{% url 'mostrar_resepciones_desechos_reserva' %}">Ver los registros de desechos por reserva</a></li>
     </div>
     {% endif %}
     {% if user.tipo_usuario == "Reciclador" %}

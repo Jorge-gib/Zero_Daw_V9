@@ -705,9 +705,47 @@ def editar_orden_reciclaje(request, orden_reciclaje_id):
     # Si llegamos al final renderizamos el formulario
     return render(request, "Pagina/orden_reciclaje.html", {'form': form})
 ########################################################
+#######################################################################################
+# Muestra los registros de recicladores
+class MostrarResepciones(ListView):
+    model = Recepcion_desechos
+    template_name = 'Registro/ver_recicladores.html'
 
+    def get_queryset(self):
+        # Filtrar las órdenes de reciclaje asociadas al usuario actual
+        ordenes_usuario = Orden_reciclaje.objects.filter(id_user=self.request.user)
+        # Filtrar los registros de recepción de desechos relacionados con las órdenes de reciclaje del usuario actual
+        return Recepcion_desechos.objects.filter(id_orden__in=ordenes_usuario)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Obtener la comuna del usuario actual
+        comuna_usuario = self.request.user.comuna
+        # Filtrar la información por la comuna del usuario que ejecuta la vista
+        context['registros'] = self.get_queryset().filter(id_orden__id_user__comuna=comuna_usuario)
+        return context
+    
+#######################################################################################
 
+class MostrarResepcionesReserva(ListView):
+    model = Recepcion_desechos
+    template_name = 'Registro/ver_recicladores_reserva.html'
+
+    def get_queryset(self):
+        # Filtrar las órdenes de reciclaje asociadas al usuario actual
+        ordenes_usuario = Reserva_orden.objects.filter(id_user=self.request.user)
+        # Filtrar los registros de recepción de desechos relacionados con las órdenes de reciclaje del usuario actual
+        return Recepcion_desechos_reserva.objects.filter(id_orden__in=ordenes_usuario)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Obtener la comuna del usuario actual
+        comuna_usuario = self.request.user.comuna
+        # Filtrar la información por la comuna del usuario que ejecuta la vista
+        context['registros'] = self.get_queryset().filter(id_orden__id_user__comuna=comuna_usuario)
+        return context
+    
+#######################################################################################
 
 
 

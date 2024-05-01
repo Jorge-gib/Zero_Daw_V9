@@ -2,7 +2,9 @@ from django.urls import path
 from . import views
 from .views import (
     # Importaciones de vistas
+    MostrarResepcionesReserva,
     MostrarOrdenesCalificarCiudadanoReservaView,
+    MostrarResepciones,
     MostrarOrdenesCalificarRecolectorReservaView,
     MostrarReservaParaEliminarView,
     ActualizarReserva,
@@ -181,4 +183,10 @@ urlpatterns = [
     
     # Borrar registro de entrega de material
     path('borrar_registro_entrega_material/<int:registro_entrega_material_id>', views.borrar_registro_entrega_material, name="borrar_registro_entrega_material"),
+    
+    # Direccion url para ver desechos registrados
+     path('mostrar_resepciones_desechos', MostrarResepciones.as_view(), name='mostrar_resepciones_desechos'),
+     
+    # Direccion url para ver desechos registrados por reserva
+     path('mostrar_resepciones_desechos_reserva', MostrarResepcionesReserva.as_view(), name='mostrar_resepciones_desechos_reserva'),
 ]

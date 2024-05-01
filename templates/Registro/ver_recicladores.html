@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <h1 class="letras">Registros de Recepción de Desechos</h1>
+    <p class="letras">Aqui estan la lista de recepciones de desechos hechos por reciladores de su comuna</p>
+</div>
+
+{% if registros %}
+    <ul>
+        {% for registro in registros %}
+            <li>
+                <p class="letras">ID de registro: {{ registro.id_registro }}</p>
+                <p class="letras">Fecha de registro: {{ registro.fecha_registro }}</p>
+                <p class="letras">Cantidad de plástico: {{ registro.cantidad_plastico }}</p>
+                <p class="letras">Cantidad de vidrio: {{ registro.cantidad_vidrio }}</p>
+                <p class="letras">Cantidad de cartón: {{ registro.cantidad_carton }}</p>
+                <p class="letras">Cantidad de aluminio: {{ registro.cantidad_aluminio }}</p>
+                <p class="letras">Cantidad de metal: {{ registro.cantidad_metal }}</p>
+                <p class="letras">Cantidad de electrodomésticos: {{ registro.cantidad_electrodomesticos }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2 class="letras">No hay registros de recepción de desechos disponibles</h2>
+{% endif %}
+
+<a href="{% url 'login' %}">Volver</a>
+
+{% endblock %}
