@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.contrib import messages
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 from .models import *
 from .forms import  Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -26,6 +29,7 @@ from django.views.generic import ListView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.shortcuts import redirect
+import os
 
 # Clase para borrar un usuario
 class UserDelete(DeleteView):
@@ -201,17 +205,35 @@ class RegistroUsuario(CreateView):
         # Verificar si el rut ya está registrado
         if UserModelo.objects.filter(rut=rut).exists():
             form.add_error('rut', 'El rut ya está registrado')
-            return render(self.request, 'Registro/primarykey.html', {'form': form})
+            return self.form_invalid(form)
 
         # Verificar si el usuario ya existe
         if UserModelo.objects.filter(username=username).exists():
             form.add_error('username', 'El usuario ya existe')
-            return render(self.request, 'Registro/us.html', {'form': form})
+            return self.form_invalid(form)
 
         # Guardar el objeto UserModelo
         self.object = form.save()
 
+        # Obtener la instancia de la imagen cargada
+        imagen_licencia = form.cleaned_data.get('licencia_automotriz')
+
+        # Guardar la imagen en la carpeta 'licencias'
+        if imagen_licencia:
+            fs = FileSystemStorage(location=settings.CV_UPLOAD_PATH)
+            nombre_archivo = os.path.basename(imagen_licencia.name)
+            fs.save(nombre_archivo, imagen_licencia)
+
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        error_messages = []
+        for field, errors in form.errors.items():
+            field_label = form.fields[field].label
+            error_messages.append(f"{field_label}: {', '.join(errors)}")
+        error_message = 'Por favor, corrija los siguientes errores: {}'.format(' - '.join(error_messages))
+        messages.error(self.request, error_message)
+        return self.render_to_response(self.get_context_data(form=form))
 # funcion para redireccionar en caso de que el rut que se ingrese ya exista
 def key(request):
     context={}

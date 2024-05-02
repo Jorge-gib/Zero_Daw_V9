@@ -4,6 +4,11 @@ import os
 # Construye rutas dentro del proyecto de esta manera: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Configuración de Django para archivos adjuntos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CV_UPLOAD_DIR = 'licencias/'
+CV_UPLOAD_PATH = os.path.join(MEDIA_ROOT, CV_UPLOAD_DIR)
+
 # ADVERTENCIA DE SEGURIDAD: ¡mantén la clave secreta utilizada en producción en secreto!
 SECRET_KEY = 'django-insecure-*u7&#g*6%cyj+a%+pvoovf&c357g&kc-165kh223*1ql_8digg'
 

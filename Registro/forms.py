@@ -59,7 +59,7 @@ class RegistroForm(UserCreationForm):
     comuna = models.CharField(max_length=80)
     codigo_postal = forms.IntegerField()
     telefono = forms.IntegerField()
-    licencia_automotriz = models.CharField(max_length=200, null=True)
+    licencia_automotriz = forms.ImageField()  # Cambiado a ImageField
     segundo_nombre_madre = models.CharField(max_length=100)
     tipo_usuario = forms.ChoiceField(choices=UserModelo.TIPO_USUARIO)
 
