@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponseNotAllowed
 from django.contrib import messages
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -769,5 +770,57 @@ class MostrarResepcionesReserva(ListView):
     
 #######################################################################################
 
+## Vista para mostrtar recolectores
+class MostrarRecolectores(LoginRequiredMixin, ListView):
+    model = UserModelo
+    template_name = 'Registro/ver_recolectores.html'
+    context_object_name = 'usuarios'
+
+    def get_queryset(self):
+        # Obtenemos la comuna del usuario actual
+        comuna_usuario_actual = self.request.user.comuna
+        
+        # Filtramos los usuarios que son recolectores y están en la misma comuna del usuario actual
+        queryset = UserModelo.objects.filter(tipo_usuario='Recolector', comuna=comuna_usuario_actual)
+        
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        # Si se ha seleccionado un usuario
+        if 'id_user' in request.GET:
+            id_user = request.GET['id_user']
+            # Redirigir a la URL 'autorizar_o_denegar' con el id_user como parámetro
+            return redirect(reverse_lazy('actualizar_recolector/', kwargs={'pk': id_user}))
+
+        return super().get(request, *args, **kwargs)
 
 
+##################################################################
+
+## Actualizar campo validar usuario para dar autorizacion al recolector
+
+
+################################
+def actualizar_recolector(request, id_user):
+    if request.method == 'GET':
+        # Aquí manejas la lógica para mostrar la confirmación de validación
+        # Puedes obtener el usuario usando el id pasado en la URL
+        usuario = get_object_or_404(UserModelo, id=id_user)
+        return render(request, 'Registro/autorizar_recolector.html', {'usuario': usuario})
+    elif request.method == 'POST':
+        # Obtener el usuario y eliminarlo
+        usuario = get_object_or_404(UserModelo, id=id_user)
+        usuario.delete()
+        # Redireccionar a la página de confirmación de validación o a donde corresponda
+        return redirect('confirmacion_validacion')
+    else:
+        return HttpResponseNotAllowed(['GET', 'POST'])
+    
+## Pagina de rechazo a recolerctor
+def rechazar(request):
+    context={}
+    return render(request, 'Registro/rechazar.html', context)
+# Pagina de asepto a recolerctor
+def confirmacion_validacion(request):
+    context={}
+    return render(request, 'Registro/confirmacion_validacion.html', context)

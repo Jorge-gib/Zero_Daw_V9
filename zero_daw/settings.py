@@ -5,7 +5,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuración de Django para archivos adjuntos
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 CV_UPLOAD_DIR = 'licencias/'
 CV_UPLOAD_PATH = os.path.join(MEDIA_ROOT, CV_UPLOAD_DIR)
 
@@ -99,11 +99,12 @@ USE_TZ = True
 # Archivos estáticos (CSS, JavaScript, Imágenes)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static', 'licencias'),  # Agregar la ruta a la carpeta 'licencias'
 ]
 STATIC_URL = '/static/'
-MEDIA_URL = '/images/'
-MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static', 'images')
-STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static', 'static-only')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Tipo de campo de clave primaria predeterminado
 AUTH_USER_MODEL = 'Registro.UserModelo'

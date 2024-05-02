@@ -1,7 +1,14 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+media_url = settings.MEDIA_URL
+from django.conf.urls.static import static
 from .views import (
     # Importaciones de vistas
+    MostrarRecolectores,
+    confirmacion_validacion,
+    rechazar,
+    actualizar_recolector,
     MostrarResepcionesReserva,
     MostrarOrdenesCalificarCiudadanoReservaView,
     MostrarResepciones,
@@ -189,4 +196,16 @@ urlpatterns = [
      
     # Direccion url para ver desechos registrados por reserva
      path('mostrar_resepciones_desechos_reserva', MostrarResepcionesReserva.as_view(), name='mostrar_resepciones_desechos_reserva'),
-]
+     
+     # Direccion url para mostrar recolectores para validar
+     path('mostrar_recolectores', MostrarRecolectores.as_view(), name='mostrar_recolectores'),
+     
+     #Autorizar o denegar a usuario recolector
+     path('actualizar_recolector/<int:id_user>/', views.actualizar_recolector, name='actualizar_recolector'),
+
+     
+     #Rechazo de recolector
+     path('rechazar', views.rechazar, name='rechazar'),
+     #Confirmar validazion
+     path('confirmacion_validacion', views.confirmacion_validacion, name='confirmacion_validacion'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <h1 class="letras">Usuarios Recolectores</h1>
+    <p class="letras">Seleccione un recolector para anular o ignorar</p>
+</div>
+
+{% if usuarios %}
+    <ul>
+        {% for usuario in usuarios %}
+            <li>
+                <p class="letras">Nombre: {{ usuario.first_name }}</p>
+                <p class="letras">Apellido: {{ usuario.last_name }}</p> 
+                <p class="letras">Comuna: {{ usuario.comuna }}</p>
+                <p class="letras">Teléfono: {{ usuario.telefono }}</p>
+                <p class="letras">Tipo de usuario: {{ usuario.get_tipo_usuario_display }}</p>
+                {% if usuario.licencia_automotriz %}
+                    <!-- Modifica la ruta de la imagen para buscarla en la carpeta 'licencias' dentro de 'static' -->
+                    <img src="{% static 'licencias/' %}{{ usuario.licencia_automotriz }}" alt="Licencia de conducir">
+                {% endif %}
+                <!-- Enviar el ID del usuario al hacer clic en el botón -->
+                <form method="POST" action="{% url 'actualizar_recolector' id_user=usuario.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id_user" value="{{ usuario.id }}">
+                    <button type="submit">Anular</button>
+                </form>
+                <form method="GET" action="{% url 'rechazar' %}">
+                    <button type="submit">Ignorar</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h1 class="letras">No hay usuarios recolectores disponibles</h1>
+{% endif %}
+
+<a href="{% url 'login' %}">Volver</a>
+
+{% endblock %}
