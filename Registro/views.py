@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from .models import *
-from .forms import  Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from .forms import  ResepcionDesechosForms, Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -824,3 +824,69 @@ def rechazar(request):
 def confirmacion_validacion(request):
     context={}
     return render(request, 'Registro/confirmacion_validacion.html', context)
+
+#######################################################################################
+## Vista para mostrtar ordenes de reciclaje para resepcionar desechos
+
+class MostrarOrdenesResepcionar(LoginRequiredMixin, ListView):
+    model = Orden_reciclaje
+    template_name = 'Registro/mostrar_ordenes_para_resepcionar.html'
+    context_object_name = 'ordenes'
+
+    def post(self, request, *args, **kwargs):
+        id_orden = request.POST.get('id_orden')
+        if id_orden:
+            # Obtener la orden de reciclaje
+            
+
+            # Redirigir a la URL 'hacer_resepcion_desechos' con el id_orden como parámetro
+            return redirect(reverse_lazy('hacer_resepcion_desechos', kwargs={'pk': id_orden}))
+
+        # Si no se ha enviado un id_orden, continuar con la vista actual
+        return super().get(request, *args, **kwargs)
+
+##########################################################################################
+## Vista para mostrtar ordenes de reciclaje para resepcionar desechos
+
+##################################################################
+#Hacer una recepcion de desechos
+def HacerResepcionDesechosView(request, id_orden):
+    # Lógica para obtener la orden con el id proporcionado
+    orden = Orden_reciclaje.objects.get(id_orden=id_orden)
+    orden = Orden_reciclaje.objects.get(pk=id_orden)
+            
+            # Actualizar el campo estado a "Expirado"
+    orden.estado = "Expirado"
+    orden.save()
+
+    if request.method == 'POST':
+        form = ResepcionDesechosForms(request.POST)
+        
+        if form.is_valid():
+            # Guardar la información en el modelo Recepcion_desechos
+            fecha_registro = form.cleaned_data['fecha_registro']
+            cantidad_plastico = form.cleaned_data['cantidad_plastico']
+            cantidad_vidrio = form.cleaned_data['cantidad_vidrio']
+            cantidad_carton = form.cleaned_data['cantidad_carton']
+            cantidad_aluminio = form.cleaned_data['cantidad_aluminio']
+            cantidad_metal = form.cleaned_data['cantidad_metal']
+            cantidad_electrodomesticos = form.cleaned_data['cantidad_electrodomesticos']
+            
+            recepcion = Recepcion_desechos.objects.create(
+                id_orden=orden,  # Usando el objeto orden en lugar del ID
+                fecha_registro=fecha_registro,
+                cantidad_plastico=cantidad_plastico,
+                cantidad_vidrio=cantidad_vidrio,
+                cantidad_carton=cantidad_carton,
+                cantidad_aluminio=cantidad_aluminio,
+                cantidad_metal=cantidad_metal,
+                cantidad_electrodomesticos=cantidad_electrodomesticos
+            )
+            recepcion.save()
+
+            # Redirigir a la confirmación
+            return render(request, 'Registro/confirmacion_resepcion_desechos.html', {'form': form, 'orden_id': id_orden})
+            
+    else:
+        form = Reserva_ordenForm()
+    return render(request, 'Registro/hacer_resepcion_desechos.html', {'form': form, 'orden_id': id_orden})

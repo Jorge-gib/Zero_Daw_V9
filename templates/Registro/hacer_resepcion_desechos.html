@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script>
+    function verificarCampos() {
+        var fecha_registro = document.getElementById("fecha_registro").value;
+        var cantidad_plastico = document.getElementById("cantidad_plastico").value;
+        var cantidad_vidrio = document.getElementById("cantidad_vidrio").value;
+        var cantidad_carton = document.getElementById("cantidad_carton").value;
+        var cantidad_aluminio = document.getElementById("cantidad_aluminio").value;
+        var cantidad_metal = document.getElementById("cantidad_metal").value;
+        var cantidad_electrodomesticos = document.getElementById("cantidad_electrodomesticos").value;
+
+        if (fecha_registro === "" || cantidad_plastico === "" || cantidad_vidrio === "" || cantidad_carton === "" || cantidad_aluminio === "" || cantidad_metal === "" || cantidad_electrodomesticos === "") {
+            alert("Por favor, complete todos los campos para registrar la recepción de desechos. Si no hay reciclaje de un tipo específico, ingrese 0.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+<h1 class="letras">Registrar la recepción de desechos</h1>
+<div>
+  <p1 class="letras">Recuerde que debe llenar todos los campos para registrar la recepción de desechos.</p1>
+</div>
+{% if orden_id %}
+<form method="POST" action="{% url 'hacer_resepcion_desechos' orden_id %}" onsubmit="return verificarCampos()">
+  {% csrf_token %}
+
+  <!-- Campo oculto para el ID de la orden -->
+  <input type="hidden" name="id_orden" value="{{ orden_id }}">
+
+  <!-- Campos de entrada para los campos de Recepcion_desechos -->
+  <div>
+    <label class="letras" for="fecha_registro">Fecha de registro:</label>
+    <input type="date" name="fecha_registro" id="fecha_registro">
+  </div>
+  <div>
+      <label class="letras" for="cantidad_plastico">Cantidad de plástico:</label>
+      <input type="number" name="cantidad_plastico" id="cantidad_plastico" placeholder="Ingrese cantidad">
+  </div>
+  <div>
+    <label class="letras" for="cantidad_vidrio">Cantidad de vidrio:</label>
+    <input type="number" name="cantidad_vidrio" id="cantidad_vidrio" placeholder="Ingrese cantidad">
+  </div>
+  <div>
+    <label class="letras" for="cantidad_carton">Cantidad de cartón:</label>
+    <input type="number" name="cantidad_carton" id="cantidad_carton" placeholder="Ingrese cantidad">
+  </div>
+  <div>
+    <label class="letras" for="cantidad_aluminio">Cantidad de aluminio:</label>
+    <input type="number" name="cantidad_aluminio" id="cantidad_aluminio" placeholder="Ingrese cantidad">
+  </div>
+  <div>
+    <label class="letras" for="cantidad_metal">Cantidad de metal:</label>
+    <input type="number" name="cantidad_metal" id="cantidad_metal" placeholder="Ingrese cantidad">
+  </div>
+  <div>
+    <label class="letras" for="cantidad_electrodomesticos">Cantidad de electrodomésticos:</label>
+    <input type="number" name="cantidad_electrodomesticos" id="cantidad_electrodomesticos" placeholder="Ingrese cantidad">
+  </div>
+
+  <button type="submit">Guardar</button>
+  <button type="reset">Limpiar campos</button>
+</form>
+{% else %}
+    <p class="letras">No se encontró la orden para registrar la recepción de desechos.</p>
+{% endif %}
+
+<div id="success-message" style="display: none;">La recepción de desechos se registró con éxito.</div>
+
+</div>
+
+{% endblock %}

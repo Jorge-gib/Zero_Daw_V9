@@ -417,3 +417,31 @@ class Reserva_ordenForm(forms.ModelForm):
             'longitud_posicion_ciudadano': forms.TextInput(attrs={'class': 'form-control'}),
             'estado': forms.TextInput(attrs={'class': 'form-control'}),
         }
+        
+
+#Forms para crear resepcion_desechos
+class ResepcionDesechosForms(forms.ModelForm):
+    
+    class Meta:
+        model = Recepcion_desechos
+        fields = ['id_orden', 'fecha_registro', 'cantidad_plastico', 'cantidad_vidrio', 'cantidad_carton', 'cantidad_aluminio', 'cantidad_metal', 'cantidad_electrodomesticos']
+        labels = {
+            'id_orden': 'ID de la orden',
+            'fecha_registro': 'Fecha de registro',
+            'cantidad_plastico': 'Cantidad de plástico',
+            'cantidad_vidrio': 'Cantidad de vidrio',
+            'cantidad_carton': 'Cantidad de cartón',
+            'cantidad_aluminio': 'Cantidad de aluminio',
+            'cantidad_metal': 'Cantidad de metal',
+            'cantidad_electrodomesticos': 'Cantidad de electrodomésticos',
+        }
+        widgets = {
+            'id_orden': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha_registro': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'cantidad_plastico': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cantidad_vidrio': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cantidad_carton': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cantidad_aluminio': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cantidad_metal': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cantidad_electrodomesticos': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
