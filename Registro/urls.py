@@ -6,9 +6,11 @@ from django.conf.urls.static import static
 from .views import (
     # Importaciones de vistas
     MostrarRecolectores,
+    MostrarOrdenesResepcionarReserva,
     MostrarOrdenesResepcionar,
     confirmacion_validacion,
     HacerResepcionDesechosView,
+    HacerRecepcionDesechosReservaView,
     rechazar,
     actualizar_recolector,
     MostrarResepcionesReserva,
@@ -217,5 +219,13 @@ urlpatterns = [
      
      #Url para hacer resepcion de desechos
      path('hacer_resepcion_desechos/<int:id_orden>/', HacerResepcionDesechosView, name='hacer_resepcion_desechos'),
+     #################################################################################
+     
+     #Ver ordenes de reciclaje para rececpcionar desechos
+     path('Ver_ordenes_para_resepcionar_reserva/', MostrarOrdenesResepcionarReserva.as_view(), name='Ver_ordenes_para_resepcionar_reserva'),
+
+     
+     #Url para hacer resepcion de desechos
+     path('hacer_resepcion_desechos_reserva/<int:id_orden>/', HacerRecepcionDesechosReservaView, name='hacer_resepcion_desechos_reserva'),
      
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

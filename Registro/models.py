@@ -84,7 +84,7 @@ class Recepcion_desechos(models.Model):
 
 class Recepcion_desechos_reserva(models.Model):
     id_orden = models.ForeignKey(Reserva_orden, on_delete=models.CASCADE)
-    id_registro_reserva = models.AutoField(primary_key=True)
+    id_registro = models.AutoField(primary_key=True)
     fecha_registro = models.DateField()
     cantidad_plastico = models.IntegerField(default=0)
     cantidad_vidrio = models.IntegerField(default=0)
@@ -94,7 +94,7 @@ class Recepcion_desechos_reserva(models.Model):
     cantidad_electrodomesticos = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.id_registro_reserva)
+        return str(self.id_registro)
 
 class Calificacion_recolector_ciudadano(models.Model):
     id_orden = models.ForeignKey(Orden_reciclaje, on_delete=models.CASCADE)
