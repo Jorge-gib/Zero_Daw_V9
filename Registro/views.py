@@ -361,6 +361,14 @@ class TomarOrdenView(UpdateView):
     template_name = 'Registro/tomar_orden.html'
     success_url = reverse_lazy('confirmacion_posicion_recolector')
 
+    def form_valid(self, form):
+        # Lógica adicional para validar y guardar el formulario
+        # Guardar la instancia del formulario pero no el rut_recolector si viene vacio
+        orden_reciclaje = form.save(commit=False)
+        if not form.cleaned_data['rut_recolector']:
+            del orden_reciclaje.rut_recolector
+        orden_reciclaje.save()
+        return super().form_valid(form)
     
 
 ###############################################################################################################

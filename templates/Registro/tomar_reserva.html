@@ -4,6 +4,7 @@
 
 {% block content %}
   <h1 class="letras">Toma una orden de reserva</h1>
+  <p class="letras">Debe ingresar su rut para identificarlo en la orden</p>
   {% if reserva_orden %}
     <form method="POST" action="{% url 'tomar_reserva' reserva_orden.id_orden %}">
       {% csrf_token %}
@@ -17,6 +18,10 @@
       <div>
         <label class="letras" for="longitud_posicion_recolector">Longitud:</label>
         <input type="number" name="longitud_posicion_recolector" value="{{ reserva_orden.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
+      </div>
+      <div>
+        <label class="letras" for="rut_recolector">RUT Recolector:</label>
+        <input type="text" name="rut_recolector" value="{{ reserva_orden.rut_recolector }}" placeholder="RUT Recolector" maxlength="10" >
       </div>
       <input type="hidden" name="estado" value="Orden tomada">
       <button type="submit">Actualizar Orden</button>
