@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+   <div>
+    <h1 class="letras">Gestion de pagos</h1>
+   </div>
+  
+    {% csrf_token %}
+    <div class="content container">
+        <p class="letras">Listo, ya se envio la promesa de pago</p>
+    </div>
+    <a href="{% url 'login' %}">Volver</a>
+    
+{% endblock %}

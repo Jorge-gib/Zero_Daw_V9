@@ -125,6 +125,7 @@ class Registro_pago(models.Model):
     id_registro = models.ForeignKey(Recepcion_desechos, on_delete=models.CASCADE)
     id_pago = models.AutoField(primary_key=True)
     fecha_pago = models.DateField()
+    telefono_reciclador = models.IntegerField(default=0)
     total_material_reciclado = models.IntegerField(default=0)
     monto_pago = models.IntegerField(default=0)
 
@@ -135,6 +136,7 @@ class Registro_pago_reserva(models.Model):
     id_registro = models.ForeignKey(Recepcion_desechos_reserva, on_delete=models.CASCADE)
     id_pago = models.AutoField(primary_key=True)
     fecha_pago = models.DateField()
+    telefono_reciclador = models.IntegerField(default=0)
     total_material_reciclado = models.IntegerField(default=0)
     monto_pago = models.IntegerField(default=0)
 

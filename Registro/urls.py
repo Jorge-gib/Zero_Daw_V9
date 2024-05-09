@@ -6,6 +6,10 @@ from django.conf.urls.static import static
 from .views import (
     # Importaciones de vistas
     MostrarRecolectores,
+    HacerResepcionDesechosView,
+    PagoRegistradoView,
+    AgregarPagoView,
+    CalculoPagoView,
     MostrarOrdenesResepcionarReserva,
     MostrarOrdenesResepcionar,
     confirmacion_validacion,
@@ -227,5 +231,12 @@ urlpatterns = [
      
      #Url para hacer resepcion de desechos
      path('hacer_resepcion_desechos_reserva/<int:id_orden>/', HacerRecepcionDesechosReservaView, name='hacer_resepcion_desechos_reserva'),
+     
+     #Url para calular pago
+     path('pago_recolector/<int:id_registro>/<int:id_orden>/', CalculoPagoView, name='pago_recolector'),
+     #Url para registrar pago
+     path('registrar_pago/<int:id_registro>/<int:numero_telefono_usuario>/<int:total_residuos>/<int:costo_total>/', AgregarPagoView, name='registrar_pago'),
+     #Confirmacion registro pago
+     path('pago_registrado', PagoRegistradoView, name='pago_registrado'),
      
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

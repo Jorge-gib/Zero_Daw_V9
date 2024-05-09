@@ -4,7 +4,9 @@ from django.contrib import messages
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from .models import *
-from .forms import  ResepcionDesechosReservaForms, ResepcionDesechosForms, Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Registro_entrega_materialForm, Orden_reciclajeForm
+import datetime
+from django.http import Http404
+from .forms import  Registro_pagoForm, ResepcionDesechosReservaForms, ResepcionDesechosForms, Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -849,9 +851,8 @@ class MostrarOrdenesResepcionar(LoginRequiredMixin, ListView):
 def HacerResepcionDesechosView(request, id_orden):
     # Lógica para obtener la orden con el id proporcionado
     orden = Orden_reciclaje.objects.get(id_orden=id_orden)
-    orden = Orden_reciclaje.objects.get(pk=id_orden)
-            
-            # Actualizar el campo estado a "Expirado"
+    id_orden = orden.id_orden
+    # Actualizar el campo estado a "Expirado"
     orden.estado = "Expirado"
     orden.save()
 
@@ -860,28 +861,15 @@ def HacerResepcionDesechosView(request, id_orden):
         
         if form.is_valid():
             # Guardar la información en el modelo Recepcion_desechos
-            fecha_registro = form.cleaned_data['fecha_registro']
-            cantidad_plastico = form.cleaned_data['cantidad_plastico']
-            cantidad_vidrio = form.cleaned_data['cantidad_vidrio']
-            cantidad_carton = form.cleaned_data['cantidad_carton']
-            cantidad_aluminio = form.cleaned_data['cantidad_aluminio']
-            cantidad_metal = form.cleaned_data['cantidad_metal']
-            cantidad_electrodomesticos = form.cleaned_data['cantidad_electrodomesticos']
-            
-            recepcion = Recepcion_desechos.objects.create(
-                id_orden=orden,  # Usando el objeto orden en lugar del ID
-                fecha_registro=fecha_registro,
-                cantidad_plastico=cantidad_plastico,
-                cantidad_vidrio=cantidad_vidrio,
-                cantidad_carton=cantidad_carton,
-                cantidad_aluminio=cantidad_aluminio,
-                cantidad_metal=cantidad_metal,
-                cantidad_electrodomesticos=cantidad_electrodomesticos
-            )
+            recepcion = form.save(commit=False)
+            recepcion.id_orden = orden
             recepcion.save()
 
-            # Redirigir a la confirmación
-            return render(request, 'Registro/confirmacion_resepcion_desechos.html', {'form': form, 'orden_id': id_orden})
+            # Obtener el id_registro de la recepción guardada
+            id_registro = recepcion.id_registro
+
+            # Redirigir a la confirmación con el id_registro
+            return redirect(reverse_lazy('pago_recolector', kwargs={'id_registro': id_registro, 'id_orden': id_orden}))
             
     else:
         form = Reserva_ordenForm()
@@ -945,3 +933,60 @@ def HacerRecepcionDesechosReservaView(request, id_orden):
     else:
         form = ResepcionDesechosReservaForms()
     return render(request, 'Registro/hacer_resepcion_desechos_reserva.html', {'form': form, 'orden_id': id_orden})
+
+def CalculoPagoView(request, id_registro, id_orden):
+    try:
+        recepcion = Recepcion_desechos.objects.get(id_registro=id_registro)
+        orden = recepcion.id_registro
+        orden_id = recepcion.id_registro
+        orden_reciclaje = Orden_reciclaje.objects.get(id_orden=id_orden)
+    except Recepcion_desechos.DoesNotExist:
+        raise Http404("La recepción de desechos no existe")
+    except Orden_reciclaje.DoesNotExist:
+        raise Http404("La orden de reciclaje asociada no existe")
+
+    total_residuos = sum([
+        getattr(recepcion, f'cantidad_{material}') for material in ['plastico', 'vidrio', 'carton', 'aluminio', 'metal', 'electrodomesticos']
+    ])
+
+    precio_plastico = 50
+    precio_vidrio = 100
+    precio_carton = 30
+    precio_aluminio = 80
+    precio_metal = 70
+    precio_electrodomesticos = 200
+
+    costo_total = (recepcion.cantidad_plastico * precio_plastico) + \
+                  (recepcion.cantidad_vidrio * precio_vidrio) + \
+                  (recepcion.cantidad_carton * precio_carton) + \
+                  (recepcion.cantidad_aluminio * precio_aluminio) + \
+                  (recepcion.cantidad_metal * precio_metal) + \
+                  (recepcion.cantidad_electrodomesticos * precio_electrodomesticos)
+
+    # Obtener el número de teléfono del usuario autenticado
+    numero_telefono_usuario = request.user.telefono
+    
+    # Obtener el rut_recolector de la orden
+    rut_recolector = orden_reciclaje.rut_recolector
+
+    if request.method == 'POST':
+        url = reverse('registrar_pago', kwargs={'orden': orden, 'numero_telefono_usuario': numero_telefono_usuario, 'total_residuos': total_residuos, 'costo_total': costo_total})
+        return redirect(url)
+
+    return render(request, 'Registro/calculo_pago.html', {'costo_total': costo_total, 'total_residuos': total_residuos, 'orden': orden_reciclaje, 'numero_telefono_usuario': numero_telefono_usuario, 'rut_recolector': rut_recolector})
+
+
+
+def AgregarPagoView(request, id_registro, numero_telefono_usuario, total_residuos, costo_total):
+    registro_pago = Registro_pago.objects.create(
+        id_registro_id=id_registro,
+        fecha_pago=datetime.date.today(),
+        telefono_reciclador = request.user.telefono,
+        total_material_reciclado=total_residuos,
+        monto_pago=costo_total
+    )
+    return redirect('pago_registrado')  # Redirige a la página deseada después de guardar
+
+def PagoRegistradoView(request):
+    context={}
+    return render(request, 'Registro/confirmacion_pago.html', context)
