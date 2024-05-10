@@ -1048,4 +1048,40 @@ def AgregarPagoReservaView(request, id_registro, numero_telefono_usuario, total_
     )
     return redirect('pago_registrado')  # Redirige a la página deseada después de guardar
     
-   
+##################################################
+
+class MostrarPromesasPago(ListView):
+    model = Registro_pago
+    template_name = 'Registro/ver_promesas_pago.html'
+    context_object_name = 'promesas_pago'
+
+    def get_queryset(self):
+        # Obtener el usuario actual
+        user = self.request.user
+        # Obtener el rut del usuario que está ejecutando la vista
+        rut_usuario = user.rut
+        
+        # Filtrar los registros de pago por el rut del usuario
+        queryset = Registro_pago.objects.filter(
+            id_registro__id_orden__rut_recolector=rut_usuario
+        )
+        return queryset
+    
+##################################################
+
+class MostrarPromesasPagoReserva(ListView):
+    model = Registro_pago_reserva
+    template_name = 'Registro/ver_promesas_pago_reserva.html'
+    context_object_name = 'promesas_pago'
+
+    def get_queryset(self):
+        # Obtener el usuario actual
+        user = self.request.user
+        # Obtener el rut del usuario que está ejecutando la vista
+        rut_usuario = user.rut
+        
+        # Filtrar los registros de pago por el rut del usuario
+        queryset = Registro_pago_reserva.objects.filter(
+            id_registro__id_orden__rut_recolector=rut_usuario
+        )
+        return queryset

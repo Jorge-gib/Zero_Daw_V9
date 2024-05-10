@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <h1 class="letras">Registros de Promesas de Pago</h1>
+    <p class="letras">Aquí están los registros de promesas de pago realizados por recicladores de su comuna:</p>
+</div>
+
+{% if promesas_pago %}
+    <ul>
+        {% for promesa in promesas_pago %}
+            <li>
+                <p class="letras">ID de registro: {{ promesa.id_registro }}</p>
+                <p class="letras">ID de pago: {{ promesa.id_pago }}</p>
+                <p class="letras">Fecha de pago: {{ promesa.fecha_pago }}</p>
+                <p class="letras">Teléfono del reciclador: {{ promesa.telefono_reciclador }}</p>
+                <p class="letras">Total de material reciclado: {{ promesa.total_material_reciclado }}</p>
+                <p class="letras">Monto de pago: ${{ promesa.monto_pago }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2 class="letras">No hay registros de promesas de pago disponibles</h2>
+{% endif %}
+
+<a href="{% url 'login' %}">Volver</a>
+
+{% endblock %}
