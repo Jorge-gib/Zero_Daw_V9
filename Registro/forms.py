@@ -1,5 +1,5 @@
 from django import forms
-from .models import Registro_pago, Calificacion_recolector_ciudadano_reserva, Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Recepcion_desechos_reserva, Recepcion_desechos
+from .models import Registro_pago_reserva, Registro_pago, Calificacion_recolector_ciudadano_reserva, Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Recepcion_desechos_reserva, Recepcion_desechos
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 import itertools
@@ -496,6 +496,27 @@ class ResepcionDesechosReservaForms(forms.ModelForm):
 class Registro_pagoForm(forms.ModelForm):
     class Meta:
         model = Registro_pago
+        fields = ['id_registro', 'id_pago', 'fecha_pago', 'telefono_reciclador', 'total_material_reciclado', 'monto_pago']
+        labels = {
+            'id_registro': 'ID de la orden',
+            'id_pago': 'ID pago',
+            'fecha_pago': 'Fecha de pago',
+            'telefono_reciclador': 'Teléfono del reciclador',
+            'total_material_reciclado': 'Total de material reciclado',
+            'monto_pago': 'Monto de pago',
+        }
+        widgets = {
+            'id_registro': forms.TextInput(attrs={'class': 'form-control'}),
+            'id_pago': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha_pago': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'telefono_reciclador': forms.NumberInput(attrs={'class': 'form-control'}),
+            'total_material_reciclado': forms.NumberInput(attrs={'class': 'form-control'}),
+            'monto_pago': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+        
+class Registro_pago_reservaForm(forms.ModelForm):
+    class Meta:
+        model = Registro_pago_reserva
         fields = ['id_registro', 'id_pago', 'fecha_pago', 'telefono_reciclador', 'total_material_reciclado', 'monto_pago']
         labels = {
             'id_registro': 'ID de la orden',

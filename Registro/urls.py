@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 from .views import (
     # Importaciones de vistas
     MostrarRecolectores,
+    AgregarPagoReservaView,
+    CalculoPagoReservaView,
     HacerResepcionDesechosView,
     PagoRegistradoView,
     AgregarPagoView,
@@ -234,8 +236,12 @@ urlpatterns = [
      
      #Url para calular pago
      path('pago_recolector/<int:id_registro>/<int:id_orden>/', CalculoPagoView, name='pago_recolector'),
+     #Url para calular pago reserva
+     path('pago_recolector_reserva/<int:id_registro>/<int:id_orden>/', CalculoPagoReservaView, name='pago_recolector_reserva'),
      #Url para registrar pago
      path('registrar_pago/<int:id_registro>/<int:numero_telefono_usuario>/<int:total_residuos>/<int:costo_total>/', AgregarPagoView, name='registrar_pago'),
+     #Url para registrar pago
+     path('registrar_pago_reserva/<int:id_registro>/<int:numero_telefono_usuario>/<int:total_residuos>/<int:costo_total>/', AgregarPagoReservaView, name='registrar_pago_reserva'),
      #Confirmacion registro pago
      path('pago_registrado', PagoRegistradoView, name='pago_registrado'),
      
