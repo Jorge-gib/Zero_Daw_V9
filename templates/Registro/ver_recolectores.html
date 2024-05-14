@@ -9,6 +9,7 @@
 {% if usuarios %}
     <ul>
         {% for usuario in usuarios %}
+        {% if not usuario.validacion_recolector %}
             <li>
                 <p class="letras">Nombre: {{ usuario.first_name }}</p>
                 <p class="letras">Apellido: {{ usuario.last_name }}</p> 
@@ -31,6 +32,7 @@
                     <button type="submit">Ignorar</button>
                 </form>
             </li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% else %}
