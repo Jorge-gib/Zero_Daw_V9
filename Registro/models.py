@@ -6,7 +6,7 @@ class UserModelo(AbstractUser):
         ('Recolector', 'Recolector'),
         ('Reciclador', 'Reciclador'),
         ('Ciudadano', 'Ciudadano'),
-        ('Operario_municipalidad', 'Operario_municipalidad'),
+        ('Operario municipalidad', 'Operario municipalidad'),
     )
     rut = models.CharField(max_length=10)
     dv = models.IntegerField()
