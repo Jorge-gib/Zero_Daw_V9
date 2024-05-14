@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 from .views import (
     # Importaciones de vistas
     MostrarRecolectores,
+    MyLoginView,
+    AccesoDenegadoView,
     MostrarPromesasPagoReserva,
     MostrarPromesasPago,
     AgregarPagoReservaView,
@@ -250,5 +252,10 @@ urlpatterns = [
      path('Ver_promesas_pago', MostrarPromesasPago.as_view(), name='Ver_promesas_pago'),
      #Ver promesas de pago
      path('Ver_promesas_pago_reserva', MostrarPromesasPagoReserva.as_view(), name='Ver_promesas_pago_reserva'),
+     
+     #Validacion de recolector en login
+     path('login', MyLoginView.as_view(), name='login'),
+     #Pagina acceso denegeado
+     path('acceso_denegado', AccesoDenegadoView, name='acceso_denegado'),
      
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

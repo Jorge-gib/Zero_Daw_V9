@@ -1,9 +1,11 @@
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.http import HttpResponseNotAllowed
 from django.contrib import messages
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from .models import *
+from django.http import HttpResponseRedirect
 import datetime
 from django.http import Http404
 from .forms import  Registro_pago_reservaForm, Registro_pagoForm, ResepcionDesechosReservaForms, ResepcionDesechosForms, Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Registro_entrega_materialForm, Orden_reciclajeForm
@@ -806,13 +808,12 @@ def actualizar_recolector(request, id_user):
         usuario = get_object_or_404(UserModelo, id=id_user)
         return render(request, 'Registro/autorizar_recolector.html', {'usuario': usuario})
     elif request.method == 'POST':
-        # Obtener el usuario y eliminarlo
+        # Obtener el usuario y actualizar el campo validacion_recolector a True
         usuario = get_object_or_404(UserModelo, id=id_user)
-        usuario.delete()
+        usuario.validacion_recolector = True
+        usuario.save()
         # Redireccionar a la página de confirmación de validación o a donde corresponda
-        return redirect('confirmacion_validacion')
-    else:
-        return HttpResponseNotAllowed(['GET', 'POST'])
+        return redirect(reverse('confirmacion_validacion'))
     
 ## Pagina de rechazo a recolerctor
 def rechazar(request):
@@ -1085,3 +1086,24 @@ class MostrarPromesasPagoReserva(ListView):
             id_registro__id_orden__rut_recolector=rut_usuario
         )
         return queryset
+    
+################################################
+
+class MyLoginView(LoginView):
+    template_name = 'Usuario/login.html'
+
+    def form_valid(self, form):
+        # Recupera el usuario que está intentando iniciar sesión
+        username = form.cleaned_data.get('username')
+        user = UserModelo.objects.get(username=username)
+        
+        # Verifica si el usuario es un recolector y si el campo validacion_recolector es False
+        if user.tipo_usuario == 'Recolector' and not user.validacion_recolector:
+            return HttpResponseRedirect(reverse('acceso_denegado'))  # Redirige al usuario a la página de acceso_denegado
+        
+        return super().form_valid(form)
+#######################################################
+
+def AccesoDenegadoView(request):
+    context={}
+    return render(request, 'Usuario/acceso_denegado.html', context)
