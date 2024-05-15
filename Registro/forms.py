@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import models
 from django.forms import NumberInput
 import re
-
+from django.core.exceptions import ValidationError
 
 
 
@@ -51,16 +51,24 @@ class PassUpdateForm(forms.ModelForm):
 
 
 
-#Forms para crear un usuario
 class RegistroForm(UserCreationForm):
     rut = forms.CharField(max_length=12, label='RUT')
+    edad = forms.IntegerField(label='Edad')
 
-    def clean_rut(self):
-        rut = self.cleaned_data['rut']
+    def clean(self):
+        cleaned_data = super().clean()
+        rut = cleaned_data.get('rut')
+        edad = cleaned_data.get('edad')
+
         # Validar que el RUT tenga puntos y esté sin dígito verificador
-        if not re.match(r'^\d{1,2}\.\d{3}\.\d{3}$', rut):
-            raise forms.ValidationError('El RUT debe tener puntos y sin dígito verificador')
-        return rut
+        if rut and not re.match(r'^\d{1,2}\.\d{3}\.\d{3}$', rut):
+            self.add_error('rut', 'El RUT debe tener puntos y sin dígito verificador')
+
+        # Validar la edad
+        if edad and edad <= 18:
+            self.add_error('edad', 'La edad debe ser mayor o igual a 18 años')
+
+        return cleaned_data
 
     class Meta:
         model = UserModelo
@@ -118,9 +126,6 @@ class RegistroForm(UserCreationForm):
             'segundo_nombre_madre': forms.TextInput(attrs={'class': 'form-control'}),
             'tipo_usuario': forms.Select(attrs={'class': 'form-control'}),
         }
-
-
-
 # Forms para calificar recolector ciudadano        
 class Calificacion_recolector_ciudadanoForm(forms.ModelForm):
     class Meta:
