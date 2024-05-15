@@ -10,7 +10,7 @@
     {% with hay_ordenes_concluidas=False %}
         <ul>
             {% for orden in ordenes %}
-            {% if orden.estado != "Concluido" and orden.estado != "Calificado" %}
+            {% if orden.estado == "Orden tomada"%}
                     {% with hay_ordenes_concluidas=True %}
                        
                     <li>
@@ -46,6 +46,6 @@
     <para class="letras">No hay más registros de órdenes</para>
 {% endif %}
 
-<a href="{% url 'login' %}">Volver</a>
+<a href="{% url 'home' %}">Volver</a>
 
 {% endblock %}

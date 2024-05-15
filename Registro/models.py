@@ -48,6 +48,8 @@ class Orden_reciclaje(models.Model):
     def __str__(self):
         return str(self.id_orden)
 
+    def get_rut_recolector(self):
+        return self.rut_recolector if self.rut_recolector else ''
 class Reserva_orden(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
     id_orden = models.AutoField(primary_key=True)
@@ -69,6 +71,9 @@ class Reserva_orden(models.Model):
 
     def __str__(self):
         return str(self.id_orden)
+    def get_rut_recolector(self):
+        return self.rut_recolector if self.rut_recolector else ''
+    
 
 class Recepcion_desechos(models.Model):
     id_orden = models.ForeignKey(Orden_reciclaje, on_delete=models.CASCADE)

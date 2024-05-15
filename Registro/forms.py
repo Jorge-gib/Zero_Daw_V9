@@ -325,7 +325,11 @@ class Orden_reciclajeForm(forms.ModelForm):
         }
 #Forms para actualizar orden
 class OrdenUpdateForm(forms.ModelForm):
-    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.instance.rut_recolector:
+            self.fields.pop('rut_recolector')
+
     rut_recolector = forms.CharField(
         max_length=10,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'RUT Recolector'})
@@ -345,7 +349,7 @@ class OrdenUpdateForm(forms.ModelForm):
     class Meta:
         model = Orden_reciclaje
         fields = ['rut_recolector', 'latitud_posicion_recolector', 'longitud_posicion_recolector', 'estado']
-        
+
 #Forms para actualizar reserva
 class ReservaUpdateForm(forms.ModelForm):
     rut_recolector = forms.CharField(

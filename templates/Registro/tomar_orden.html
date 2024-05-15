@@ -20,9 +20,10 @@
         <input type="number" name="longitud_posicion_recolector" value="{{ orden_reciclaje.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
       </div>
       <div>
-        <label class="letras" for="rut_recolector">RUT Recolector:</label>
-        <input type="text" name="rut_recolector" value="{{ orden_reciclaje.rut_recolector }}" placeholder="RUT Recolector" maxlength="10" required>
-      </div>
+        <label class="letras" for="rut_recolector">RUT Recolector sin digito verificador y con puntos:</label>
+        <input type="text" name="rut_recolector" value="{{ orden_reciclaje.get_rut_recolector }}" placeholder="RUT Recolector" maxlength="10" required>
+    </div>
+    
       <input type="hidden" name="estado" value="Orden tomada">
       <button type="submit">Actualizar Orden</button>
       <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
