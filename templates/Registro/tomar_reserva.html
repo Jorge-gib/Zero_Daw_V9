@@ -4,9 +4,9 @@
 
 {% block content %}
   <h1 class="letras">Toma una orden de reserva</h1>
-  <p class="letras">Debe ingresar su rut para identificarlo en la orden</p>
+  <p class="letras">Debe ingresar su RUT para identificarlo en la orden</p>
   {% if reserva_orden %}
-    <form method="POST" action="{% url 'tomar_reserva' reserva_orden.id_orden %}">
+    <form method="POST" action="{% url 'tomar_reserva' reserva_orden.id_orden %}" onsubmit="return validarRut()">
       {% csrf_token %}
       <div class="letras">
         <p>ID orden: {{ reserva_orden.id_orden }}</p>
@@ -20,10 +20,11 @@
         <input type="number" name="longitud_posicion_recolector" value="{{ reserva_orden.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
       </div>
       <div>
-        <label class="letras" for="rut_recolector">RUT Recolector sin digito verificador:</label>
-        <input type="text" name="rut_recolector" value="{{ orden_reciclaje.get_rut_recolector }}" placeholder="RUT Recolector" maxlength="10" required>
-    </div>
-    
+        <label class="letras" for="rut_recolector">RUT Recolector sin dígito verificador y con puntos:</label>
+        <input type="text" name="rut_recolector" id="rut_recolector" value="{{ orden_reciclaje.get_rut_recolector }}" placeholder="Ejemplo: 12.345.678" maxlength="10" required>
+        <span id="rutError" style="color: red; display: none;">Ingrese el RUT sin dígito verificador y con puntos (Ejemplo: 12.345.678)</span>
+      </div>
+      
       <input type="hidden" name="estado" value="Orden tomada">
       <button type="submit">Actualizar Orden</button>
       <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
@@ -51,6 +52,16 @@
       } else {
         alert("Tu navegador no admite la geolocalización.");
       }
+    }
+
+    function validarRut() {
+      var rutInput = document.getElementById("rut_recolector").value;
+      var rutPattern = /^\d{1,2}\.\d{3}\.\d{3}$/; // Expresión regular para RUT sin dígito verificador y con puntos
+      if (!rutPattern.test(rutInput)) {
+        document.getElementById("rutError").style.display = "inline";
+        return false;
+      }
+      return true;
     }
   </script>
 

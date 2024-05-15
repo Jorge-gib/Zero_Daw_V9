@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <h1 class="letras">Agrege una calificacion al Ciudadano</h1>
+  <h1 class="letras">Agrega una calificación al Ciudadano</h1>
 
   <form method="POST" action="{% url 'agregar_calificacion_recolector_ciudadano' orden.id_orden %}">
     {% csrf_token %}
     <input type="hidden" name="id_calificacion" value="{{ id_calificacion }}">
     <div>
       <label class="letras" for="calificacion_estrellas_ciudadano">Calificación Estrellas Ciudadano:</label>
+      <!-- Utilizamos un div en lugar de una lista ul -->
       <div class="rateyo" id="calificacion_estrellas_ciudadano"></div>
       <input type="hidden" name="calificacion_estrellas_ciudadano" id="calificacion_estrellas_ciudadano_input" step="0.1" required>
     </div>
@@ -32,14 +33,18 @@
         precision: 1,
         minValue: 0,
         maxValue: 5,
+        fullStar: true, // Solo mostrar estrellas llenas
         onChange: function(rating, rateYoInstance) {
           $("#calificacion_estrellas_ciudadano_input").val(rating);
         }
       });
 
-      // Añadir estilo para mostrar las estrellas en una fila horizontal
+      // Aplicamos estilos para mostrar las estrellas horizontalmente y sin bordes
       $(".rateyo").css("display", "flex");
       $(".rateyo").css("justify-content", "center");
+      $(".rateyo").css("list-style-type", "none"); /* Para ocultar las viñetas de la lista */
+      $(".rateyo").css("padding", "0"); /* Para eliminar el relleno predeterminado de la lista */
+      $(".rateyo").css("margin", "0"); /* Para eliminar el margen predeterminado de la lista */
     });
   </script>
   

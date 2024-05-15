@@ -8,6 +8,7 @@ import datetime
 from django.contrib.auth.forms import UserCreationForm
 from django.db import models
 from django.forms import NumberInput
+import re
 
 
 
@@ -52,16 +53,14 @@ class PassUpdateForm(forms.ModelForm):
 
 #Forms para crear un usuario
 class RegistroForm(UserCreationForm):
-    rut = forms.CharField(max_length=10)
-    dv = forms.IntegerField()
-    edad = forms.IntegerField()
-    direccion = forms.CharField(max_length=50)
-    comuna = models.CharField(max_length=80)
-    codigo_postal = forms.IntegerField()
-    telefono = forms.IntegerField()
-    licencia_automotriz = forms.ImageField()  # Cambiado a ImageField
-    segundo_nombre_madre = models.CharField(max_length=100)
-    tipo_usuario = forms.ChoiceField(choices=UserModelo.TIPO_USUARIO)
+    rut = forms.CharField(max_length=12, label='RUT')
+
+    def clean_rut(self):
+        rut = self.cleaned_data['rut']
+        # Validar que el RUT tenga puntos y esté sin dígito verificador
+        if not re.match(r'^\d{1,2}\.\d{3}\.\d{3}$', rut):
+            raise forms.ValidationError('El RUT debe tener puntos y sin dígito verificador')
+        return rut
 
     class Meta:
         model = UserModelo
@@ -119,12 +118,6 @@ class RegistroForm(UserCreationForm):
             'segundo_nombre_madre': forms.TextInput(attrs={'class': 'form-control'}),
             'tipo_usuario': forms.Select(attrs={'class': 'form-control'}),
         }
-             
-             
-             
-        
-
-
 
 
 
@@ -325,10 +318,7 @@ class Orden_reciclajeForm(forms.ModelForm):
         }
 #Forms para actualizar orden
 class OrdenUpdateForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if not self.instance.rut_recolector:
-            self.fields.pop('rut_recolector')
+    
 
     rut_recolector = forms.CharField(
         max_length=10,
