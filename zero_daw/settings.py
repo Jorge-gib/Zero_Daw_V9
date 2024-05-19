@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 
+
 # Construye rutas dentro del proyecto de esta manera: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -10,10 +11,10 @@ CV_UPLOAD_DIR = 'licencias/'
 CV_UPLOAD_PATH = os.path.join(MEDIA_ROOT, CV_UPLOAD_DIR)
 
 # ADVERTENCIA DE SEGURIDAD: ¡mantén la clave secreta utilizada en producción en secreto!
-SECRET_KEY = 'django-insecure-*u7&#g*6%cyj+a%+pvoovf&c357g&kc-165kh223*1ql_8digg'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-*u7&#g*6%cyj+a%+pvoovf&c357g&kc-165kh223*1ql_8digg')
 
 # ADVERTENCIA DE SEGURIDAD: ¡no ejecutes con debug activado en producción!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -25,11 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'rest_framework.authtoken',
     'Registro',  # Aplicación de tu proyecto
-    'pwa',
     'api',
+    'rest_framework',
+    'pwa',
 ]
 
 # Middleware utilizado en la aplicación
@@ -67,12 +68,22 @@ TEMPLATES = [
 WSGI_APPLICATION = 'zero_daw.wsgi.application'
 
 # Configuración de la base de datos
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': '127.0.0.1:1521/XE',
+        'USER': 'ZERO_DAW',
+        'PASSWORD': 'jorge123',
+        'TEST': {
+            'USER': 'default_test',
+            'TBLSPACE': 'default_test_tbls',
+            'TBLSPACE_TMP': 'default_test_tbls_tmp',
+        },
+    },
+
 }
+
 
 # Validación de contraseñas
 AUTH_PASSWORD_VALIDATORS = [
