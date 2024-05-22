@@ -1,78 +1,84 @@
-<!-- base.html -->
 {% load static %}
 <html>
-    <head>
-        <title>{% block title %}{% endblock title %}</title>
-        {% block css %} {% endblock css %}
-        <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
-        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/fondo.css' %}">
-        <link rel="stylesheet" href="{% static 'css/registro.css' %}">
-        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
-        <link rel="stylesheet" href="{% static 'favicon.ico' %}">
-    </head>
-    <body>
-    {% block navbar %}
-    <!-- Cabecera -->
-    <div class="cabezera">
-        <nav id="navbar">
-            <div id="navbar-logo">
-                <img src="{% static 'images/logo_r.png' %}" alt="logo" style="width: 60px; height: 60px;">
-            </div>
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    {% block css %} {% endblock css %}
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/registro.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'favicon.ico' %}">
+</head>
+<body>
+{% block navbar %}
+<!-- Cabecera -->
+<div class="cabezera">
+    <nav id="navbar">
+        <div id="navbar-logo">
+            <img src="{% static 'images/logo_r.png' %}" alt="logo" style="width: 60px; height: 60px;">
+        </div>
 
-            <div>
-                <ul>            
-                    {% if not user.is_authenticated %}
-                    <li class="nav-item"><a href="{% url 'zero_daw' %}">Zero Daw</a></li>      
-                    <li class="nav-item"><a href="{% url 'somos' %}">Ley de reciclaje</a></li>
-                    <li class="nav-item"><a href="{% url 'video' %}">Introduccion al reciclaje</a></li>  
-                    <li class="nav-item"><a href="{% url 'registrar' %}">registrarse</a></li>
-                    <li class="nav-item"><a href="{% url 'login' %}">iniciar sesion</a></li>
-                    {% endif %}
+        <div>
+            <ul>
+                {% if not user.is_authenticated %}
+                <li class="nav-item"><a href="{% url 'zero_daw' %}">Zero Daw</a></li>
+                <li class="nav-item"><a href="{% url 'somos' %}">Ley de reciclaje</a></li>
+                <li class="nav-item"><a href="{% url 'video' %}">Introduccion al reciclaje</a></li>
+                <li class="nav-item"><a href="{% url 'registrar' %}">registrarse</a></li>
+                <li class="nav-item"><a href="{% url 'login' %}">iniciar sesion</a></li>
+                {% endif %}
 
-                    {% if user.is_authenticated %}
-                    {% if user.is_superuser %}
-                    <li class="nav-item"><a style="color: red;" href="{% url 'list_user' %}">Listar usuarios</a></li>
-                    {% endif %}
+                {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                <li class="nav-item"><a style="color: red;" href="{% url 'list_user' %}">Listar usuarios</a></li>
+                {% endif %}
 
-                    <li class="nav-item"><a href="{% url 'logout' %}">Cerrar sesion</a></li>
-                    <span class="ml-md-5" style="color: blue;"><strong>Bienvenido: {{ user.get_username }}</strong></span>
-                    <img src="{% static 'images/logo_reciclaje.png' %}" alt="logo" style="width: 60px; height: 60px;">
-                    {% endif %}                
-                </ul>
-            </div>                                 
-        </nav>
-    </div>
-    {% endblock %}
-    <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
-                {% block content %} {% endblock %}
-            </div>
+                <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                    {% csrf_token %}
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+                <li class="nav-item">
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Cerrar sesión
+                    </a>
+                </li>
+                <span class="ml-md-5" style="color: blue;"><strong>Bienvenido: {{ user.get_username }}</strong></span>
+                <img src="{% static 'images/logo_reciclaje.png' %}" alt="logo" style="width: 60px; height: 60px;">
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>
+{% endblock %}
+<div class="content container">
+    <div class="row">
+        <div class="col-md-8">
+            {% block content %} {% endblock %}
         </div>
     </div>
-   
-    {% block javascript %} {% endblock javascript %}
-    <script>
-        window.addEventListener("scroll", function () {
-          var header = document.querySelector(".cabezera");
-          var scrollPosition = window.scrollY;
-      
-          if (scrollPosition > 0) {
+</div>
+
+{% block javascript %} {% endblock javascript %}
+<script>
+    window.addEventListener("scroll", function () {
+        var header = document.querySelector(".cabezera");
+        var scrollPosition = window.scrollY;
+
+        if (scrollPosition > 0) {
             header.classList.add("fixed-header");
-          } else {
+        } else {
             header.classList.remove("fixed-header");
-          }
-        });
-      </script>
-      <footer>
-        <div id="navbar" class="video2">
-            <div class="video">
+        }
+    });
+</script>
+<footer>
+    <div id="navbar" class="video2">
+        <div class="video">
             <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-            </div>
-            <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
         </div>
-        
-      </footer>
-    </body>
+        <img src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+    </div>
+</footer>
+</body>
 </html>
