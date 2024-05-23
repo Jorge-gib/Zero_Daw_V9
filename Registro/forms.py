@@ -65,7 +65,7 @@ class RegistroForm(UserCreationForm):
             self.add_error('rut', 'El RUT debe tener puntos y sin dígito verificador')
 
         # Validar la edad
-        if edad and edad <= 18:
+        if edad and edad < 18:
             self.add_error('edad', 'La edad debe ser mayor o igual a 18 años')
 
         return cleaned_data
@@ -126,6 +126,7 @@ class RegistroForm(UserCreationForm):
             'segundo_nombre_madre': forms.TextInput(attrs={'class': 'form-control'}),
             'tipo_usuario': forms.Select(attrs={'class': 'form-control'}),
         }
+
 # Forms para calificar recolector ciudadano        
 class Calificacion_recolector_ciudadanoForm(forms.ModelForm):
     class Meta:

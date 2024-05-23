@@ -2,13 +2,27 @@
 {% load static %}
 
 {% block content %}
+<style>
+    .form-control {
+        width: 7cm;
+    }
+    .form-control-small {
+        width: 1cm;
+    }
+    .form-control-medium {
+        width: 5cm;
+    }
+    .form-control-extra-small {
+        width: 3cm;
+    }
+</style>
+
 <div class="blue-background">
-    
     <h1 class="titulo">Agregar USUARIO</h1>
     <div class="contenido">
-        <p1>Ingrese sus datos, en caso de tener licencia no adjunte licencia en el campo especificado"</p1>
+        <p>Ingrese sus datos, en caso de tener licencia no adjunte licencia en el campo especificado</p>
     </div>
-    
+
     <div class="content container">
         {% if messages %}
         <div class="alert alert-danger">
@@ -22,8 +36,132 @@
 
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">GRABAR</button>
+            
+            <div class="form-group">
+                <label for="first_name">Nombre:</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" value="{{ form.first_name.value|default_if_none:'' }}" required>
+                {% if form.first_name.errors %}
+                    <div class="alert alert-danger">{{ form.first_name.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="last_name">Apellido:</label>
+                <input type="text" id="last_name" name="last_name" class="form-control" value="{{ form.last_name.value|default_if_none:'' }}" required>
+                {% if form.last_name.errors %}
+                    <div class="alert alert-danger">{{ form.last_name.errors }}</div>
+                {% endif %}
+            </div>
+            <p>Su nombre de usuario es tu correo electrónico</p>
+            <div class="form-group">
+                <label for="username">Nombre de usuario:</label>
+                <input type="text" id="username" name="username" class="form-control" value="{{ form.username.value|default_if_none:'' }}" required>
+                {% if form.username.errors %}
+                    <div class="alert alert-danger">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="password1">Contraseña:</label>
+                <input type="password" id="password1" name="password1" class="form-control" required>
+                {% if form.password1.errors %}
+                    <div class="alert alert-danger">{{ form.password1.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="password2">Repita Contraseña:</label>
+                <input type="password" id="password2" name="password2" class="form-control" required>
+                {% if form.password2.errors %}
+                    <div class="alert alert-danger">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+            <p>Debe ingresar su RUT sin dígito verificador con puntos y guion</p>
+            <div class="form-group">
+                <label for="rut">RUT:</label>
+                <input type="text" id="rut" name="rut" class="form-control-extra-small" value="{{ form.rut.value|default_if_none:'' }}" required>
+                {% if form.rut.errors %}
+                    <div class="alert alert-danger">{{ form.rut.errors }}</div>
+                {% endif %}
+            </div>
+            <p>Si su dígito verificador es K reemplácelo por un uno</p>
+            <div class="form-group">
+                <label for="dv">DV:</label>
+                <input type="text" id="dv" name="dv" class="form-control-small" value="{{ form.dv.value|default_if_none:'' }}" required>
+                {% if form.dv.errors %}
+                    <div class="alert alert-danger">{{ form.dv.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" class="form-control-small" value="{{ form.edad.value|default_if_none:'' }}" required min="18">
+                {% if form.edad.errors %}
+                    <div class="alert alert-danger">{{ form.edad.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" class="form-control" value="{{ form.direccion.value|default_if_none:'' }}" required>
+                {% if form.direccion.errors %}
+                    <div class="alert alert-danger">{{ form.direccion.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="comuna">Comuna:</label>
+                <input type="text" id="comuna" name="comuna" class="form-control-medium" value="{{ form.comuna.value|default_if_none:'' }}" required>
+                {% if form.comuna.errors %}
+                    <div class="alert alert-danger">{{ form.comuna.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="codigo_postal">Código postal:</label>
+                <input type="number" id="codigo_postal" name="codigo_postal" class="form-control" value="{{ form.codigo_postal.value|default_if_none:'' }}" required>
+                {% if form.codigo_postal.errors %}
+                    <div class="alert alert-danger">{{ form.codigo_postal.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="number" id="telefono" name="telefono" class="form-control" value="{{ form.telefono.value|default_if_none:'' }}" required>
+                {% if form.telefono.errors %}
+                    <div class="alert alert-danger">{{ form.telefono.errors }}</div>
+                {% endif %}
+            </div>
+            <p>Si no es recolector, no es necesario llenar este campo</p>
+            <div class="form-group">
+                <label for="licencia_automotriz">Licencia automotriz:</label>
+                <input type="file" id="licencia_automotriz" name="licencia_automotriz" class="form-control">
+                {% if form.licencia_automotriz.errors %}
+                    <div class="alert alert-danger">{{ form.licencia_automotriz.errors }}</div>
+                {% endif %}
+            </div>
+            <p>Esta es la respuesta clave en caso de que pierda su password</p>
+            <div class="form-group">
+                <label for="segundo_nombre_madre">Segundo nombre madre:</label>
+                <input type="text" id="segundo_nombre_madre" name="segundo_nombre_madre" class="form-control" value="{{ form.segundo_nombre_madre.value|default_if_none:'' }}" required>
+                {% if form.segundo_nombre_madre.errors %}
+                    <div class="alert alert-danger">{{ form.segundo_nombre_madre.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="tipo_usuario">Tipo usuario:</label>
+                <select id="tipo_usuario" name="tipo_usuario" class="form-control" required>
+                    {% for key, value in form.tipo_usuario.field.choices %}
+                        <option value="{{ key }}" {% if form.tipo_usuario.value == key %}selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+                {% if form.tipo_usuario.errors %}
+                    <div class="alert alert-danger">{{ form.tipo_usuario.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">GRABAR</button>
         </form>
         <a href="{% url 'home' %}">Volver</a>
     </div>
