@@ -44,6 +44,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 # URL principal del proyecto
 ROOT_URLCONF = 'zero_daw.urls'
 
@@ -75,6 +76,9 @@ DATABASES = {
         'NAME': '127.0.0.1:1521/XE',
         'USER': 'ZERO_DAW_BD',
         'PASSWORD': 'jorge123',
+        'OPTIONS': {
+            'threaded': True,
+        },
         'TEST': {
             'USER': 'default_test',
             'TBLSPACE': 'default_test_tbls',
@@ -83,6 +87,7 @@ DATABASES = {
     },
 
 }
+
 
 
 # Validación de contraseñas
@@ -119,3 +124,5 @@ AUTH_USER_MODEL = 'Registro.UserModelo'
 # Redireccionamientos después del inicio de sesión/cierre de sesión
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+

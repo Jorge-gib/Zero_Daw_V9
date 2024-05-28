@@ -5,18 +5,18 @@
 {% block content %}
 <div>
     <h1 class="letras">Pago recolector</h1>
-    <p class="letras">Aquí está el monto a pagar y el RUT del recolector que entregó el servicio:</p>
+    <p class="letras">Aqui esta el monto a pagar y el RUT del recolector que entrego el servicio:</p>
 </div>
 <div class="letras"> 
     <p class="letras">Monto a pagar: ${{ costo_total }}</p>
-    <p class="letras">RUT Recolector sin dígito verificador: {{ rut_recolector }}</p>
+    <p class="letras">RUT Recolector sin digito verificador: {{ rut_recolector }}</p>
 </div>
 
 {% if orden %}
     
     <form method="POST" action="{% url 'registrar_pago' orden numero_telefono_usuario total_residuos costo_total %}">
         {% csrf_token %}
-        <!-- Enviar el ID de la orden al hacer clic en el botón -->
+        <!-- Enviar el ID de la orden al hacer clic en el botÃ³n -->
         <div>
             <input type="hidden" name="id_registro" value="{{ orden.id_registro }}">
         </div>
@@ -32,7 +32,7 @@
         <button type="submit">Siguiente</button>
     </form>
 {% else %}
-    <p class="letras">No se encontró información para mostrar.</p>
+    <p class="letras">No se encontro informacion para mostrar.</p>
 {% endif %}
 
 <div>
