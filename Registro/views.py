@@ -967,11 +967,11 @@ def CalculoPagoView(request, id_registro, id_orden):
     ])
 
     precio_plastico = 50
-    precio_vidrio = 100
-    precio_carton = 30
-    precio_aluminio = 80
-    precio_metal = 70
-    precio_electrodomesticos = 200
+    precio_vidrio = 200
+    precio_carton = 300
+    precio_aluminio = 700
+    precio_metal = 700
+    precio_electrodomesticos = 2000
 
     costo_total = (recepcion.cantidad_plastico * precio_plastico) + \
                   (recepcion.cantidad_vidrio * precio_vidrio) + \
@@ -1007,11 +1007,11 @@ def CalculoPagoReservaView(request, id_registro, id_orden):
     ])
 
     precio_plastico = 50
-    precio_vidrio = 100
-    precio_carton = 30
-    precio_aluminio = 80
-    precio_metal = 70
-    precio_electrodomesticos = 200
+    precio_vidrio = 200
+    precio_carton = 300
+    precio_aluminio = 700
+    precio_metal = 700
+    precio_electrodomesticos = 2000
 
     costo_total = (recepcion.cantidad_plastico * precio_plastico) + \
                   (recepcion.cantidad_vidrio * precio_vidrio) + \
