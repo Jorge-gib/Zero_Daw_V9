@@ -987,10 +987,10 @@ def CalculoPagoView(request, id_registro, id_orden):
     rut_recolector = orden_reciclaje.rut_recolector
 
     if request.method == 'POST':
-        url = reverse('registrar_pago', kwargs={'orden': orden, 'numero_telefono_usuario': numero_telefono_usuario, 'total_residuos': total_residuos, 'costo_total': costo_total})
+        url = reverse('registrar_pago', kwargs={'orden': id_registro, 'numero_telefono_usuario': numero_telefono_usuario, 'total_residuos': total_residuos, 'costo_total': costo_total})
         return redirect(url)
 
-    return render(request, 'Registro/calculo_pago.html', {'costo_total': costo_total, 'total_residuos': total_residuos, 'orden': orden_reciclaje, 'numero_telefono_usuario': numero_telefono_usuario, 'rut_recolector': rut_recolector})
+    return render(request, 'Registro/calculo_pago.html', {'costo_total': costo_total, 'total_residuos': total_residuos, 'orden': id_registro, 'numero_telefono_usuario': numero_telefono_usuario, 'rut_recolector': rut_recolector})
 ###########################################
 def CalculoPagoReservaView(request, id_registro, id_orden):
     try:
@@ -1032,7 +1032,7 @@ def CalculoPagoReservaView(request, id_registro, id_orden):
         url = reverse('registrar_pago_reserva', kwargs={'orden': orden, 'numero_telefono_usuario': numero_telefono_usuario, 'total_residuos': total_residuos, 'costo_total': costo_total})
         return redirect(url)
 
-    return render(request, 'Registro/calculo_pago_reserva.html', {'costo_total': costo_total, 'total_residuos': total_residuos, 'orden': orden_reciclaje, 'numero_telefono_usuario': numero_telefono_usuario, 'rut_recolector': rut_recolector})
+    return render(request, 'Registro/calculo_pago_reserva.html', {'costo_total': costo_total, 'total_residuos': total_residuos, 'orden': id_registro, 'numero_telefono_usuario': numero_telefono_usuario, 'rut_recolector': rut_recolector})
 
 ###########################################
 
