@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Lista de ordenes{% endblock %}
+{% block title %}Lista de órdenes{% endblock %}
 
 {% block content %}
   <h1 class="letras">Toma una orden</h1>
-  <p class="letras">Debe ingresar su RUT para identificarlo en en el sistema</p>
+  <p class="letras">Complete la información necesaria para tomar una orden.</p>
   {% if orden_reciclaje %}
-    <form method="POST" action="{% url 'tomar_orden' orden_reciclaje.id_orden %}" onsubmit="return validarRut()">
+    <form method="POST" action="{% url 'tomar_orden' orden_reciclaje.id_orden %}" onsubmit="return validarFormulario()">
       {% csrf_token %}
       <div class="letras">
         <p>ID orden: {{ orden_reciclaje.id_orden }}</p>
@@ -18,11 +18,6 @@
       <div>
         <label class="letras" for="longitud_posicion_recolector">Longitud:</label>
         <input type="number" name="longitud_posicion_recolector" value="{{ orden_reciclaje.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
-      </div>
-      <div>
-        <label class="letras" for="rut_recolector">RUT Recolector sin dígito verificador y con puntos:</label>
-        <input type="text" name="rut_recolector" id="rut_recolector" value="{{ orden_reciclaje.get_rut_recolector }}" placeholder="Ejemplo: 12.345.678" maxlength="10" required>
-        <span id="rutError" style="color: red; display: none;">Ingrese el RUT sin dígito verificador y con puntos (Ejemplo: 12.345.678)</span>
       </div>
       
       <input type="hidden" name="estado" value="Orden tomada">
@@ -54,13 +49,8 @@
       }
     }
 
-    function validarRut() {
-      var rutInput = document.getElementById("rut_recolector").value;
-      var rutPattern = /^\d{1,2}\.\d{3}\.\d{3}$/; // Expresión regular para RUT sin dígito verificador y con puntos
-      if (!rutPattern.test(rutInput)) {
-        document.getElementById("rutError").style.display = "inline";
-        return false;
-      }
+    function validarFormulario() {
+      // Aquí puedes agregar validaciones adicionales si es necesario
       return true;
     }
   </script>

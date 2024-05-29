@@ -366,14 +366,16 @@ class TomarOrdenView(UpdateView):
     success_url = reverse_lazy('confirmacion_posicion_recolector')
 
     def form_valid(self, form):
-        # Lógica adicional para validar y guardar el formulario
-        # Guardar la instancia del formulario pero no el rut_recolector si viene vacio
+        # Obtener la instancia del formulario pero no guardar aún
         orden_reciclaje = form.save(commit=False)
-        if not form.cleaned_data['rut_recolector']:
-            del orden_reciclaje.rut_recolector
+        
+        # Asignar el rut del usuario actual al campo rut_recolector
+        orden_reciclaje.rut_recolector = self.request.user.rut
+        
+        # Guardar la instancia del formulario
         orden_reciclaje.save()
+        
         return super().form_valid(form)
-    
 
 ###############################################################################################################
 #Actualiza la reserva
@@ -382,6 +384,18 @@ class TomarReservaView(UpdateView):
     form_class = ReservaUpdateForm
     template_name = 'Registro/tomar_reserva.html'
     success_url = reverse_lazy('confirmacion_posicion_recolector')
+
+    def form_valid(self, form):
+        # Obtener la instancia del formulario pero no guardar aún
+        reserva_orden = form.save(commit=False)
+        
+        # Asignar el rut del usuario actual al campo rut_recolector
+        reserva_orden.rut_recolector = self.request.user.rut
+        
+        # Guardar la instancia del formulario
+        reserva_orden.save()
+        
+        return super().form_valid(form)
 
     
 

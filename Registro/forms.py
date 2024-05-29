@@ -324,15 +324,9 @@ class Orden_reciclajeForm(forms.ModelForm):
         }
 #Forms para actualizar orden
 class OrdenUpdateForm(forms.ModelForm):
-    
-
-    rut_recolector = forms.CharField(
-        max_length=10,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'RUT Recolector'})
-    )
     estado = forms.CharField(
         max_length=200,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'RUT Recolector'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Estado'})
     )
 
     latitud_posicion_recolector = forms.DecimalField(
@@ -344,28 +338,26 @@ class OrdenUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Orden_reciclaje
-        fields = ['rut_recolector', 'latitud_posicion_recolector', 'longitud_posicion_recolector', 'estado']
+        fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector', 'estado']
 
 #Forms para actualizar reserva
 class ReservaUpdateForm(forms.ModelForm):
-    rut_recolector = forms.CharField(
-        max_length=10,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'RUT Recolector'})
-    )
     estado = forms.CharField(
         max_length=200,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'RUT Recolector'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Estado'})
     )
+
     latitud_posicion_recolector = forms.DecimalField(
-        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Latitud'})
     )
     longitud_posicion_recolector = forms.DecimalField(
-        widget=NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Longitud'})
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.000001', 'placeholder': 'Longitud'})
     )
 
     class Meta:
         model = Reserva_orden
-        fields = ['rut_recolector','latitud_posicion_recolector', 'longitud_posicion_recolector','estado']
+        fields = ['latitud_posicion_recolector', 'longitud_posicion_recolector', 'estado']
+
 #Forms para cambiar el estado de la orden      
 class OrdenConcluir(forms.ModelForm):
     
