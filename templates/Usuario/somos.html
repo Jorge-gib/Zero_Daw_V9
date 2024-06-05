@@ -26,7 +26,7 @@ Ley de Reciclaje en Chile
 
 {% block content %}
 {% load static %} <!-- Agrega esta línea para cargar la etiqueta 'static' -->
-
+<br>
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
   <ol class="carousel-indicators">
     <li data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></li>
@@ -76,8 +76,8 @@ Ley de Reciclaje en Chile
     <span class="visually-hidden">siguiente</span>
   </a>
 </div>
-
-<div class="row">
+<br>
+<div id="texto" class="row">
   <div class="col">
     <h1 class="letras">Ley de Reciclaje en Chile</h1>
     <p class="letras">La Ley de Reciclaje en Chile tiene como objetivo promover y regular la gestión de residuos y fomentar el reciclaje en el país. Esta ley establece las responsabilidades de los productores, importadores, distribuidores y consumidores en el manejo de los residuos y busca reducir el impacto ambiental generado por su disposición inadecuada.</p>
@@ -97,14 +97,7 @@ $(document).ready(function() {
   });
 });
 </script>
-<footer>
-  <div id="navbar" class="video2">
-      <div class="video">
-      <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-      </div>
-      <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-  </div>
-  
-</footer>
+
+{{block.super}}
 
 {% endblock %}

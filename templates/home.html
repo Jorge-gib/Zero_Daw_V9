@@ -6,15 +6,15 @@
 
 {% block content %} 
 
-
-    <h2></h2>
     {% if user.is_authenticated  %}
     <div>
+        <br>
+        <h1 class="letras1">Bienvenido</h1>
         <img src="{% static 'images/logo_31.png' %}" alt="home" style="width: 250px; height: 250x;">
-        
-        <h1 class="letras">Bienvenido</h1>
-        <p class="letras">Hola - {{user.first_name}} {{user.last_name}}</p>
-        <p class="letras">Tu tipo de usuario es - {{user.tipo_usuario}}</p>
+        <div class="usuarioTipo">
+        <p class="hola">Hola - {{user.first_name}} {{user.last_name}}</p>
+        <p class="tipousuarioText">Tu tipo de usuario es - {{user.tipo_usuario}}</p>
+        </div>
         <br><br>
         
         
@@ -54,15 +54,7 @@
         <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
     </div>
     {% endif %}
-    <footer>
-        <div id="navbar" class="video2">
-            <div class="video">
-            <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-            </div>
-            <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-        </div>
-        
-    </footer>
-
+    
+    {{block.super}}
 
 {% endblock content %}

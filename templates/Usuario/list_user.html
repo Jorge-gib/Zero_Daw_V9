@@ -3,12 +3,14 @@
 {% block titulo_principal %} CRUD: Select * {% endblock %}
 
 {% block content %}
+<br>
 <div>
     <h1 class="letras">Usuario del sistema</h1>
 </div>
-<h1></h1>
+<br>
 {% if object_list %}
 {% for user in object_list %}
+<div class="detalleUsuario">
     <p class="letras">Nombre usuario: {{ user.username }}</p>
     <p class="letras">Nombre: {{ user.first_name }}</p>
     <p class="letras">Apellido: {{ user.last_name }}</p> 
@@ -18,21 +20,14 @@
     <p class="letras">Direccion: {{ user.direccion }}</p>
     <p class="letras">Telefono: {{ user.telefono }}</p> 
     <p class="letras">Rol en el sistema: {{ user.tipo_usuario}}</p>                 
-    <br>
+    
+</div>
 {% endfor %}
 
 {% else %}
 <h1 class="letras">No hay registros de user</h1>
 {% endif %}
 <a href="{% url 'login' %}">Volver</a>
-<footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-    
-</footer>
+
 
 {% endblock %}
