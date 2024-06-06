@@ -1,0 +1,88 @@
+/*========================================================Animaciones========================================================*/
+
+/* Animación de Fade-In y desplazamiento desde arriba */
+@keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Clase que aplica la animación */
+  .fade-in-down {
+    animation: fadeInDown 1s ease-in-out;
+  }
+  
+  /* Ocultar el formulario inicialmente */
+  .hidden {
+    opacity: 0;
+  }
+  
+  
+  /*Animación: Tarjeta rotativa*/
+  
+  /* Estilos de tarjeta para el formulario de registro */
+  
+  /* Contenedor de la tarjeta */
+  .card-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 600px; /* Ajusta esto según el tamaño que necesites */
+    margin: 0 auto; /* Centrar el contenedor */
+    position: relative;
+    height: 100%;
+  }
+  
+  /* Tarjeta */
+  .card {
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    position: relative;
+  }
+  
+  /* Lados de la tarjeta */
+  .card .card-front,
+  .card .card-back {
+    backface-visibility: hidden;
+    position: absolute;
+    width: 100%;
+    background-color: #bac2ac; 
+    padding: 20px;
+    border: 5px solid #b1bd9f;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    top: 0;
+    left: 0;
+  }
+  
+  /* Frente de la tarjeta */
+  .card .card-front {
+    transform: rotateY(0deg);
+    z-index: 2; /* Mantener el frente de la tarjeta en el frente */
+  }
+  
+  /* Parte trasera de la tarjeta */
+  .card .card-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+  }
+  
+  /* Girar la tarjeta */
+  .card.flipped {
+    transform: rotateY(180deg);
+    z-index: 2; /* Traer el reverso al frente durante el giro */
+  }
+  
+  .contenedorRegistro{
+    padding: 5px;
+    border-radius: 10px;
+    max-width: 600px;
+    height: 720px;
+    margin: auto;
+  
+  }

@@ -15,9 +15,9 @@ Registro
 
 {% block content %}
 <br>
-<div class="blue-background">
-<div id="registro" class="container">
-    <h1 class="display">Login</h1><br>
+<div class="blue-background hidden fade-in-down">
+<div id="registro" class="container ">
+    <h1 class="display">Inicia sesión</h1><br>
    
     <form method="POST" id="formulario">        
         {% csrf_token %}
@@ -60,4 +60,13 @@ Registro
   
 </div>
 {{block.super}}
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
 {% endblock %}

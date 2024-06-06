@@ -5,12 +5,12 @@
 {% block content %}
 <br>
 <div>
-    <h1 class="letras">Usuario del sistema</h1>
+    <h1 class="letras hidden fade-in-down">Usuario del sistema</h1>
 </div>
 <br>
 {% if object_list %}
 {% for user in object_list %}
-<div class="detalleUsuario">
+<div class="detalleUsuario hidden fade-in-down">
     <p class="letras">Nombre usuario: {{ user.username }}</p>
     <p class="letras">Nombre: {{ user.first_name }}</p>
     <p class="letras">Apellido: {{ user.last_name }}</p> 
@@ -28,6 +28,14 @@
 <h1 class="letras">No hay registros de user</h1>
 {% endif %}
 <a href="{% url 'login' %}">Volver</a>
+{% endblock content %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
 
-{% endblock %}
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
+{% endblock javascript %}

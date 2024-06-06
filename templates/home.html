@@ -7,17 +7,15 @@
 {% block content %} 
 
     {% if user.is_authenticated  %}
-    <div>
+    <div id="animatedDiv" class="hidden fade-in-down">
         <br>
         <h1 class="letras1">Bienvenido</h1>
-        <img src="{% static 'images/logo_31.png' %}" alt="home" style="width: 250px; height: 250x;">
+        <img src="{% static 'images/logo_31.png' %}" alt="home" style="width: 500px; height: 350px;">
         <div class="usuarioTipo">
         <p class="hola">Hola - {{user.first_name}} {{user.last_name}}</p>
         <p class="tipousuarioText">Tu tipo de usuario es - {{user.tipo_usuario}}</p>
         </div>
         <br><br>
-        
-        
     </div>
     {% endif %}
     {% if user.tipo_usuario == "Ciudadano" %}
@@ -58,3 +56,12 @@
     {{block.super}}
 
 {% endblock content %}
+{% block javascript %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var animatedDiv = document.getElementById("animatedDiv");
+        animatedDiv.classList.remove("hidden");
+        animatedDiv.classList.add("fade-in-down");
+    });
+</script>
+{% endblock javascript %}

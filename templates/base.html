@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="{% static 'css/fondo.css' %}">
         <link rel="stylesheet" href="{% static 'css/registro.css' %}">
         <link rel="stylesheet" href="{% static 'favicon.ico' %}">
+        <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+
     </head>
     <body>
     {% block navbar %}
@@ -59,7 +61,17 @@
             </div>
         </div>
     </div>
-   
+    {% block footer %}
+    <footer id="footer">
+      <div class="video2">
+          <div class="video">
+          <p class="letrasFoot">Sistema de reciclaje sin fines de lucro</p>
+          </div>
+          <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+      </div>
+    </footer>
+    {% endblock %}
+  </body>
     {% block javascript %} {% endblock javascript %}
     <script>
         window.addEventListener("scroll", function () {
@@ -73,15 +85,5 @@
           }
         });
       </script>
-      {% block footer %}
-      <footer id="footer">
-        <div class="video2">
-            <div class="video">
-            <p class="letrasFoot">Sistema de reciclaje sin fines de lucro</p>
-            </div>
-            <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-        </div>
-      </footer>
-      {% endblock %}
-    </body>
+   
 </html>

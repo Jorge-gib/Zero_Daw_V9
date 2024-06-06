@@ -9,17 +9,26 @@
 {% block content %}
 <br>
 
-<div class="titulo_presentacion">
+<div class="titulo_presentacion hidden fade-in-down">
     <h1 class="letrasZero" id="t">ZERO - DAW</h1>
 </div>
 <br>
-<div class="imagen">
+<div class="imagen hidden fade-in-down">
     <img id="i" src="{% static 'images/empresa.png' %}" alt="home" style="width: 250px; height: 250px;">
 </div>
 <br>
-<div class="letras2">
+<div class="letras2 hidden fade-in-down">
     <p>Zero Daw es un servicio sin fines de lucro cuyo objetivo es facilitar y garantizar los procesos de reciclaje para mejorar la situación ambiental a partir del reciclaje eficiente. Este servicio se financia a través de la remuneración de recolectores de desechos y empresas que deben asegurar el reciclaje de los desechos de los productos que ellos venden.</p>
 </div>
 
 {{ block.super }}
+{% endblock content %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
 {% endblock %}
