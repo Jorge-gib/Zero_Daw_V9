@@ -1101,7 +1101,7 @@ class MostrarPromesasPagoReserva(ListView):
         )
         return queryset
     
-################################################
+
 
 class MyLoginView(LoginView):
     template_name = 'Usuario/login.html'
@@ -1116,7 +1116,7 @@ class MyLoginView(LoginView):
             return HttpResponseRedirect(reverse('acceso_denegado'))  # Redirige al usuario a la página de acceso_denegado
         
         return super().form_valid(form)
-#######################################################
+
 
 def AccesoDenegadoView(request):
     context={}
