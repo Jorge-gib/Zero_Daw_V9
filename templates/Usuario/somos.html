@@ -26,7 +26,7 @@ Ley de Reciclaje en Chile
 
 {% block content %}
 {% load static %} <!-- Agrega esta línea para cargar la etiqueta 'static' -->
-
+<br>
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
   <ol class="carousel-indicators">
     <li data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></li>
@@ -76,8 +76,8 @@ Ley de Reciclaje en Chile
     <span class="visually-hidden">siguiente</span>
   </a>
 </div>
-
-<div class="row">
+<br>
+<div id="texto" class="row hidden fade-in-down">
   <div class="col">
     <h1 class="letras">Ley de Reciclaje en Chile</h1>
     <p class="letras">La Ley de Reciclaje en Chile tiene como objetivo promover y regular la gestión de residuos y fomentar el reciclaje en el país. Esta ley establece las responsabilidades de los productores, importadores, distribuidores y consumidores en el manejo de los residuos y busca reducir el impacto ambiental generado por su disposición inadecuada.</p>
@@ -89,22 +89,16 @@ Ley de Reciclaje en Chile
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{% endblock content %}
+{{block.super}}
 
-<script>
-$(document).ready(function() {
-  $('#carouselExample').carousel({
-    interval: 5000 // Cambia el intervalo aquí en milisegundos (5 segundos en este caso)
-  });
-});
-</script>
-<footer>
-  <div id="navbar" class="video2">
-      <div class="video">
-      <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-      </div>
-      <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-  </div>
-  
-</footer>
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
 {% endblock %}

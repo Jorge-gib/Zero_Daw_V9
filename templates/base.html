@@ -2,6 +2,7 @@
 {% load static %}
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{% endblock title %}</title>
         {% block css %} {% endblock css %}
         <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
@@ -9,6 +10,8 @@
         <link rel="stylesheet" href="{% static 'css/fondo.css' %}">
         <link rel="stylesheet" href="{% static 'css/registro.css' %}">
         <link rel="stylesheet" href="{% static 'favicon.ico' %}">
+        <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+
     </head>
     <body>
     {% block navbar %}
@@ -18,15 +21,14 @@
             <div id="navbar-logo">
                 <img src="{% static 'images/logo_r.png' %}" alt="logo" style="width: 60px; height: 60px;">
             </div>
-
             <div>
                 <ul>            
                     {% if not user.is_authenticated %}
                     <li class="nav-item"><a href="{% url 'zero_daw' %}">Zero Daw</a></li>      
                     <li class="nav-item"><a href="{% url 'somos' %}">Ley de reciclaje</a></li>
                     <li class="nav-item"><a href="{% url 'video' %}">Introduccion al reciclaje</a></li>  
-                    <li class="nav-item"><a href="{% url 'registrar' %}">registrarse</a></li>
-                    <li class="nav-item"><a href="{% url 'login' %}">iniciar sesion</a></li>
+                    <li class="nav-item"><a href="{% url 'registrar' %}">Registrarse</a></li>
+                    <li class="nav-item"><a href="{% url 'login' %}">Iniciar sesión</a></li>
                     {% endif %}
 
                     {% if user.is_authenticated %}
@@ -34,7 +36,14 @@
                     <li class="nav-item"><a style="color: red;" href="{% url 'list_user' %}">Listar usuarios</a></li>
                     {% endif %}
 
-                    <li class="nav-item"><a href="{% url 'logout' %}">Cerrar sesion</a></li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link" style="border: none; background: none;">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
                     <span class="ml-md-5" style="color: blue;"><strong>Bienvenido: {{ user.get_username }}</strong></span>
                     <img src="{% static 'images/logo_reciclaje.png' %}" alt="logo" style="width: 60px; height: 60px;">
                     {% endif %}                
@@ -45,12 +54,24 @@
     {% endblock %}
     <div class="content container">
         <div class="row">
-            <div class="col-md-8">
-                {% block content %} {% endblock %}
+            <div class="col-md-12 text-center">
+                {% block content %} 
+                
+                {% endblock %}
             </div>
         </div>
     </div>
-   
+    {% block footer %}
+    <footer id="footer">
+      <div class="video2">
+          <div class="video">
+          <p class="letrasFoot">Sistema de reciclaje sin fines de lucro</p>
+          </div>
+          <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+      </div>
+    </footer>
+    {% endblock %}
+  </body>
     {% block javascript %} {% endblock javascript %}
     <script>
         window.addEventListener("scroll", function () {
@@ -64,5 +85,5 @@
           }
         });
       </script>
-    </body>
+   
 </html>

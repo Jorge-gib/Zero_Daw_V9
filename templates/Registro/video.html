@@ -2,25 +2,27 @@
 {% load static %}
 
 {% block content %}
-<div class="t">
-    <h1 class="letras" id="t">Conozca mas sobre el mundo del reciclaje</h1>
+<br>
+<div class="t hidden fade-in-down">
+    <h1 class="letras1">Conozca mas sobre el mundo del reciclaje</h1>
 </div>  
-<div class="video">
+<div class="video hidden fade-in-down">
   <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/oHcSqUsjlWI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
-
-  <div class="letras">
+<br>
+  <div class="letras2 hidden fade-in-down">
     <p id="t_v">Es importante crear habitos para preservar nuestro planeta y por eso nuestro sistema contribuye a esta causa, facilita el proceso del reciclaje en el mundo moderno.</p>
-
 </div>
-<footer>
-  <div id="navbar" class="video2">
-      <div class="video">
-      <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-      </div>
-      <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-  </div>
-  
-</footer>
 
+{% endblock content %}
+{{block.super}}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
 {% endblock %}

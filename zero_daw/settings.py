@@ -105,4 +105,4 @@ AUTH_USER_MODEL = 'Registro.UserModelo'
 
 # Redireccionamientos después del inicio de sesión/cierre de sesión
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'

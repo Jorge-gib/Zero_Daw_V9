@@ -14,29 +14,30 @@ Registro
 {% endblock %}
 
 {% block content %}
-<div class="blue-background">
-<div id="registro" class="container">
-    <h1 class="display">Login</h1><br>
+<br>
+<div class="blue-background hidden fade-in-down">
+<div id="registro" class="container ">
+    <h1 class="display">Inicia sesión</h1><br>
    
-    <form method="POST" id="formulario">
+    <form method="POST" id="formulario">        
         {% csrf_token %}
-
+        
         <div class="form-group">
-            <label for="username">Nombre de Usuario</label><br>
-            <input name="username" class="form-control" type="text" placeholder="Ingrese su email aqui"/>
+            <label for="username">Ingresa tu correo:</label><br>
+            <input name="username" class="form-control" type="text" placeholder="Ingrese su email aqui..."/>
             <div class="bg-danger mt-1">{{ form.errors.username }}</div>
         </div>
 
         <div class="form-group">
-            <label for="password">Password</label><br>
-            <input name="password" class="form-control" type="password" placeholder="Ingrese si clave de acceso aqui"/>
+            <label for="password">Contraseña:</label><br>
+            <input name="password" class="form-control" type="password" placeholder="Ingrese su clave de acceso aqui..."/>
             <div class="bg-danger mt-1">{{ form.errors.password }}</div>
         </div>
 
 
         {% if form.non_field_errors %}
         <div class="form-group">
-            <div class="bg-danger mt-1 p-2">Login incorrecto!</div>
+            <div class="bg-danger mt-1 p-2" style="width:100px; height">Login incorrecto!</div>
         </div>  
         {% endif %}
         
@@ -58,13 +59,14 @@ Registro
    
   
 </div>
-<footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-    
-</footer>
+{{block.super}}
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
 {% endblock %}
