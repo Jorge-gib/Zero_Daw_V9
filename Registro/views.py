@@ -1063,7 +1063,6 @@ def AgregarPagoReservaView(request, id_registro, numero_telefono_usuario, total_
     )
     return redirect('pago_registrado')  # Redirige a la página deseada después de guardar
     
-##################################################
 
 class MostrarPromesasPago(ListView):
     model = Registro_pago
@@ -1082,7 +1081,7 @@ class MostrarPromesasPago(ListView):
         )
         return queryset
     
-##################################################
+
 
 class MostrarPromesasPagoReserva(ListView):
     model = Registro_pago_reserva
