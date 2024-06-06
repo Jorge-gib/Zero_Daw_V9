@@ -4,7 +4,6 @@
 {% block content %}
 <script>
     function verificarCampos() {
-        var fecha = document.getElementById("fecha_orden").value;
         var cantidad_plastico = document.getElementById("cantidad_plastico").value;
         var cantidad_vidrio = document.getElementById("cantidad_vidrio").value;
         var cantidad_carton = document.getElementById("cantidad_carton").value;
@@ -12,13 +11,10 @@
         var latitud = document.getElementById("latitud_posicion_ciudadano").value;
         var longitud = document.getElementById("longitud_posicion_ciudadano").value;
 
-        if (fecha === "" || cantidad_plastico === "" || cantidad_vidrio === "" || cantidad_carton === "" || cantidad_aluminio === "" || latitud === "" || longitud === "") {
+        if (cantidad_plastico === "" || cantidad_vidrio === "" || cantidad_carton === "" || cantidad_aluminio === "" || latitud === "" || longitud === "") {
             alert("Por favor, complete todos los campos para registrar la orden, en la cantidad de materiales si no reciclara nada coloque 0");
             return false;
         }
-
-        // Asignar la fecha actual al campo de fecha
-        document.getElementById("fecha_orden").value = new Date().toISOString().split('T')[0];
 
         // Asignar el estado "Iniciado" al campo oculto
         document.getElementById("estado").value = "Iniciado";
@@ -39,11 +35,8 @@
   <input type="hidden" name="id_user" value="{{ user.id }}">
 
   <!-- Campos de entrada para los campos de Orden_reciclaje -->
+  <input type="hidden" name="fecha_orden" id="fecha_orden">
 
-  <div>
-    <label class="letras" for="fecha_orden">Fecha de orden:</label>
-    <input type="date" name="fecha_orden" id="fecha_orden">
-  </div>
   <div>
       <div>
           <label class="letras" for="cantidad_plastico">Cantidad de plastico:</label>
@@ -61,6 +54,14 @@
         <label class="letras" for="cantidad_aluminio">Cantidad de aluminio:</label>
         <input type="number" name="cantidad_aluminio" id="cantidad_aluminio" placeholder="Ingrese cantidad">
     </div>
+    <div>
+        <label class="letras" for="cantidad_metal">Cantidad de metal:</label>
+        <input type="number" name="cantidad_metal" id="cantidad_metal" placeholder="Ingrese cantidad">
+    </div>
+    <div>
+        <label class="letras" for="cantidad_electrodomesticos">Cantidad de eletro domesticos:</label>
+        <input type="number" name="cantidad_electrodomesticos" id="cantidad_electrodomesticos" placeholder="Ingrese cantidad">
+    </div>
      
 
   <div>
@@ -71,7 +72,7 @@
       <label class="letras" for="longitud_posicion_ciudadano">Longitud:</label>
       <input type="number" name="longitud_posicion_ciudadano" id="longitud_posicion_ciudadano" step="0.000001" placeholder="Longitud">
   </div>
-  <input type="hidden" name="estado" value="Iniciado">
+  <input type="hidden" name="estado" id="estado" value="Iniciado">
 
   <button type="submit">Guardar</button>
   <button type="reset">Limpiar campos</button>
@@ -99,31 +100,22 @@
           alert("Tu navegador no admite la geolocalización.");
       }
   }
+
+  // Obtener el campo de entrada de fecha por su ID
+  const fechaOrdenInput = document.getElementById('fecha_orden');
+  
+  // Obtener la fecha actual en formato ISO (AAAA-MM-DD)
+  const fechaActual = new Date().toISOString().split('T')[0];
+  
+  // Asignar la fecha actual al campo de entrada de fecha
+  fechaOrdenInput.value = fechaActual;
 </script>
-<script>
-    // Obtener el campo de entrada de fecha por su ID
-    const fechaOrdenInput = document.getElementById('fecha_orden');
-  
-    // Obtener la fecha actual en formato ISO (AAAA-MM-DD)
-    const fechaActual = new Date().toISOString().split('T')[0];
-  
-    // Asignar la fecha actual al campo de entrada de fecha
-    fechaOrdenInput.value = fechaActual;
-  </script>
 
 <div>
 <a class="link" href="{% url 'verOrdenReciclaje' %}">Ver orden reciclaje</a>
 </div>
 <div>
-<a class="link" href="{% url 'login' %}">Volver</a>
+<a class="link" href="{% url 'home' %}">Volver</a>
 </div>
-<footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-    
-</footer>
+
 {% endblock %}

@@ -1,8 +1,32 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LoginView, LogoutView
+from django.conf import settings
+media_url = settings.MEDIA_URL
+from django.conf.urls.static import static
 from .views import (
     # Importaciones de vistas
+    MostrarRecolectores,
+    MyLoginView,
+    AccesoDenegadoView,
+    MostrarPromesasPagoReserva,
+    MostrarPromesasPago,
+    AgregarPagoReservaView,
+    CalculoPagoReservaView,
+    HacerResepcionDesechosView,
+    PagoRegistradoView,
+    AgregarPagoView,
+    CalculoPagoView,
+    MostrarOrdenesResepcionarReserva,
+    MostrarOrdenesResepcionar,
+    confirmacion_validacion,
+    HacerResepcionDesechosView,
+    HacerRecepcionDesechosReservaView,
+    rechazar,
+    actualizar_recolector,
+    MostrarResepcionesReserva,
     MostrarOrdenesCalificarCiudadanoReservaView,
+    MostrarResepciones,
     MostrarOrdenesCalificarRecolectorReservaView,
     MostrarReservaParaEliminarView,
     ActualizarReserva,
@@ -52,8 +76,10 @@ urlpatterns = [
     # Página Zero DAW
     path('zero_daw', views.zero_daw, name='zero_daw'),
     
+    
+    
     # Agregar calificación para recolector
-    path('agregar_calificacion_recolector/<int:id_orden>/', views.agregar_calificacion_recolector_reserva, name='agregar_calificacion_recolector_ciudadano'),
+    path('agregar_calificacion_recolector_reserva/<int:id_orden>/', views.agregar_calificacion_recolector_reserva, name='agregar_calificacion_recolector_reserva'),
     
     # Agregar calificación para ciudadano en reserva
     path('agregar_calificacion_ciudadano_reserva/<int:id_orden>/', views.agregar_calificacion_ciudadano_reserva, name='agregar_calificacion_ciudadano_reserva'),
@@ -142,14 +168,12 @@ urlpatterns = [
     # Ver calificación de recolector por ciudadano
     path('verCalificacionRecolectorCiudadano', views.verCalificacionRecolectorCiudadano, name="verCalificacionRecolectorCiudadano"),
     
-    # Ver calificación de reciclador
-    path('verCalificacionReciclador', views.verCalificacionReciclador, name="verCalificacionReciclador"),
+   
     
     # Ver registro de entrega de material
     path('verRegistroEntregaMaterial', views.verRegistroEntregaMaterial, name="verRegistroEntregaMaterial"),
     
-    # Agregar calificación de reciclador
-    path('agregar_calificacion_reciclador', views.agregar_calificacion_reciclador, name="agregar_calificacion_reciclador"),
+    
     
     # Agregar registro de entrega de material
     path('agregar_registro_entrega_material', views.agregar_registro_entrega_material, name="agregar_registro_entrega_material"),
@@ -160,8 +184,7 @@ urlpatterns = [
     # Editar calificación de recolector por ciudadano
     path('editar_calificacion_recolector_ciudadano/<int:calificacion_recolector_ciudadano_id>', views.editar_calificacion_recolector_ciudadano, name="editar_calificacion_recolector_ciudadano"),
     
-    # Editar calificación de reciclador
-    path('editar_calificacion_reciclador/<int:calificacion_reciclador_id>', views.editar_calificacion_reciclador, name="editar_calificacion_reciclador"),
+  
     
     # Editar registro de entrega de material
     path('editar_registro_entrega_matrial/<int:registro_entrega_matrial_id>', views.editar_registro_entrega_matrial, name="editar_registro_entrega_matrial"),
@@ -178,9 +201,64 @@ urlpatterns = [
     # Borrar calificación de recolector por ciudadano
     path('borrar_calificacion_recolector_ciudadano/<int:calificacion_recolector_ciudadano_id>', views.borrar_calificacion_recolector_ciudadano, name="borrar_calificacion_recolector_ciudadano"),
     
-    # Borrar calificación de reciclador
-    path('borrar_calificacion_reciclador/<int:calificacion_reciclador_id>', views.borrar_calificacion_reciclador, name="borrar_calificacion_reciclador"),
+    
     
     # Borrar registro de entrega de material
     path('borrar_registro_entrega_material/<int:registro_entrega_material_id>', views.borrar_registro_entrega_material, name="borrar_registro_entrega_material"),
-]
+    
+    # Direccion url para ver desechos registrados
+     path('mostrar_resepciones_desechos', MostrarResepciones.as_view(), name='mostrar_resepciones_desechos'),
+     
+    # Direccion url para ver desechos registrados por reserva
+     path('mostrar_resepciones_desechos_reserva', MostrarResepcionesReserva.as_view(), name='mostrar_resepciones_desechos_reserva'),
+     
+     # Direccion url para mostrar recolectores para validar
+     path('mostrar_recolectores', MostrarRecolectores.as_view(), name='mostrar_recolectores'),
+     
+     #Autorizar o denegar a usuario recolector
+     path('actualizar_recolector/<int:id_user>/', views.actualizar_recolector, name='actualizar_recolector'),
+
+     
+     #Rechazo de recolector
+     path('rechazar', views.rechazar, name='rechazar'),
+     #Confirmar validazion
+     path('confirmacion_validacion', views.confirmacion_validacion, name='confirmacion_validacion'),
+     
+     #Ver ordenes de reciclaje para rececpcionar desechos
+     path('Ver_ordenes_para_resepcionar/', MostrarOrdenesResepcionar.as_view(), name='Ver_ordenes_para_resepcionar'),
+
+     
+     #Url para hacer resepcion de desechos
+     path('hacer_resepcion_desechos/<int:id_orden>/', HacerResepcionDesechosView, name='hacer_resepcion_desechos'),
+     #################################################################################
+     
+     #Ver ordenes de reciclaje para rececpcionar desechos
+     path('Ver_ordenes_para_resepcionar_reserva/', MostrarOrdenesResepcionarReserva.as_view(), name='Ver_ordenes_para_resepcionar_reserva'),
+
+     
+     #Url para hacer resepcion de desechos
+     path('hacer_resepcion_desechos_reserva/<int:id_orden>/', HacerRecepcionDesechosReservaView, name='hacer_resepcion_desechos_reserva'),
+     
+     #Url para calular pago
+     path('pago_recolector/<int:id_registro>/<int:id_orden>/', CalculoPagoView, name='pago_recolector'),
+     #Url para calular pago reserva
+     path('pago_recolector_reserva/<int:id_registro>/<int:id_orden>/', CalculoPagoReservaView, name='pago_recolector_reserva'),
+     #Url para registrar pago
+     path('registrar_pago/<int:id_registro>/<int:numero_telefono_usuario>/<int:total_residuos>/<int:costo_total>/', AgregarPagoView, name='registrar_pago'),
+     #Url para registrar pago
+     path('registrar_pago_reserva/<int:id_registro>/<int:numero_telefono_usuario>/<int:total_residuos>/<int:costo_total>/', AgregarPagoReservaView, name='registrar_pago_reserva'),
+     #Confirmacion registro pago
+     path('pago_registrado', PagoRegistradoView, name='pago_registrado'),
+     #Ver promesas de pago
+     path('Ver_promesas_pago', MostrarPromesasPago.as_view(), name='Ver_promesas_pago'),
+     #Ver promesas de pago
+     path('Ver_promesas_pago_reserva', MostrarPromesasPagoReserva.as_view(), name='Ver_promesas_pago_reserva'),
+     
+     #Validacion de recolector en login
+     path('login', MyLoginView.as_view(), name='login'),
+     #Pagina acceso denegeado
+     path('acceso_denegado', AccesoDenegadoView, name='acceso_denegado'),
+     
+     path('logout/', LogoutView.as_view(), name='logout'),
+     
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

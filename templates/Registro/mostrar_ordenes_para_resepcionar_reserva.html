@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <h1 class="letras">Ordenes vigentes</h1>
+    <p class="letras">Seleccione la orden que desee para calificar al recolector</p>
+</div>
+
+{% if ordenes %}
+    {% with hay_ordenes_disponibles=False %}
+        <ul>
+            {% for orden in ordenes %}
+                {% if orden.estado == "Concluido" or orden.estado == "Calificado" %}
+                    {% with hay_ordenes_disponibles=True %}
+                        <li>
+                            <p class="letras">ID de orden: {{ orden.id_orden }}</p>
+                            <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
+                            <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+                            <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
+                            <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
+                            <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+                            <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
+                            <p class="letras">Cantidad electrodomesticos: {{ orden.cantidad_electrodomesticos }}</p>
+                            <p class="letras">Estado: {{ orden.estado }} </p>
+
+                            <!-- Enviar el ID de la orden al hacer clic en el botón -->
+                            
+                            <form method="POST" action="{% url 'hacer_resepcion_desechos_reserva' orden.id_orden %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="id_orden" value="{{ orden.id_orden }}">
+                                <button type="submit">Seleccionar</button>
+                            </form>
+                        </li>
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% if not hay_ordenes_disponibles %}
+            <p class="letras">No hay más órdenes disponibles</p>
+        {% endif %}
+    {% endwith %}
+{% else %}
+    <h1 class="letras">No hay más registros de órdenes</h1>
+{% endif %}
+
+<a href="{% url 'home' %}">Volver</a>
+
+{% endblock %}

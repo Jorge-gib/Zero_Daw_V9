@@ -1,6 +1,14 @@
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
-from .models import Calificacion_recolector_ciudadano_reserva, Reserva_orden, UserModelo, Calificacion_recolector_ciudadano, Orden_reciclaje, Calificacion_reciclador, Registro_entrega_material
-from .forms import  Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Calificacion_recicladorForm, Registro_entrega_materialForm, Orden_reciclajeForm
+from django.http import HttpResponseNotAllowed
+from django.contrib import messages
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from .models import *
+from django.http import HttpResponseRedirect
+import datetime
+from django.http import Http404
+from .forms import  Registro_pago_reservaForm, Registro_pagoForm, ResepcionDesechosReservaForms, ResepcionDesechosForms, Calificacion_recolector_reservaForm, ReservaConcluir, ReservaUpdateForm, Calificacion_ciudadanoForm, Calificacion_recolectorForm, OrdenConcluir, OrdenUpdateForm, Posicion_recolectorForm, PassUpdateForm, UserUpdateForm, Reserva_ordenForm, RegistroForm, Calificacion_recolector_ciudadanoForm, Registro_entrega_materialForm, Orden_reciclajeForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy 
 from django.shortcuts import redirect
@@ -26,6 +34,7 @@ from django.views.generic import ListView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.shortcuts import redirect
+import os
 
 # Clase para borrar un usuario
 class UserDelete(DeleteView):
@@ -201,17 +210,35 @@ class RegistroUsuario(CreateView):
         # Verificar si el rut ya está registrado
         if UserModelo.objects.filter(rut=rut).exists():
             form.add_error('rut', 'El rut ya está registrado')
-            return render(self.request, 'Registro/primarykey.html', {'form': form})
+            return self.form_invalid(form)
 
         # Verificar si el usuario ya existe
         if UserModelo.objects.filter(username=username).exists():
             form.add_error('username', 'El usuario ya existe')
-            return render(self.request, 'Registro/us.html', {'form': form})
+            return self.form_invalid(form)
 
         # Guardar el objeto UserModelo
         self.object = form.save()
 
+        # Obtener la instancia de la imagen cargada
+        imagen_licencia = form.cleaned_data.get('licencia_automotriz')
+
+        # Guardar la imagen en la carpeta 'licencias'
+        if imagen_licencia:
+            fs = FileSystemStorage(location=settings.CV_UPLOAD_PATH)
+            nombre_archivo = os.path.basename(imagen_licencia.name)
+            fs.save(nombre_archivo, imagen_licencia)
+
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        error_messages = []
+        for field, errors in form.errors.items():
+            field_label = form.fields[field].label
+            error_messages.append(f"{field_label}: {', '.join(errors)}")
+        error_message = 'Por favor, corrija los siguientes errores: {}'.format(' - '.join(error_messages))
+        messages.error(self.request, error_message)
+        return self.render_to_response(self.get_context_data(form=form))
 # funcion para redireccionar en caso de que el rut que se ingrese ya exista
 def key(request):
     context={}
@@ -297,10 +324,7 @@ def verCalificacionRecolectorCiudadano(request):
     calificacion_recolector_ciudadano = Calificacion_recolector_ciudadano.objects.all()
     return render(request, "Pagina/ver_calificacion_recolector_ciudadano.html", {'calificacion_recolector_ciudadano': calificacion_recolector_ciudadano})
 
-# Esta funcion ya no es valida
-def verCalificacionReciclador(request):
-    calificacion_reciclador = Calificacion_reciclador.objects.all()
-    return render(request, "Pagina/ver_calificacion_reciclador.html", {'calificacion_reciclador': calificacion_reciclador})
+
 # Funcion para ver registro material
 def verRegistroEntregaMaterial(request):
     registro_entrega_material = Registro_entrega_material.objects.all()
@@ -341,7 +365,17 @@ class TomarOrdenView(UpdateView):
     template_name = 'Registro/tomar_orden.html'
     success_url = reverse_lazy('confirmacion_posicion_recolector')
 
-    
+    def form_valid(self, form):
+        # Obtener la instancia del formulario pero no guardar aún
+        orden_reciclaje = form.save(commit=False)
+        
+        # Asignar el rut del usuario actual al campo rut_recolector
+        orden_reciclaje.rut_recolector = self.request.user.rut
+        
+        # Guardar la instancia del formulario
+        orden_reciclaje.save()
+        
+        return super().form_valid(form)
 
 ###############################################################################################################
 #Actualiza la reserva
@@ -350,6 +384,18 @@ class TomarReservaView(UpdateView):
     form_class = ReservaUpdateForm
     template_name = 'Registro/tomar_reserva.html'
     success_url = reverse_lazy('confirmacion_posicion_recolector')
+
+    def form_valid(self, form):
+        # Obtener la instancia del formulario pero no guardar aún
+        reserva_orden = form.save(commit=False)
+        
+        # Asignar el rut del usuario actual al campo rut_recolector
+        reserva_orden.rut_recolector = self.request.user.rut
+        
+        # Guardar la instancia del formulario
+        reserva_orden.save()
+        
+        return super().form_valid(form)
 
     
 
@@ -459,7 +505,7 @@ class MostrarOrdenesCalificarRecolectorReservaView(LoginRequiredMixin, ListView)
 
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
-        url = reverse_lazy('agregar_calificacion_recolector_ciudadano_reserva', args=[orden_id])
+        url = reverse_lazy('agregar_calificacion_recolector_reserva', args=[orden_id])
         
         # Actualizar el atributo 'estado' del modelo
         orden = Reserva_orden.objects.get(id_orden=orden_id)
@@ -510,18 +556,7 @@ class MostrarOrdenesCalificarCiudadanoReservaView(ListView):
 
 #################################################################################################################
 
-#Funicion eliminada
 
-def agregar_calificacion_reciclador(request):
-    if request.method == "POST":
-        form = Calificacion_recicladorForm(request.POST)
-        if form.is_valid():
-            model_instance = form.save(commit=False)
-            model_instance.save()
-            return redirect("/agregar_calificacion_reciclador")
-    else:
-        form = Calificacion_recicladorForm()
-        return render(request, "Pagina/agregar_calificacion_reciclador.html", {'form': form})
     
 ##########################################################################################################################
 # funcion para agregar registro entrega material
@@ -595,14 +630,6 @@ def borrar_calificacion_recolector_ciudadano(request, calificacion_recolector_ci
 
 
 ####################################################################################################################################
-#Funcion eliminada
-def borrar_calificacion_reciclador(request, calificacion_reciclador_id):
-    # Recuperamos la instancia de la carrera y la borramos
-    instancia = Calificacion_reciclador.objects.get(id=calificacion_reciclador_id)
-    instancia.delete()
-
-    # Después redireccionamos de nuevo a la lista
-    return redirect('verCalificacionReciclador')
 
 
 ###################################################################################################################################
@@ -672,27 +699,7 @@ def editar_calificacion_recolector_ciudadano(request, calificacion_recolector_ci
 ############################################################################################################################
 
 # Funcion eliminada
-def editar_calificacion_reciclador(request, calificacion_reciclador_id):
-    # Recuperamos la instancia de la carrera
-    instancia = Calificacion_reciclador.objects.get(id=calificacion_reciclador_id)
 
-    # Creamos el formulario con los datos de la instancia
-    form = Calificacion_recicladorForm(instance=instancia)
-
-    # Comprobamos si se ha enviado el formulario
-    if request.method == "POST":
-        # Actualizamos el formulario con los datos recibidos
-        form = Calificacion_recicladorForm(request.POST, instance=instancia)
-        # Si el formulario es válido...
-        if form.is_valid():
-            # Guardamos el formulario pero sin confirmarlo,
-            # así conseguiremos una instancia para manipular antes de grabar
-            instancia = form.save(commit=False)
-            # Podemos guardar cuando queramos
-            instancia.save()
-
-    # Si llegamos al final renderizamos el formulario
-    return render(request, "Pagina/calificacion_reciclador.html", {'form': form})
 
 
 ######################################################################################################################
@@ -747,9 +754,370 @@ def editar_orden_reciclaje(request, orden_reciclaje_id):
     # Si llegamos al final renderizamos el formulario
     return render(request, "Pagina/orden_reciclaje.html", {'form': form})
 ########################################################
+#######################################################################################
+# Muestra los registros de recicladores
+class MostrarResepciones(ListView):
+    model = Recepcion_desechos
+    template_name = 'Registro/ver_recicladores.html'
+    context_object_name = 'registros'
+
+    def get_queryset(self):
+        # Filtrar los registros de recepción de desechos por la comuna del usuario
+        comuna_usuario = self.request.user.comuna
+        queryset = Recepcion_desechos.objects.filter(id_orden__id_user__comuna=comuna_usuario)
+        return queryset
+    
+#######################################################################################
+class MostrarResepcionesReserva(ListView):
+    model = Recepcion_desechos
+    template_name = 'Registro/ver_recicladores_reserva.html'
+    context_object_name = 'registros'
+
+    def get_queryset(self):
+        # Filtrar los registros de recepción de desechos por la comuna del usuario
+        comuna_usuario = self.request.user.comuna
+        queryset = Recepcion_desechos.objects.filter(id_orden__id_user__comuna=comuna_usuario)
+        return queryset
+    
+########################################################################################
+
+    
+#######################################################################################
+
+## Vista para mostrtar recolectores
+class MostrarRecolectores(LoginRequiredMixin, ListView):
+    model = UserModelo
+    template_name = 'Registro/ver_recolectores.html'
+    context_object_name = 'usuarios'
+
+    def get_queryset(self):
+        # Obtenemos la comuna del usuario actual
+        comuna_usuario_actual = self.request.user.comuna
+        
+        # Filtramos los usuarios que son recolectores y están en la misma comuna del usuario actual
+        queryset = UserModelo.objects.filter(tipo_usuario='Recolector', comuna=comuna_usuario_actual)
+        
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        # Si se ha seleccionado un usuario
+        if 'id_user' in request.GET:
+            id_user = request.GET['id_user']
+            # Redirigir a la URL 'autorizar_o_denegar' con el id_user como parámetro
+            return redirect(reverse_lazy('actualizar_recolector/', kwargs={'pk': id_user}))
+
+        return super().get(request, *args, **kwargs)
 
 
+##################################################################
+
+## Actualizar campo validar usuario para dar autorizacion al recolector
 
 
+################################
+def actualizar_recolector(request, id_user):
+    if request.method == 'GET':
+        # Aquí manejas la lógica para mostrar la confirmación de validación
+        # Puedes obtener el usuario usando el id pasado en la URL
+        usuario = get_object_or_404(UserModelo, id=id_user)
+        return render(request, 'Registro/autorizar_recolector.html', {'usuario': usuario})
+    elif request.method == 'POST':
+        # Obtener el usuario y actualizar el campo validacion_recolector a True
+        usuario = get_object_or_404(UserModelo, id=id_user)
+        usuario.validacion_recolector = True
+        usuario.save()
+        # Redireccionar a la página de confirmación de validación o a donde corresponda
+        return redirect(reverse('confirmacion_validacion'))
+    
+## Pagina de rechazo a recolerctor
+def rechazar(request):
+    context={}
+    return render(request, 'Registro/rechazar.html', context)
+# Pagina de asepto a recolerctor
+def confirmacion_validacion(request):
+    context={}
+    return render(request, 'Registro/confirmacion_validacion.html', context)
+
+#######################################################################################
+## Vista para mostrtar ordenes de reciclaje para resepcionar desechos
+
+class MostrarOrdenesResepcionar(LoginRequiredMixin, ListView):
+    model = Orden_reciclaje
+    template_name = 'Registro/mostrar_ordenes_para_resepcionar.html'
+    context_object_name = 'ordenes'
+
+    def post(self, request, *args, **kwargs):
+        id_orden = request.POST.get('id_orden')
+        if id_orden:
+            # Obtener la orden de reciclaje
+            
+
+            # Redirigir a la URL 'hacer_resepcion_desechos' con el id_orden como parámetro
+            return redirect(reverse_lazy('hacer_resepcion_desechos', kwargs={'pk': id_orden}))
+
+        # Si no se ha enviado un id_orden, continuar con la vista actual
+        return super().get(request, *args, **kwargs)
+
+##########################################################################################
+## Vista para mostrtar ordenes de reciclaje para resepcionar desechos
+
+##################################################################
+#Hacer una recepcion de desechos
+def HacerResepcionDesechosView(request, id_orden):
+    # Lógica para obtener la orden con el id proporcionado
+    orden = Orden_reciclaje.objects.get(id_orden=id_orden)
+    id_orden = orden.id_orden
+    # Actualizar el campo estado a "Expirado"
+    orden.estado = "Expirado"
+    orden.save()
+
+    if request.method == 'POST':
+        form = ResepcionDesechosForms(request.POST)
+        
+        if form.is_valid():
+            # Guardar la información en el modelo Recepcion_desechos
+            recepcion = form.save(commit=False)
+            recepcion.id_orden = orden
+            recepcion.save()
+
+            # Obtener el id_registro de la recepción guardada
+            id_registro = recepcion.id_registro
+
+            # Redirigir a la confirmación con el id_registro
+            return redirect(reverse_lazy('pago_recolector', kwargs={'id_registro': id_registro, 'id_orden': id_orden}))
+            
+    else:
+        form = Reserva_ordenForm()
+    return render(request, 'Registro/hacer_resepcion_desechos.html', {'form': form, 'orden_id': id_orden})
+#########################################################################
+
+class MostrarOrdenesResepcionarReserva(LoginRequiredMixin, ListView):
+    model = Reserva_orden
+    template_name = 'Registro/mostrar_ordenes_para_resepcionar_reserva.html'
+    context_object_name = 'ordenes'
+
+    def post(self, request, *args, **kwargs):
+        id_orden = request.POST.get('id_orden')
+        if id_orden:
+            # Obtener la orden de reciclaje
+            
+
+            # Redirigir a la URL 'hacer_resepcion_desechos' con el id_orden como parámetro
+            return redirect(reverse_lazy('hacer_resepcion_desechos_reserva', kwargs={'pk': id_orden}))
+
+        # Si no se ha enviado un id_orden, continuar con la vista actual
+        return super().get(request, *args, **kwargs)
+##############################################################################
+
+def HacerRecepcionDesechosReservaView(request, id_orden):
+    # Lógica para obtener la orden con el id proporcionado
+  
+    orden = Reserva_orden.objects.get(id_orden=id_orden)
+    id_orden = orden.id_orden
+    # Actualizar el campo estado a "Expirado"
+    orden.estado = "Expirado"
+    orden.save()
+
+    if request.method == 'POST':
+        form = ResepcionDesechosReservaForms(request.POST)
+        
+        if form.is_valid():
+            # Guardar la información en el modelo Recepcion_desechos_reserva
+            fecha_registro = form.cleaned_data['fecha_registro']
+            cantidad_plastico = form.cleaned_data['cantidad_plastico']
+            cantidad_vidrio = form.cleaned_data['cantidad_vidrio']
+            cantidad_carton = form.cleaned_data['cantidad_carton']
+            cantidad_aluminio = form.cleaned_data['cantidad_aluminio']
+            cantidad_metal = form.cleaned_data['cantidad_metal']
+            cantidad_electrodomesticos = form.cleaned_data['cantidad_electrodomesticos']
+            
+            recepcion = Recepcion_desechos_reserva.objects.create(
+                id_orden=orden,  # Usando el objeto orden en lugar del ID
+                fecha_registro=fecha_registro,
+                cantidad_plastico=cantidad_plastico,
+                cantidad_vidrio=cantidad_vidrio,
+                cantidad_carton=cantidad_carton,
+                cantidad_aluminio=cantidad_aluminio,
+                cantidad_metal=cantidad_metal,
+                cantidad_electrodomesticos=cantidad_electrodomesticos
+            )
+            recepcion.save()
+            id_registro = recepcion.id_registro
+
+            # Redirigir a la confirmación
+            return redirect(reverse_lazy('pago_recolector_reserva', kwargs={'id_registro': id_registro, 'id_orden': id_orden}))
+            
+    else:
+        form = ResepcionDesechosReservaForms()
+    return render(request, 'Registro/hacer_resepcion_desechos_reserva.html', {'form': form, 'orden_id': id_orden})
+
+def CalculoPagoView(request, id_registro, id_orden):
+    try:
+        recepcion = Recepcion_desechos.objects.get(id_registro=id_registro)
+        orden = recepcion.id_registro
+        orden_id = recepcion.id_registro
+        orden_reciclaje = Orden_reciclaje.objects.get(id_orden=id_orden)
+    except Recepcion_desechos.DoesNotExist:
+        raise Http404("La recepción de desechos no existe")
+    except Orden_reciclaje.DoesNotExist:
+        raise Http404("La orden de reciclaje asociada no existe")
+
+    total_residuos = sum([
+        getattr(recepcion, f'cantidad_{material}') for material in ['plastico', 'vidrio', 'carton', 'aluminio', 'metal', 'electrodomesticos']
+    ])
+
+    precio_plastico = 50
+    precio_vidrio = 200
+    precio_carton = 300
+    precio_aluminio = 700
+    precio_metal = 700
+    precio_electrodomesticos = 2000
+
+    costo_total = (recepcion.cantidad_plastico * precio_plastico) + \
+                  (recepcion.cantidad_vidrio * precio_vidrio) + \
+                  (recepcion.cantidad_carton * precio_carton) + \
+                  (recepcion.cantidad_aluminio * precio_aluminio) + \
+                  (recepcion.cantidad_metal * precio_metal) + \
+                  (recepcion.cantidad_electrodomesticos * precio_electrodomesticos)
+
+    # Obtener el número de teléfono del usuario autenticado
+    numero_telefono_usuario = request.user.telefono
+    
+    # Obtener el rut_recolector de la orden
+    rut_recolector = orden_reciclaje.rut_recolector
+
+    if request.method == 'POST':
+        url = reverse('registrar_pago', kwargs={'orden': id_registro, 'numero_telefono_usuario': numero_telefono_usuario, 'total_residuos': total_residuos, 'costo_total': costo_total})
+        return redirect(url)
+
+    return render(request, 'Registro/calculo_pago.html', {'costo_total': costo_total, 'total_residuos': total_residuos, 'orden': id_registro, 'numero_telefono_usuario': numero_telefono_usuario, 'rut_recolector': rut_recolector})
+###########################################
+def CalculoPagoReservaView(request, id_registro, id_orden):
+    try:
+        recepcion = Recepcion_desechos_reserva.objects.get(id_registro=id_registro)
+        orden = recepcion.id_registro
+        orden_reciclaje = Reserva_orden.objects.get(id_orden=id_orden)
+    except Recepcion_desechos_reserva.DoesNotExist:
+        raise Http404("La recepción de desechos no existe")
+    except Reserva_orden.DoesNotExist:
+        raise Http404("La orden de reciclaje asociada no existe")
+
+    total_residuos = sum([
+        getattr(recepcion, f'cantidad_{material}') for material in ['plastico', 'vidrio', 'carton', 'aluminio', 'metal', 'electrodomesticos']
+    ])
+
+    precio_plastico = 50
+    precio_vidrio = 200
+    precio_carton = 300
+    precio_aluminio = 700
+    precio_metal = 700
+    precio_electrodomesticos = 2000
+
+    costo_total = (recepcion.cantidad_plastico * precio_plastico) + \
+                  (recepcion.cantidad_vidrio * precio_vidrio) + \
+                  (recepcion.cantidad_carton * precio_carton) + \
+                  (recepcion.cantidad_aluminio * precio_aluminio) + \
+                  (recepcion.cantidad_metal * precio_metal) + \
+                  (recepcion.cantidad_electrodomesticos * precio_electrodomesticos)
+
+     # Obtener el número de teléfono del usuario autenticado
+    numero_telefono_usuario = request.user.telefono
+    
+    # Obtener el rut_recolector de la orden
+    rut_recolector = orden_reciclaje.rut_recolector
+
+    
+
+    if request.method == 'POST':
+        url = reverse('registrar_pago_reserva', kwargs={'orden': orden, 'numero_telefono_usuario': numero_telefono_usuario, 'total_residuos': total_residuos, 'costo_total': costo_total})
+        return redirect(url)
+
+    return render(request, 'Registro/calculo_pago_reserva.html', {'costo_total': costo_total, 'total_residuos': total_residuos, 'orden': id_registro, 'numero_telefono_usuario': numero_telefono_usuario, 'rut_recolector': rut_recolector})
+
+###########################################
 
 
+def AgregarPagoView(request, id_registro, numero_telefono_usuario, total_residuos, costo_total):
+    registro_pago = Registro_pago.objects.create(
+        id_registro_id=id_registro,
+        fecha_pago=datetime.date.today(),
+        telefono_reciclador = request.user.telefono,
+        total_material_reciclado=total_residuos,
+        monto_pago=costo_total
+    )
+    return redirect('pago_registrado')  # Redirige a la página deseada después de guardar
+
+def PagoRegistradoView(request):
+    context={}
+    return render(request, 'Registro/confirmacion_pago.html', context)
+
+############################################
+
+def AgregarPagoReservaView(request, id_registro, numero_telefono_usuario, total_residuos, costo_total):
+    registro_pago = Registro_pago_reserva.objects.create(
+        id_registro_id=id_registro,
+        fecha_pago=datetime.date.today(),
+        telefono_reciclador = request.user.telefono,
+        total_material_reciclado=total_residuos,
+        monto_pago=costo_total
+    )
+    return redirect('pago_registrado')  # Redirige a la página deseada después de guardar
+    
+##################################################
+
+class MostrarPromesasPago(ListView):
+    model = Registro_pago
+    template_name = 'Registro/ver_promesas_pago.html'
+    context_object_name = 'promesas_pago'
+
+    def get_queryset(self):
+        # Obtener el usuario actual
+        user = self.request.user
+        # Obtener el rut del usuario que está ejecutando la vista
+        rut_usuario = user.rut
+        
+        # Filtrar los registros de pago por el rut del usuario
+        queryset = Registro_pago.objects.filter(
+            id_registro__id_orden__rut_recolector=rut_usuario
+        )
+        return queryset
+    
+##################################################
+
+class MostrarPromesasPagoReserva(ListView):
+    model = Registro_pago_reserva
+    template_name = 'Registro/ver_promesas_pago_reserva.html'
+    context_object_name = 'promesas_pago'
+
+    def get_queryset(self):
+        # Obtener el usuario actual
+        user = self.request.user
+        # Obtener el rut del usuario que está ejecutando la vista
+        rut_usuario = user.rut
+        
+        # Filtrar los registros de pago por el rut del usuario
+        queryset = Registro_pago_reserva.objects.filter(
+            id_registro__id_orden__rut_recolector=rut_usuario
+        )
+        return queryset
+    
+################################################
+
+class MyLoginView(LoginView):
+    template_name = 'Usuario/login.html'
+
+    def form_valid(self, form):
+        # Recupera el usuario que está intentando iniciar sesión
+        username = form.cleaned_data.get('username')
+        user = UserModelo.objects.get(username=username)
+        
+        # Verifica si el usuario es un recolector y si el campo validacion_recolector es False
+        if user.tipo_usuario == 'Recolector' and not user.validacion_recolector:
+            return HttpResponseRedirect(reverse('acceso_denegado'))  # Redirige al usuario a la página de acceso_denegado
+        
+        return super().form_valid(form)
+#######################################################
+
+def AccesoDenegadoView(request):
+    context={}
+    return render(request, 'Usuario/acceso_denegado.html', context)

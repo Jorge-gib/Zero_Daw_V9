@@ -42,27 +42,27 @@
         <li class="nav-item"><a class="link" href="{% url 'list_user' %}">Ver mi perfil</a></li>
         <li class="nav-item"><a class="link" href="{% url 'ReservaListGeolocalizar' %}">Buscar ubicacion ordenes de reserva</a></li>
         <li class="nav-item"><a class="link" href="{% url 'OrdenListGeolocalizar_para_ubicar_ciudadano' %}">Buscar ubicacion ordenes</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'Ver_promesas_pago' %}">Ver las promesas de pago</a></li>
+        <li class="nav-item"><a class="link" href="{% url 'Ver_promesas_pago_reserva' %}">Ver las promesas de pago or reserva</a></li>
     </div>
     {% endif %}
-    {% if user.tipo_usuario == "Operario_municipalidad" %}
+    
+    {% if user.tipo_usuario == "Operario municipalidad" %}
     <div>
         <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
+        <li class="nav-item"><a href="{% url 'mostrar_resepciones_desechos' %}">Ver los registros de desechos</a></li>
+        <li class="nav-item"><a href="{% url 'mostrar_resepciones_desechos_reserva' %}">Ver los registros de desechos por reserva</a></li>
+        <li class="nav-item"><a href="{% url 'mostrar_recolectores' %}">Ver los recolectores para aprobar o rechazar</a></li>
     </div>
     {% endif %}
     {% if user.tipo_usuario == "Reciclador" %}
     <div>
         <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
+        <li class="nav-item"><a href="{% url 'Ver_ordenes_para_resepcionar' %}">Registrar recepcion de desechos</a></li>
+        <li class="nav-item"><a href="{% url 'Ver_ordenes_para_resepcionar_reserva' %}">Registrar recepcion de desechos de las reservas</a></li>
     </div>
     {% endif %}
-    <footer>
-        <div id="navbar" class="video2">
-            <div class="video">
-            <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-            </div>
-            <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-        </div>
-        
-    </footer>
+    
 
 
 {% endblock content %}

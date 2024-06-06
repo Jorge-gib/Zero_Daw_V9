@@ -1,19 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
-# Modelo extendido de usuario que hereda de AbstractUser
 class UserModelo(AbstractUser):
     TIPO_USUARIO = (
         ('Recolector', 'Recolector'),
         ('Reciclador', 'Reciclador'),
         ('Ciudadano', 'Ciudadano'),
-        ('Operario_municipalidad', 'Operario_municipalidad'),
+        ('Operario municipalidad', 'Operario municipalidad'),
     )
     rut = models.CharField(max_length=10)
     dv = models.IntegerField()
     nombre = models.CharField(max_length=100)
     edad = models.IntegerField()  
-    direccion = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=150)
+    comuna = models.CharField(max_length=80)
     codigo_postal = models.IntegerField()
     telefono = models.IntegerField()
     licencia_automotriz = models.ImageField(upload_to='licencias/', blank=True, null=True)
@@ -23,19 +23,22 @@ class UserModelo(AbstractUser):
     new_password2 = models.CharField(max_length=50, null=True)
     groups = models.ManyToManyField(Group, related_name='usuarios')
     user_permissions = models.ManyToManyField(Permission, related_name='usuarios')
+    validacion_recolector = models.BooleanField(default=False)
 
     def __str__(self):
         return self.rut
 
-# Modelo para las órdenes de reciclaje
 class Orden_reciclaje(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
     id_orden = models.AutoField(primary_key=True)
     fecha_orden = models.DateField()
+    rut_recolector = models.CharField(max_length=10, null=True)
     cantidad_plastico = models.IntegerField(default=0)
     cantidad_vidrio = models.IntegerField(default=0)
     cantidad_carton = models.IntegerField(default=0)
     cantidad_aluminio = models.IntegerField(default=0)
+    cantidad_metal = models.IntegerField(default=0)
+    cantidad_electrodomesticos = models.IntegerField(default=0)
     latitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -45,17 +48,21 @@ class Orden_reciclaje(models.Model):
     def __str__(self):
         return str(self.id_orden)
 
-# Modelo para las reservas de órdenes
+    def get_rut_recolector(self):
+        return self.rut_recolector if self.rut_recolector else ''
 class Reserva_orden(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
     id_orden = models.AutoField(primary_key=True)
     fecha_orden = models.DateField()
+    rut_recolector = models.CharField(max_length=10, null=True)
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
     cantidad_plastico = models.IntegerField(default=0)
     cantidad_vidrio = models.IntegerField(default=0)
     cantidad_carton = models.IntegerField(default=0)
     cantidad_aluminio = models.IntegerField(default=0)
+    cantidad_metal = models.IntegerField(default=0)
+    cantidad_electrodomesticos = models.IntegerField(default=0)
     latitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -64,21 +71,38 @@ class Reserva_orden(models.Model):
 
     def __str__(self):
         return str(self.id_orden)
+    def get_rut_recolector(self):
+        return self.rut_recolector if self.rut_recolector else ''
+    
 
-# Modelo para los registros de entrega de material
-class Registro_entrega_material(models.Model):
-    id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)
+class Recepcion_desechos(models.Model):
+    id_orden = models.ForeignKey(Orden_reciclaje, on_delete=models.CASCADE)
     id_registro = models.AutoField(primary_key=True)
     fecha_registro = models.DateField()
     cantidad_plastico = models.IntegerField(default=0)
     cantidad_vidrio = models.IntegerField(default=0)
     cantidad_carton = models.IntegerField(default=0)
     cantidad_aluminio = models.IntegerField(default=0)
+    cantidad_metal = models.IntegerField(default=0)
+    cantidad_electrodomesticos = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.id_registro)
 
-# Modelo para las calificaciones de recolector y ciudadano
+class Recepcion_desechos_reserva(models.Model):
+    id_orden = models.ForeignKey(Reserva_orden, on_delete=models.CASCADE)
+    id_registro = models.AutoField(primary_key=True)
+    fecha_registro = models.DateField()
+    cantidad_plastico = models.IntegerField(default=0)
+    cantidad_vidrio = models.IntegerField(default=0)
+    cantidad_carton = models.IntegerField(default=0)
+    cantidad_aluminio = models.IntegerField(default=0)
+    cantidad_metal = models.IntegerField(default=0)
+    cantidad_electrodomesticos = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.id_registro)
+
 class Calificacion_recolector_ciudadano(models.Model):
     id_orden = models.ForeignKey(Orden_reciclaje, on_delete=models.CASCADE)
     id_calificacion = models.AutoField(primary_key=True)
@@ -90,7 +114,6 @@ class Calificacion_recolector_ciudadano(models.Model):
     def __str__(self):
         return str(self.id_calificacion)
 
-# Modelo para las calificaciones de recolector y ciudadano en reserva
 class Calificacion_recolector_ciudadano_reserva(models.Model):
     id_orden = models.ForeignKey(Reserva_orden, on_delete=models.CASCADE)
     id_calificacion = models.AutoField(primary_key=True)
@@ -102,12 +125,30 @@ class Calificacion_recolector_ciudadano_reserva(models.Model):
     def __str__(self):
         return str(self.id_calificacion)
 
-# Modelo para las calificaciones del reciclador
-class Calificacion_reciclador(models.Model):
-    id_registro = models.ForeignKey(Registro_entrega_material, on_delete=models.CASCADE)
-    id_calificacion = models.AutoField(primary_key=True)
-    calificacion_estrellas = models.FloatField()
-    opinion_servicio = models.CharField(max_length=400)
+class Registro_pago(models.Model):
+    
+    id_registro = models.ForeignKey(Recepcion_desechos, on_delete=models.CASCADE)
+    id_pago = models.AutoField(primary_key=True)
+    fecha_pago = models.DateField()
+    telefono_reciclador = models.IntegerField(default=0)
+    total_material_reciclado = models.IntegerField(default=0)
+    monto_pago = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.id_calificacion)
+        return str(self.id_pago)
+
+class Registro_pago_reserva(models.Model):
+    id_registro = models.ForeignKey(Recepcion_desechos_reserva, on_delete=models.CASCADE)
+    id_pago = models.AutoField(primary_key=True)
+    fecha_pago = models.DateField()
+    telefono_reciclador = models.IntegerField(default=0)
+    total_material_reciclado = models.IntegerField(default=0)
+    monto_pago = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.id_pago)
+
+
+
+    
+    

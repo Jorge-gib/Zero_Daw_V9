@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="blue-background">
+    
+    <h1 class="titulo">Ingreso recolector</h1>
+    
+    <div class="content container">
+        <p>Aun no está autorizado para ingresar al sistema. Debe esperar la autorización de la Municipalidad.</p>
+        <a href="{% url 'login' %}">Volver</a>
+    </div>
+</div>
+
+{% endblock %}

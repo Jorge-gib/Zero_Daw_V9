@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Pago Recolector{% endblock %}
+
+{% block content %}
+<div>
+    <h1 class="letras">Pago recolector</h1>
+    <p class="letras">Aquí está el monto a pagar y el RUT del recolector que entregó el servicio:</p>
+</div>
+<div class="letras"> 
+    <p class="letras">Monto a pagar: ${{ costo_total }}</p>
+    <p class="letras">RUT Recolector sin dígito verificador: {{ rut_recolector }}</p>
+</div>
+
+{% if orden %}
+    
+    <form method="POST" action="{% url 'registrar_pago_reserva' orden numero_telefono_usuario total_residuos costo_total %}">
+        {% csrf_token %}
+        <!-- Enviar el ID de la orden al hacer clic en el botón -->
+        <div>
+            <input type="hidden" name="id_registro" value="{{ orden.id_registro }}">
+        </div>
+        <div>
+            <input type="hidden" name="numero_telefono_usuario" value="{{ numero_telefono_usuario }}">
+        </div>
+        <div>
+            <input type="hidden" name="total_residuos" value="{{ total_residuos }}">
+        </div>
+        <div>
+            <input type="hidden" name="costo_total" value="{{ costo_total }}">
+        </div>
+        <button type="submit">Siguiente</button>
+    </form>
+{% else %}
+    <p class="letras">No se encontró información para mostrar.</p>
+{% endif %}
+
+<div>
+    <a href="{% url 'home' %}">Volver</a>
+</div>
+{% endblock %}

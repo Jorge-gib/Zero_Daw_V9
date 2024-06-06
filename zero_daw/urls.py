@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
+from Registro.views import MyLoginView
+
 
 # Configuración de las URLs del proyecto academico
 
@@ -18,7 +20,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
     
     # Rutas para iniciar y cerrar sesión
-    path('login/', LoginView.as_view(redirect_authenticated_user=True, template_name='Usuario/login.html'), name='login'),
+    path('login', MyLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(template_name='Usuario/logout.html'), name='logout'),
     
     # Ruta de inicio, muestra la plantilla home.html

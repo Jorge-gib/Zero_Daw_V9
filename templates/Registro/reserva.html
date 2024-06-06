@@ -65,6 +65,14 @@
   <label class="letras" for="cantidad_aluminio">Cantidad de aluminio:</label>
   <input type="number" name="cantidad_aluminio" id="cantidad_aluminio" placeholder="Ingrese cantidad">
 </div>
+<div>
+  <label class="letras" for="cantidad_metal">Cantidad de metal:</label>
+  <input type="number" name="cantidad_metal" id="cantidad_metal" placeholder="Ingrese cantidad">
+</div>
+<div>
+  <label class="letras" for="cantidad_electrodomesticos">Cantidad de electro domesticos:</label>
+  <input type="number" name="cantidad_electrodomesticos" id="cantidad_electrodomesticos" placeholder="Ingrese cantidad">
+</div>
 
   <div>
       <label class="letras" for="latitud_posicion_ciudadano">Latitud:</label>
@@ -106,16 +114,8 @@
 <a class="link" href="{% url 'reserva_list' %}">Ver orden reciclaje</a>
 </div>
 <div>
-<a class="link" href="{% url 'login' %}">Volver</a>
+<a class="link" href="{% url 'home' %}">Volver</a>
 </div>
-<footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-    
-</footer>
+
 
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+   <div>
+    <h1 class="letras">Gestion de validacion de recolectores</h1>
+   </div>
+  
+    {% csrf_token %}
+    <div class="content container">
+        <p class="letras">Usted ha autorizado al recolector</p>
+    </div>
+    <a href="{% url 'home' %}">Volver</a>
+    
+{% endblock %}

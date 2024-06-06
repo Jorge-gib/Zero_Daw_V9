@@ -97,7 +97,7 @@ def geolocalizacion_ciudadano_orden_normal(request, id_orden):
 # Función para mostrar la geolocalización de un recolector
 def geolocalizacion_recolector(request, id_orden):
     # Obtener la orden de reserva por su ID
-    orden_reciclaje = Reserva_orden.objects.filter(id_orden=id_orden).first()
+    orden_reciclaje = Reserva_orden.objects.filter(id_orden).first()
 
     # Verificar si la orden existe
     if orden_reciclaje is None:

@@ -9,6 +9,7 @@
 {% if ordenes %}
     <ul>
         {% for orden in ordenes %}
+            {% if orden.estado == "Orden tomada" %}
             <li>
                 <p class="letras">ID de orden: {{ orden.id_orden }}</p>
                 <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
@@ -16,6 +17,8 @@
                 <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
                 <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
                 <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+                <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
+                <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
                 <p class="letras">Estado: {{ orden.estado }}</p>
 
                 <!-- Enviar el ID de la orden al hacer clic en el botón -->
@@ -25,19 +28,13 @@
                     <button type="submit">Seleccionar</button>
                 </form>
             </li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% else %}
     <p class="letras">No hay órdenes registradas para este usuario</p>
 {% endif %}
 
-<a href="{% url 'login' %}">Volver</a>
-<footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-            <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-</footer>
+<a href="{% url 'home' %}">Volver</a>
+
 {% endblock %}
