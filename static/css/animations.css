@@ -35,6 +35,7 @@
     margin: 0 auto; /* Centrar el contenedor */
     position: relative;
     height: 100%;
+    
   }
   
   /* Tarjeta */
@@ -55,7 +56,7 @@
     padding: 20px;
     border: 5px solid #b1bd9f;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
     top: 0;
     left: 0;
   }
