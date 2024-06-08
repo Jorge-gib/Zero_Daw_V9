@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+    <div class="blue-background">
 <div>
     <h1 class="letras">Registros de Recepción de Desechos</h1>
     <p class="letras">Aqui estan la lista de recepciones de desechos hechos por reciladores de su comuna</p>
@@ -26,5 +28,6 @@
 {% endif %}
 
 <a href="{% url 'home' %}">Volver</a>
-
+</div>
+</div>
 {% endblock %}

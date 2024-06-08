@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+    <div class="blue-background">
 <div>
     <h1 class="letras">Registros de Promesas de Pago</h1>
     <p class="letras">Aquí están los registros de promesas de pago realizados por recicladores de su comuna de las reservas que hizo:</p>
@@ -24,5 +26,6 @@
 {% endif %}
 
 <a href="{% url 'home' %}">Volver</a>
-
+</div>
+</div>
 {% endblock %}

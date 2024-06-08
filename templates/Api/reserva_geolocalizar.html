@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+    <div class="blue-background">
 <div>
     <h1 class="letras">Ordenes de reserva para buscar ubicacion del ciudadano</h1>
     <p class="letras">Seleccione la orden para buscar la ubicacion del ciudadano</p>
@@ -47,5 +49,6 @@
 {% endif %}
 
 <a href="{% url 'home' %}">Volver</a>
-
+    </div>
+</div>
 {% endblock %}

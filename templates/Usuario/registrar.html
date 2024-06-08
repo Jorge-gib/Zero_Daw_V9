@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% block title %}
+Registro
+{% endblock %}
 {% block content %}
 <style>
     .form-control {
@@ -15,8 +17,11 @@
     .form-control-extra-small {
         width: 3cm;
     }
+    .form-control-large {
+        width: 10cm; /* Ajusta este valor según sea necesario para que se vea completo el nombre */
+    }
 </style>
-
+<div class="imagen hidden fade-in-down">
 <div class="blue-background">
     <h1 class="titulo">Agregar USUARIO</h1>
     <div class="contenido">
@@ -52,7 +57,7 @@
                     <div class="alert alert-danger">{{ form.last_name.errors }}</div>
                 {% endif %}
             </div>
-            <p>Su nombre de usuario es tu correo electrónico</p>
+            <p>Su nombre de usuario es tu correo electronico</p>
             <div class="form-group">
                 <label for="username">Nombre de usuario:</label>
                 <input type="text" id="username" name="username" class="form-control" value="{{ form.username.value|default_if_none:'' }}" required>
@@ -76,7 +81,7 @@
                     <div class="alert alert-danger">{{ form.password2.errors }}</div>
                 {% endif %}
             </div>
-            <p>Debe ingresar su RUT sin dígito verificador con puntos y guion</p>
+            <p>Debe ingresar su RUT sin digito verificador con puntos y guion</p>
             <div class="form-group">
                 <label for="rut">RUT:</label>
                 <input type="text" id="rut" name="rut" class="form-control-extra-small" value="{{ form.rut.value|default_if_none:'' }}" required>
@@ -102,7 +107,7 @@
             </div>
             
             <div class="form-group">
-                <label for="direccion">Dirección:</label>
+                <label for="direccion">Direccion:</label>
                 <input type="text" id="direccion" name="direccion" class="form-control" value="{{ form.direccion.value|default_if_none:'' }}" required>
                 {% if form.direccion.errors %}
                     <div class="alert alert-danger">{{ form.direccion.errors }}</div>
@@ -118,7 +123,7 @@
             </div>
             
             <div class="form-group">
-                <label for="codigo_postal">Código postal:</label>
+                <label for="codigo_postal">Codigo postal:</label>
                 <input type="number" id="codigo_postal" name="codigo_postal" class="form-control" value="{{ form.codigo_postal.value|default_if_none:'' }}" required>
                 {% if form.codigo_postal.errors %}
                     <div class="alert alert-danger">{{ form.codigo_postal.errors }}</div>
@@ -126,7 +131,7 @@
             </div>
             
             <div class="form-group">
-                <label for="telefono">Teléfono:</label>
+                <label for="telefono">Telefono:</label>
                 <input type="number" id="telefono" name="telefono" class="form-control" value="{{ form.telefono.value|default_if_none:'' }}" required>
                 {% if form.telefono.errors %}
                     <div class="alert alert-danger">{{ form.telefono.errors }}</div>
@@ -151,7 +156,7 @@
             
             <div class="form-group">
                 <label for="tipo_usuario">Tipo usuario:</label>
-                <select id="tipo_usuario" name="tipo_usuario" class="form-control" required>
+                <select id="tipo_usuario" name="tipo_usuario" class="form-control-large" required>
                     {% for key, value in form.tipo_usuario.field.choices %}
                         <option value="{{ key }}" {% if form.tipo_usuario.value == key %}selected{% endif %}>{{ value }}</option>
                     {% endfor %}
@@ -166,5 +171,17 @@
         <a href="{% url 'home' %}">Volver</a>
     </div>
 </div>
+</div>
+
+{{ block.super }}
+{% endblock content %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
 
 {% endblock %}

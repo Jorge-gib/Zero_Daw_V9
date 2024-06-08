@@ -1,12 +1,13 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <h1 class="letras">Gestion de servicio</h1>
-    
-    <div class="letras">
-        <p>Orden registrada</p>
-   
+<div class="titulo_presentacion fade-in-down">
+    <div class="blue-background">
+        <h1 class="letras">Gestion de servicio</h1>
+        <div class="letras">
+            <p>Orden registrada</p>
+        </div>
+        <a href="{% url 'home' %}">Volver</a>
     </div>
-    <a href="{% url 'home' %}">Volver</a>
-    
+</div>
 {% endblock %}

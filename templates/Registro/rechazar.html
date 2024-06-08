@@ -1,12 +1,15 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+    <div class="blue-background">
     <h1 class="letras">Gestion de autorizacion de recolectores</h1>
     
     <div class="letras">
-        <p>Usuario sigue en circulacion</p>
+        <p>Usuario sigue sin autorizacion</p>
    
     </div>
     <a href="{% url 'home' %}">Volver</a>
-    
+</div>
+</div>
 {% endblock %}

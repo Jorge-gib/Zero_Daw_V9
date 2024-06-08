@@ -14,108 +14,126 @@
       var longitud = document.getElementById("longitud_posicion_ciudadano").value;
 
       if (fecha === "" || horaInicio === "" || horaFin === "" || cantidad_plastico === "" || cantidad_vidrio === "" || cantidad_carton === "" || cantidad_aluminio === "" || latitud === "" || longitud === "") {
-        alert("Por favor, complete todos los campos para registrar la orden, en la cantidad de materiales si no reciclara nada coloque 0");
+          alert("Por favor, complete todos los campos para registrar la orden, en la cantidad de materiales si no reciclara nada coloque 0");
           return false;
       }
       document.getElementById("estado").value = "En espera";
-
       return true;
   }
 </script>
+<div class="titulo_presentacion fade-in-down">
+  <div class="blue-background">
+    <h1 class="letras">Llene la lista para realizar la orden de reserva</h1>
+    <div>
+      <p class="letras">Recuerde que para validar su reserva, un recolector debe confirmarla.</p>
+    </div>
 
-<h1 class="letras">Llene la lista para realizar la orden de reserva</h1>
-<div>
-  <p1 class="letras">Recuerde que para validar su reserva, un recolector debe confirmarla.</p1>
-</div>
+    <form method="POST" action="{% url 'orden_reserva' %}" onsubmit="return verificarCampos()">
+      {% csrf_token %}
 
-<form method="POST" action="{% url 'orden_reserva' %}" onsubmit="return verificarCampos()">
-  {% csrf_token %}
+      <!-- Campo oculto para el ID del usuario -->
+      <input type="hidden" name="id_user" value="{{ user.id }}">
 
-  <!-- Campo oculto para el ID del usuario -->
-  <input type="hidden" name="id_user" value="{{ user.id }}">
+      <!-- Campos de entrada para los campos de Orden_reciclaje -->
+      <div>
+          <label class="letras" for="fecha_orden">Fecha de orden:</label>
+          <input type="date" name="fecha_orden" id="fecha_orden">
+      </div>
+      <div>
+          <label class="letras" for="hora_inicio">Hora de inicio:</label>
+          <input type="time" id="hora_inicio" name="hora_inicio">
+      </div>
+      <div>
+          <label class="letras" for="hora_fin">Hora de fin:</label>
+          <input type="time" id="hora_fin" name="hora_fin">
+      </div>
+     
+      <div>
+        <label class="letras" for="cantidad_plastico">Cantidad de plastico:</label>
+        <input type="number" name="cantidad_plastico" id="cantidad_plastico" placeholder="Ingrese cantidad">
+      </div>
+      <div>
+        <label class="letras" for="cantidad_vidrio">Cantidad de vidrio:</label>
+        <input type="number" name="cantidad_vidrio" id="cantidad_vidrio" placeholder="Ingrese cantidad">
+      </div>
+      <div>
+        <label class="letras" for="cantidad_carton">Cantidad de carton:</label>
+        <input type="number" name="cantidad_carton" id="cantidad_carton" placeholder="Ingrese cantidad">
+      </div>
+      <div>
+        <label class="letras" for="cantidad_aluminio">Cantidad de aluminio:</label>
+        <input type="number" name="cantidad_aluminio" id="cantidad_aluminio" placeholder="Ingrese cantidad">
+      </div>
+      <div>
+        <label class="letras" for="cantidad_metal">Cantidad de metal:</label>
+        <input type="number" name="cantidad_metal" id="cantidad_metal" placeholder="Ingrese cantidad">
+      </div>
+      <div>
+        <label class="letras" for="cantidad_electrodomesticos">Cantidad de electro domesticos:</label>
+        <input type="number" name="cantidad_electrodomesticos" id="cantidad_electrodomesticos" placeholder="Ingrese cantidad">
+      </div>
 
-  <!-- Campos de entrada para los campos de Orden_reciclaje -->
+      <div>
+          <label class="letras" for="latitud_posicion_ciudadano">Latitud:</label>
+          <input type="number" name="latitud_posicion_ciudadano" id="latitud_posicion_ciudadano" step="0.000001" placeholder="Latitud">
+      </div>
+      <div>
+          <label class="letras" for="longitud_posicion_ciudadano">Longitud:</label>
+          <input type="number" name="longitud_posicion_ciudadano" id="longitud_posicion_ciudadano" step="0.000001" placeholder="Longitud">
+      </div>
+      <input type="hidden" name="estado" value="En espera">
 
-  <div>
-      <label class="letras" for="fecha_orden">Fecha de orden:</label>
-      <input type="date" name="fecha_orden" id="fecha_orden">
-  </div>
-  <div>
-      <label class="letras" for="hora_inicio">Hora de inicio:</label>
-      <input type="time" id="hora_inicio" name="hora_inicio">
-  </div>
-  <div>
-      <label class="letras" for="hora_fin">Hora de fin:</label>
-      <input type="time" id="hora_fin" name="hora_fin">
-  </div>
- 
-  <div>
-    <label class="letras" for="cantidad_plastico">Cantidad de plastico:</label>
-    <input type="number" name="cantidad_plastico" id="cantidad_plastico" placeholder="Ingrese cantidad">
-</div>
-<div>
-  <label class="letras" for="cantidad_vidrio">Cantidad de vidrio:</label>
-  <input type="number" name="cantidad_vidrio" id="cantidad_vidrio" placeholder="Ingrese cantidad">
-</div>
-<div>
-  <label class="letras" for="cantidad_carton">Cantidad de carton:</label>
-  <input type="number" name="cantidad_carton" id="cantidad_carton" placeholder="Ingrese cantidad">
-</div>
-<div>
-  <label class="letras" for="cantidad_aluminio">Cantidad de aluminio:</label>
-  <input type="number" name="cantidad_aluminio" id="cantidad_aluminio" placeholder="Ingrese cantidad">
-</div>
-<div>
-  <label class="letras" for="cantidad_metal">Cantidad de metal:</label>
-  <input type="number" name="cantidad_metal" id="cantidad_metal" placeholder="Ingrese cantidad">
-</div>
-<div>
-  <label class="letras" for="cantidad_electrodomesticos">Cantidad de electro domesticos:</label>
-  <input type="number" name="cantidad_electrodomesticos" id="cantidad_electrodomesticos" placeholder="Ingrese cantidad">
-</div>
+      <button type="submit">Guardar</button>
+      <button type="reset">Limpiar campos</button>
+      <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
+    </form>
 
-  <div>
-      <label class="letras" for="latitud_posicion_ciudadano">Latitud:</label>
-      <input type="number" name="latitud_posicion_ciudadano" id="latitud_posicion_ciudadano" step="0.000001" placeholder="Latitud">
-  </div>
-  <div>
-      <label class="letras" for="longitud_posicion_ciudadano">Longitud:</label>
-      <input type="number" name="longitud_posicion_ciudadano" id="longitud_posicion_ciudadano" step="0.000001" placeholder="Longitud">
-  </div>
-  <input type="hidden" name="estado" value="En espera">
+    <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
 
-  <button type="submit">Guardar</button>
-  <button type="reset">Limpiar campos</button>
-  <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
-</form>
-
-<div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
-
-<script>
-  function showSuccessMessage() {
-      document.getElementById("success-message").style.display = "block";
-  }
-
-  function capturarUbicacion() {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-              var latitud = position.coords.latitude.toFixed(6);
-              var longitud = position.coords.longitude.toFixed(6);
-
-              document.getElementById("latitud_posicion_ciudadano").value = latitud;
-              document.getElementById("longitud_posicion_ciudadano").value = longitud;
-          });
-      } else {
-          alert("Tu navegador no admite la geolocalización.");
+    <script>
+      function showSuccessMessage() {
+          document.getElementById("success-message").style.display = "block";
       }
-  }
-</script>
-<div>
-<a class="link" href="{% url 'reserva_list' %}">Ver orden reciclaje</a>
-</div>
-<div>
-<a class="link" href="{% url 'home' %}">Volver</a>
+
+      function capturarUbicacion() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function (position) {
+                  var latitud = position.coords.latitude.toFixed(6);
+                  var longitud = position.coords.longitude.toFixed(6);
+
+                  document.getElementById("latitud_posicion_ciudadano").value = latitud;
+                  document.getElementById("longitud_posicion_ciudadano").value = longitud;
+              });
+          } else {
+              alert("Tu navegador no admite la geolocalización.");
+          }
+      }
+    </script>
+    <div>
+      <a class="link" href="{% url 'reserva_list' %}">Ver orden reciclaje</a>
+    </div>
+    <div>
+      <a class="link" href="{% url 'home' %}">Volver</a>
+    </div>
+  </div>
 </div>
 
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+      const elements = document.querySelectorAll('.fade-in-down');
+
+      elements.forEach(element => {
+          element.classList.remove('hidden');
+
+          element.addEventListener('animationend', () => {
+              element.classList.remove('fade-in-down');
+          });
+      });
+  });
+</script>
+{{ block.super }}
+{% endblock %}
 
 {% endblock %}

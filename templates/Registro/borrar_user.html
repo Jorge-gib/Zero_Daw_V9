@@ -1,6 +1,8 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+    <div class="blue-background">
 <h1 class="letras">Borrar Usuario</h1>
 
 <form method="POST" action="{% url 'borrar_user' user.id %}">
@@ -14,7 +16,12 @@
     <input type="hidden" name="user_id" value="{{ user.id }}">
     <input type="submit" value="Borrar">
 </form>
+
     <a href="{% url 'home' %}">Volver</a>
+
+</div> 
+</div> 
     
+
 
 {% endblock %}

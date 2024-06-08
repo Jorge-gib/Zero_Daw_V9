@@ -1,13 +1,15 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+  <div class="blue-background">
   <h1 class="letras">Actualice los datos que desee</h1>
   <div>
     <p1 class="letras">Los datos actualizados se podrán ver en la opción "Ver mi perfil" en el menú de su cuenta</p1>
   </div>
   <form method="POST" action="{% url 'editar_user' user.id %}">
     {% csrf_token %}
-
+UserUpdate
     <div>
       <label class="letras" for="nombre">Nombre:</label>
       <input type="text" name="first_name" id="nombre" value="{{ user.first_name }}">
@@ -46,5 +48,6 @@
   <div>
   <a href="{% url 'home' %}">Volver</a>
   </div>
-  
+</div>
+</div>  
 {% endblock %}

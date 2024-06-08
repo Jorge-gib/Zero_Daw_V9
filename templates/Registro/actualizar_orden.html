@@ -3,6 +3,8 @@
 {% block title %}Concluir orden{% endblock %}
 
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+  <div class="blue-background">
   <h1 class="letras">Confirme el término de orden</h1>
 
   {% if orden %}
@@ -35,5 +37,6 @@
   <div>
     <a href="{% url 'home' %}">Volver</a>
   </div>
- 
+</div>
+</div>
 {% endblock %}

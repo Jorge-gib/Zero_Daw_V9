@@ -8,16 +8,19 @@ class UserModelo(AbstractUser):
         ('Ciudadano', 'Ciudadano'),
         ('Operario municipalidad', 'Operario municipalidad'),
     )
-    rut = models.CharField(max_length=10)
-    dv = models.IntegerField()
-    nombre = models.CharField(max_length=100)
-    edad = models.IntegerField()  
-    direccion = models.CharField(max_length=150)
-    comuna = models.CharField(max_length=80)
-    codigo_postal = models.IntegerField()
-    telefono = models.IntegerField()
+
+    rut = models.CharField(max_length=10, null=True, blank=True)
+    dv = models.IntegerField(null=True, blank=True)
+    nombre = models.CharField(max_length=100, null=True, blank=True)
+    edad = models.IntegerField(null=True, blank=True)  
+    direccion = models.CharField(max_length=50, null=True, blank=True)
+    comuna = models.CharField(max_length=80, null=True, blank=True)
+    codigo_postal = models.IntegerField(null=True, blank=True)
+    telefono = models.IntegerField(null=True, blank=True)
+    validacion_recolector = models.BooleanField(default=False)  # Campo booleano con valor predeterminado False
+
     licencia_automotriz = models.ImageField(upload_to='licencias/', blank=True, null=True)
-    segundo_nombre_madre = models.CharField(max_length=100)
+    segundo_nombre_madre = models.CharField(max_length=100,null=True,blank=True)
     tipo_usuario = models.CharField(max_length=200, blank=False, null=True, choices=TIPO_USUARIO)
     new_password1 = models.CharField(max_length=50, null=True)
     new_password2 = models.CharField(max_length=50, null=True)
@@ -26,7 +29,7 @@ class UserModelo(AbstractUser):
     validacion_recolector = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.rut
+        return self.rut if self.rut else self.username
 
 class Orden_reciclaje(models.Model):
     id_user = models.ForeignKey(UserModelo, on_delete=models.CASCADE)

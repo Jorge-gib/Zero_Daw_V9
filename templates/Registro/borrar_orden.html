@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+    <div class="blue-background">
 <h1 class="letras">Concluir orden</h1>
 
 <form method="POST" action="{% url 'orden_borrar' orden.id_orden %}">
@@ -11,7 +13,8 @@
     <button type="submit">Borrar</button>
 </form>
 <a href="{% url 'home' %}">Volver</a>
-
+</div>
+</div>
 
 
 {% endblock %}

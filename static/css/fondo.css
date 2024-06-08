@@ -1,67 +1,99 @@
+/* Colores de base */
 body {
-  background-image: url("../images/planeta_limpio.jpg");
+  background-color: #ebf3e4;
+  background-image: url('../images/fondomin4.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  /* Otros estilos opcionales */
   background-position: center;
-  /*background-color: #f1f1f1;  /* Si deseas un color de fondo de respaldo */
-}
-.blue-background {
-  background-color: rgba(0, 191, 255, 0.5); /* Azul claro con transparencia */
-  display: inline-block;
-  margin: 10mm; /* Margen de 10 milímetros */
-  
-}
-.margen{
-  background-color: rgba(30, 8, 87, 0.5); /* Azul claro con transparencia */
-  display: inline-block;
-  margin: 10mm; /* Margen de 10 milímetros */
-}
-.titulo{
-  text-align: center;
-}
-.contenido{
-  text-align: center;
-}
-.display{
-  text-align: center;
-}
-.titulo_pass{
-  text-align: center;
-}
-.letras {
-  color: white;
- 
 }
 
-.cabezera {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 10px; /* Añade un relleno si lo deseas */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Efecto de sombra */
-  z-index: 1000; /* Asegura que la cabecera esté por encima de otros elementos */
-  transition: position 0.3s ease; /* Animación suave del cambio de posición */
+/* Estilo para blue-background */
+.blue-background {
+  background-color: #bac2ac; 
+  padding: 20px;
+  border: 5px solid #b1bd9f;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: auto;
+}
+
+/* Titulos y parrafos */
+.titulo {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.contenido p {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* Forms */
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  flex: 1;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  flex: 2;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%; 
+}
+
+/* Botones */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #7f8772;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #8397b6;
+}
+
+a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 /* Ajusta este valor según la altura de tu cabecera */
 body.fixed-header {
   padding-top: 80px;
 }
+
 /* Opcional: Añade un efecto de sombra o borde para resaltar la cabecera fija */
-
-
-
-#navbar{
-background-color: rgba(135, 239, 195, 0.5);
+#navbar {
+  background-color: #5f6a51;
 }
-.link{
-color:black
+
+.link {
+  color: black;
 }
-#t {
-  text-align: center;
-}
+
 #i {
   display: flex;
   align-items: center; /* Centrar verticalmente la imagen */
@@ -69,18 +101,56 @@ color:black
   height: 60px;
   margin: 0 auto; /* Alinear la imagen horizontalmente al centro */
 }
-.video{
+
+.video {
+  padding-top: 10px;
   display: flex;
   align-items: center; /* Centrar verticalmente la imagen */
   margin: 0 auto; /* Alinear la imagen horizontalmente al centro */
 }
-#t_v{
+
+#t_v {
   text-align: center;
 }
+
 .video2 {
   display: flex;
   align-items: center; /* Centrar verticalmente la imagen */
   justify-content: flex-end; /* Alinear el contenido a la derecha */
   margin: 0 auto; /* Alinear el contenido horizontalmente al centro */
+  flex: 1;
 }
+
+#texto {
+  background-color: #5b592e;
+}
+
+.letras1 {
+  background-color: #b3a29c;
+  text-align: center;
+  border: 5px solid rgb(158, 157, 157);
+  border-radius: 20px;
+}
+
+.letras2 {
+  padding-top: 10px;
+  background-color: #bac2ac;
+  text-align: center;
+  border: 5px solid #b1bd9f;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para footer */
+.letrasFoot {
+  text-align: center;
+}
+
+/* Estilo para letras Zero Daw */
+.letrasZero {
+  padding: 10px;
+  text-align: center;
+  border-radius: 20px;
+}
+
 

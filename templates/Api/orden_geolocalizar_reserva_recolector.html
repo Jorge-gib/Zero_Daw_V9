@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+    <div class="blue-background">
 <div>
     <h1 class="letras">Ordenes de reserva para ubicar al recolector</h1>
     <p class="letras">Seleccione la orden para buscar la ubicacion del recolector<p>
@@ -10,7 +12,7 @@
     {% with hay_ordenes_concluidas=False %}
         <ul>
             {% for orden in ordenes %}
-            {% if orden.estado != "Concluido" and orden.estado != "Calificado" and orden.estado != "Expirado" %}
+            {% if orden.estado != "Concluido" and orden.estado != "Calificado" and orden.estado != "Expirado" and orden.estado != "En espera"%}
                     {% with hay_ordenes_concluidas=True %}
                        
                     <li>
@@ -47,5 +49,6 @@
 {% endif %}
 
 <a href="{% url 'home' %}">Volver</a>
-
+    </div>
+</div>
 {% endblock %}

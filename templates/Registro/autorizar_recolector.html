@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+  <div class="blue-background">
   <h1 class="letras">Confirmación de Validación</h1>
   <p class="letras">El recolector {{ usuario.nombre }} {{ usuario.apellido }} que quiere validar.</p>
   
@@ -12,4 +14,6 @@
   <form method="GET" action="{% url 'rechazar' %}">
     <button type="submit">Rechazar</button>
   </form>
+</div>
+</div>
 {% endblock %}

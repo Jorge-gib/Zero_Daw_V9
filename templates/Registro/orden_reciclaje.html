@@ -22,7 +22,8 @@
         return true;
     }
 </script>
-
+<div class="titulo_presentacion hidden fade-in-down">
+<div class="blue-background">
 <h1 class="letras">Llene la lista para realizar la orden</h1>
 <div>
   <p1 class="letras">Recuerde que debe esperar a que un recolector acepte su orden</p1>
@@ -80,7 +81,7 @@
 </form>
 
 <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
-
+</div>
 <script>
   function showSuccessMessage() {
       document.getElementById("success-message").style.display = "block";
@@ -117,5 +118,17 @@
 <div>
 <a class="link" href="{% url 'home' %}">Volver</a>
 </div>
+</div>
+
+{{ block.super }}
+{% endblock content %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
 
 {% endblock %}

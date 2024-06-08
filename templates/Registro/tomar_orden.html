@@ -3,6 +3,8 @@
 {% block title %}Lista de órdenes{% endblock %}
 
 {% block content %}
+<div class="titulo_presentacion fade-in-down">
+  <div class="blue-background">
   <h1 class="letras">Toma una orden</h1>
   <p class="letras">Complete la información necesaria para tomar una orden.</p>
   {% if orden_reciclaje %}
@@ -58,5 +60,6 @@
   <div>
     <a href="{% url 'mostrar_ordenes' %}">Volver</a>
   </div>
-  
+</div>
+</div>
 {% endblock %}

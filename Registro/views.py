@@ -121,10 +121,10 @@ def agregar_calificacion_recolector_reserva(request, id_orden):
             form.save()
             return render(request, 'Registro/confirmacion_calificacion.html', {'calificacion': calificacion})
         else:
-            return render(request, 'Registro/agregar_calificacion_recolector_ciudadano3.html', {'form': form, 'orden': orden})
+            return render(request, 'Registro/agregar_calificacion_recolector_reserva.html', {'form': form, 'orden': orden})
     else:
         form = Calificacion_recolector_reservaForm(instance=calificacion)
-        return render(request, 'Registro/agregar_calificacion_recolector_ciudadano3.html', {'form': form, 'orden': orden})
+        return render(request, 'Registro/agregar_calificacion_recolector_reserva.html', {'form': form, 'orden': orden})
 
 
 
@@ -769,14 +769,14 @@ class MostrarResepciones(ListView):
     
 #######################################################################################
 class MostrarResepcionesReserva(ListView):
-    model = Recepcion_desechos
+    model = Recepcion_desechos_reserva
     template_name = 'Registro/ver_recicladores_reserva.html'
     context_object_name = 'registros'
 
     def get_queryset(self):
         # Filtrar los registros de recepción de desechos por la comuna del usuario
         comuna_usuario = self.request.user.comuna
-        queryset = Recepcion_desechos.objects.filter(id_orden__id_user__comuna=comuna_usuario)
+        queryset = Recepcion_desechos_reserva.objects.filter(id_orden__id_user__comuna=comuna_usuario)
         return queryset
     
 ########################################################################################
