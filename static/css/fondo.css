@@ -1,11 +1,19 @@
 /* Colores de base */
-body {
+html {
+  overflow-y: scroll;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
   background-color: #ebf3e4;
-  background-image: url('../images/fondomin4.jpg');
+  background-image: url('../images/fondo2.jpg');
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
   background-position: center;
 }
+
 
 /* Estilo para blue-background */
 .blue-background {
@@ -28,6 +36,7 @@ body {
 .contenido p {
   text-align: left;
   margin-bottom: 20px;
+  
 }
 
 /* Forms */
@@ -54,7 +63,7 @@ body {
 }
 
 /* Botones */
-button {
+#btnHome {
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #7f8772;
@@ -69,29 +78,10 @@ button:hover {
   background-color: #8397b6;
 }
 
-a {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-  color: #007bff;
-}
-
-a:hover {
-  text-decoration: underline;
-}
 
 /* Ajusta este valor según la altura de tu cabecera */
 body.fixed-header {
   padding-top: 80px;
-}
-
-/* Opcional: Añade un efecto de sombra o borde para resaltar la cabecera fija */
-#navbar {
-  background-color: #5f6a51;
-}
-
-.link {
-  color: black;
 }
 
 #i {
@@ -153,4 +143,42 @@ body.fixed-header {
   border-radius: 20px;
 }
 
+/* #containerHome {
+  text-align: left;
+  background-color:#bac2aca8;
+  margin:auto;
+  padding: 50px;
+  height: 550px;
+  width: 700px;
+  border: 5px outset #bac2ac;
+  border-radius: 40px 40px 40px 40px;
+} */
+#containerHome{
+  background-color: #bac2aca8;
+  padding-top: 20px;
+  padding-left:10px;
+  padding-right:50px;
+  padding-bottom:20px;
+  border: 5px outset #bac2ac;
+  border-radius: 40px 40px 40px 40px;
 
+}
+
+
+
+
+
+#btnHome:hover {
+
+  box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
+}
+
+/*texto registro*/
+.text-over-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+  padding: 5px;
+  z-index: 1;
+}
