@@ -130,6 +130,14 @@ body.fixed-header {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.letras3{
+  color: #333333;
+  text-shadow: 2px 2px 0px #ffffff3f, 5px 4px 0px rgba(0,0,0,0.15);
+}
+.letras4{
+  color: #333333;
+  text-shadow: 2px 2px 0px #ffffff17, 5px 4px 0px rgba(0,0,0,0.15);
+}
 
 /* Estilo para footer */
 .letrasFoot {
@@ -155,6 +163,17 @@ body.fixed-header {
 } */
 #containerHome{
   background-color: #bac2aca8;
+  padding-top: 20px;
+  padding-left:10px;
+  padding-right:50px;
+  padding-bottom:20px;
+  border: 5px outset #bac2ac;
+  border-radius: 40px 40px 40px 40px;
+
+}
+
+#container2{
+  background-color: #00000000;
   padding-top: 20px;
   padding-left:10px;
   padding-right:50px;

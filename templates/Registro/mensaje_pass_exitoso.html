@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="letras hidden fade-in-down">Gestion de usuario</h1>
     
-    <div id="mensajePass" class="content container hidden fade-in-down">
-        <p class="letras">Su clave ha sido actualizada con exito, puede continuar.</p>
-        <a class="hidden fade-in-down"href="{% url 'home' %}">Volver</a>
+    <div id="containerHome" class="content container hidden fade-in-down">
+        <h1 class="letras hidden fade-in-down">Gestion de usuario</h1>
+        <p class="letras hidden fade-in-down">Su clave ha sido actualizada con exito, puede continuar.</p>
+        <a href="{% url 'home' %}">Volver</a>
     </div>
     
 
@@ -15,6 +15,8 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos2.css' %}">
+
     {{ block.super }}
 {% endblock stylesheets %}
 

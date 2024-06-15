@@ -5,7 +5,7 @@
 {% block content %}
 <br>
 <div>
-    <h1 class="letras hidden fade-in-down">Usuario del sistema</h1>
+    <h1 class="letras hidden fade-in-down">Mi perfil</h1>
 </div>
 <br>
 {% if object_list %}
@@ -21,13 +21,15 @@
     <p class="letras">Telefono: {{ user.telefono }}</p> 
     <p class="letras">Rol en el sistema: {{ user.tipo_usuario}}</p>                 
     
+        <a href="{% url 'login' %}">Volver</a>
+    
 </div>
+
 {% endfor %}
 
 {% else %}
 <h1 class="letras">No hay registros de user</h1>
 {% endif %}
-<a href="{% url 'login' %}">Volver</a>
 {% endblock content %}
 
 {% block stylesheets %}

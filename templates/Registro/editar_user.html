@@ -1,58 +1,65 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
-  <h1 class="letras">Actualice los datos que desee</h1>
-  <div>
-    <p1 class="letras">Los datos actualizados se podrán ver en la opción "Ver mi perfil" en el menú de su cuenta</p1>
-  </div>
-  <form method="POST" action="{% url 'editar_user' user.id %}">
+<div class="container container-blue hidden fade-in-down">
+  <h1 class="title letras">Editar perfil</h1>
+  <form id="containerHome" class="hidden fade-in-down" method="POST" action="{% url 'editar_user' user.id %}">
     {% csrf_token %}
-
-    <div>
-      <label class="letras" for="nombre">Nombre:</label>
-      <input type="text" name="first_name" id="nombre" value="{{ user.first_name }}">
-    </div>
-    <div>
-      <label class="letras" for="apellido_paterno">Apellido Paterno:</label>
-      <input type="text" name="last_name" id="apellido_paterno" value="{{ user.last_name }}">
-    </div>
-
-    <div>
-      <label class="letras" for="edad">Edad:</label>
-      <input type="number" name="edad" id="edad" value="{{ user.edad }}">
-    </div>
-    <div>
-      <label class="letras" for="direccion">Dirección:</label>
-      <input type="text" name="direccion" id="direccion" value="{{ user.direccion }}">
-    </div>
-    <div>
-      <label class="letras" for="codigo_postal">Código Postal:</label>
-      <input type="number" name="codigo_postal" id="codigo_postal" value="{{ user.codigo_postal }}">
-    </div>
-    <div>
-      <label class="letras" for="telefono">Teléfono:</label>
-      <input type="tel" name="telefono" id="telefono" value="{{ user.telefono }}">
-    </div>
-    <div>
-      <label class="letras" for="licencia_automotriz">Licencia Automotriz:</label>
-      <input type="file" name="licencia_automotriz" id="licencia_automotriz" class="letras">
-    </div>
-    <button type="submit">Actualizar</button>
-    <button type="reset">Limpiar campos</button>
-  </form>
-  <div>
-  <a href="{% url 'list_user'%}">Ver mi perfil de usuario</a>
-  </div>
-  <div>
-  <a href="{% url 'login' %}">Volver</a>
-  </div>
-  <footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
+    <div class="form-row">
+      <div class="form-column">
+        <div class="form-group">
+          <label class="letras" for="nombre">Nombre:</label>
+          <input type="text" name="first_name" id="nombre" value="{{ user.first_name }}">
         </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+        <div class="form-group">
+          <label class="letras" for="apellido_paterno">Apellido Paterno:</label>
+          <input type="text" name="last_name" id="apellido_paterno" value="{{ user.last_name }}">
+        </div>
+        <div class="form-group">
+          <label class="letras" for="edad">Edad:</label>
+          <input type="number" name="edad" id="edad" value="{{ user.edad }}">
+        </div>
+        <div class="form-group">
+          <label class="letras" for="direccion">Dirección:</label>
+          <input type="text" name="direccion" id="direccion" value="{{ user.direccion }}">
+        </div>
+      </div>
+      <div class="form-column">
+        <div class="form-group">
+          <label class="letras" for="codigo_postal">Código Postal:</label>
+          <input type="number" name="codigo_postal" id="codigo_postal" value="{{ user.codigo_postal }}">
+        </div>
+        <div class="form-group">
+          <label class="letras" for="telefono">Teléfono:</label>
+          <input type="tel" name="telefono" id="telefono" value="{{ user.telefono }}">
+        </div>
+        <div class="form-group">
+          <label class="letras" for="licencia_automotriz">Licencia Automotriz:</label>
+          <input type="file" name="licencia_automotriz" id="licencia_automotriz" class="letras">
+        </div>
+      </div>
     </div>
-    
-</footer>
+    <div class="button-group">
+      <button type="submit" class="button btn btn-primary">Actualizar</button>
+      <button type="reset" class="button btn btn-secondary">Limpiar campos</button>
+    </div>
+  </form>
+  <div class="links">
+    <a href="{% url 'list_user'%}">Ver mi perfil de usuario</a>
+    <a href="{% url 'login' %}">Volver</a>
+  </div>
+</div>
+{% endblock content %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
 {% endblock %}

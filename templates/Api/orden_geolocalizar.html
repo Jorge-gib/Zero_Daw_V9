@@ -1,22 +1,33 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div>
-    <h1 class="letras">Órdenes realizadas</h1>
-    <p class="letras">Seleccione la orden para buscar la ubicación del recolector</p>
-</div>
-
-{% if ordenes %}
+<style>
+    #container2{
+        background-color: #bac2ac2f;
+        padding-top: 20px;
+        padding-left:10px;
+        padding-right:50px;
+        padding-bottom:20px;
+        border: 5px outset #bac2ac;
+        border-radius: 40px 40px 40px 40px;
+      
+      }
+</style>
+<div id="containerHome">
+    <h1 class="letras4">Órdenes realizadas</h1>
+    <p class="letras4">Seleccione la orden para buscar la ubicación del recolector</p>
+    {% if ordenes %}
     <ul>
         {% for orden in ordenes %}
-            <li>
-                <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-                <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-                <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-                <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
-                <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-                <p class="letras">Estado: {{ orden.estado }}</p>
+        <div>
+            <ul id="container2">
+                <p class="letras4">ID de orden: {{ orden.id_orden }}</p>
+                <p class="letras4">Fecha de orden: {{ orden.fecha_orden }}</p>
+                <p class="letras4">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+                <p class="letras4">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
+                <p class="letras4">Cantidad carton: {{ orden.cantidad_carton }}</p>
+                <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+                <p class="letras4">Estado: {{ orden.estado }}</p>
 
                 <!-- Enviar el ID de la orden al hacer clic en el botón -->
                 <form method="POST" action="{% url 'OrdenListGeolocalizar' user.id %}">
@@ -24,20 +35,20 @@
                     <input type="hidden" name="orden_id" value="{{ orden.id_user_id }}">
                     <button type="submit">Seleccionar</button>
                 </form>
-            </li>
+            </ul>
+        </div>
         {% endfor %}
     </ul>
 {% else %}
-    <p class="letras">No hay órdenes registradas para este usuario</p>
+    <p style="text-align:center;">No hay órdenes registradas para este usuario</p>
 {% endif %}
 
 <a href="{% url 'login' %}">Volver</a>
-<footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-            <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-</footer>
+</div>
+
+
+
+{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/fondo.css' %}">
 {% endblock %}

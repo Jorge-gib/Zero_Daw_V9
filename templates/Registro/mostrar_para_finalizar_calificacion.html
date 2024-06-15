@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div>
-    <h1 class="letras">Reservas conluidas para calificar</h1>
-    <p class="letras">Seleccione la orden que desee para calificar al recolector</p>
-</div>
-
+<div id="containerHome" class="hidden fade-in-down">
+    <div>
+        <h1 class="letras" style="text-align:center;">Reservas conluidas para calificar</h1>
+        <p class="letras" style="text-align:center;">Seleccione la orden que desee para calificar al recolector</p>
+    </div>
 {% if ordenes %}
     {% with hay_ordenes_concluidas=False %}
         <ul>
@@ -36,21 +36,23 @@
             {% endfor %}
         </ul>
         {% if not hay_ordenes_disponibles %}
-        <p class="letras">No hay más órdenes disponibles</p>
+        <p class="letras" style="text-align:center;">No hay más órdenes disponibles</p>
     {% endif %}
     {% endwith %}
 {% else %}
-    <h1 class="letras">No hay más registros de órdenes</h1>
+    <h1 class="letras"style="text-align:center;">No hay más registros de órdenes</h1>
 {% endif %}
 
 <a href="{% url 'login' %}">Volver</a>
-<footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-    
-</footer>
+
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalleOrden.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
 {% endblock %}
