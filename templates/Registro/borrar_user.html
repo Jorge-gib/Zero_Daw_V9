@@ -1,6 +1,7 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<<<<<<< HEAD
 <div class="titulo_presentacion fade-in-down">
     <div class="blue-background">
 <h1 class="letras">Borrar Usuario</h1>
@@ -23,5 +24,53 @@
 </div> 
     
 
+=======
+<div id="containerHome" class="hidden fade-in-down">
+    <h1 class="letras4">Borrar Usuario</h1>
+    <form method="POST" action="{% url 'borrar_user' user.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="letras4">¿Estás seguro de que deseas borrar este usuario?</label>
+        </div>
+        <div class="form-group">
+            <label class="letras4">ID del Usuario:</label>
+            <input type="text" value="{{ user.id }}" readonly>
+        </div>
+        <div class="form-group">
+            <label class="letras4">Nombre usuario:</label>
+            <input type="text" value="{{ user.username }}" readonly>
+        </div>
+        <div class="form-group">
+            <label class="letras4">Nombre:</label>
+            <input type="text" value="{{ user.first_name }}" readonly>
+        </div>
+        <div class="form-group">
+            <label class="letras4">Apellido:</label>
+            <input type="text" value="{{ user.last_name }}" readonly>
+        </div>
+        <div class="form-group">
+            <label class="letras4">Rut:</label>
+            <input type="text" value="{{ user.rut }}-{{ user.dv }}" readonly>
+        </div>
+        <input type="hidden" name="user_id" value="{{ user.id }}">
+        <div class="button-group">
+            <button type="submit" class="btn-danger">Borrar</button>
+        </div>
+    </form>
+    <div class="links">
+        <a href="{% url 'login' %}">Volver</a>
+    </div>
+</div>
+{% endblock %}
+>>>>>>> main
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
 {% endblock %}

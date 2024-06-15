@@ -55,6 +55,17 @@ class RegistroForm(UserCreationForm):
     rut = forms.CharField(max_length=12, label='RUT')
     edad = forms.IntegerField(label='Edad')
 
+    rut = forms.CharField(max_length=10)
+    dv = forms.IntegerField()
+    edad = forms.IntegerField()
+    direccion = forms.CharField(max_length=50)
+    codigo_postal = forms.IntegerField()
+    telefono = forms.IntegerField()
+    licencia_automotriz = forms.FileField(required=False)  # Cambiado a FileField
+    segundo_nombre_madre = forms.CharField(max_length=100)
+    tipo_usuario = forms.ChoiceField(choices=UserModelo.TIPO_USUARIO)
+
+
     class Meta:
         model = UserModelo
         fields = [

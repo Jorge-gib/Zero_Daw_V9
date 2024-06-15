@@ -3,13 +3,19 @@
 {% block title %}Concluir orden{% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
 <div class="titulo_presentacion fade-in-down">
   <div class="blue-background">
   <h1 class="letras">Confirme el término de orden</h1>
 
+=======
+<div id="containerHome" style="justify-content: center;">
+  <h1 class="letras4">Confirme el término de orden</h1>
+>>>>>>> main
   {% if orden %}
-  <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}">
+  <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}" style="padding-left:55px;">
     {% csrf_token %}
+<<<<<<< HEAD
     <div class="letras">
       <p class="letras">ID de orden: {{ orden.id_orden }}</p>
       <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
@@ -20,23 +26,49 @@
       <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
       <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
       <p class="letras">Estado: {{ orden.estado }} </p>
+=======
+    <div style="border: 3px inset black; border-radius:20px 20px 20px 20px; width: 100%;">
+      <p class="letras4">ID de orden: {{ orden.id_orden }}</p>
+      <p class="letras4">Fecha de orden: {{ orden.fecha_orden }}</p>
+      <p class="letras4">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+      <p class="letras4">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
+      <p class="letras4">Cantidad carton: {{ orden.cantidad_carton }}</p>
+      <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+      <p class="letras4">Estado: {{ orden.estado }} </p>
+>>>>>>> main
 
     </div>
   
     <!-- Agregar campo "estado" oculto con valor "Concluido" -->
     <input type="hidden" name="estado" value="Concluido">
-  
-    <button type="submit">Concluir orden</button>
+    <br>
+    <button type="submit" class="btn-success">Concluir orden</button>
   </form>
   {% else %}
-    <p class="letras">No se ha encontrado la orden especificada.</p>
+    <p class="letras4">No se ha encontrado la orden especificada.</p>
   {% endif %}
 
   <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
 
+<<<<<<< HEAD
   <div>
     <a href="{% url 'home' %}">Volver</a>
   </div>
 </div>
+=======
+    <div>
+      <a href="{% url 'login' %}">Volver</a>
+    </div>
+>>>>>>> main
 </div>
 {% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
+{% endblock javascript %}

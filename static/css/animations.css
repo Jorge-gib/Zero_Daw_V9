@@ -35,6 +35,7 @@
     margin: 0 auto; /* Centrar el contenedor */
     position: relative;
     height: 100%;
+    
   }
   
   /* Tarjeta */
@@ -55,7 +56,7 @@
     padding: 20px;
     border: 5px solid #b1bd9f;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
     top: 0;
     left: 0;
   }
@@ -86,3 +87,35 @@
     margin: auto;
   
   }
+
+  /*estilos scroll*/
+  .scroll-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Estilo del scroll para navegadores basados en WebKit */
+.scroll-container::-webkit-scrollbar {
+    width: 12px; /* Ancho del scrollbar */
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color del fondo del track */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background: #888; /* Color del pulgar del scrollbar */
+    scrollbar-color: aquamarine;
+    border-radius: 10px; /* Radio de borde para un pulgar redondeado */
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color del pulgar del scrollbar al pasar el ratón por encima */
+}
+
+/* Estilo del scroll para Firefox */
+.scroll-container {
+    
+    scrollbar-width: thin; /* Grosor del scrollbar */
+    scrollbar-color: #888 #f1f1f1; /* Color del pulgar y del track */
+}

@@ -1,16 +1,35 @@
-
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
 <div class="titulo_presentacion fade-in-down">
     <div class="blue-background">
 <div>
-    <h1 class="letras">Detalle de orden</h1>
+    <h1 class="letras4 hidden fade-in-down">Detalle de orden</h1>
+</div>
+<div class="grid-container">
+    {% if object_list %}
+    {% for orden in object_list %}
+    <div class="grid-item">
+        <div class="blue-background hidden fade-in-down">
+            <p class="letras4">ID de orden: {{ orden.id_orden }}</p>
+            <p class="letras4">Fecha de orden: {{ orden.fecha_orden }}</p>
+            <p class="letras4">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+            <p class="letras4">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
+            <p class="letras4">Cantidad carton: {{ orden.cantidad_carton }}</p>
+            <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+            <p class="letras4">Estado: {{ orden.estado }} </p>
+        </div>
+    </div>  
+    {% endfor %}
+    {% else %}
+    <h2 class="letras4 hidden fade-in-down">No hay registros de órdenes</h2>
+    {% endif %}
+    <a class="hide fade-in-down" href="{% url 'orden_reciclaje' %}">Volver</a>
 </div>
 
-    {% if object_list %}
-       
+{% endblock %}
 
+<<<<<<< HEAD
     {% for orden in object_list %}
     <div class="margen">
         <div class="blue-background">
@@ -41,3 +60,15 @@
   
 
 {% endblock %}
+=======
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalleOrden.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
+{% endblock %}
+>>>>>>> main

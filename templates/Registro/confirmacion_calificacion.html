@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<<<<<<< HEAD
 <div class="titulo_presentacion fade-in-down">
     <div class="blue-background">
    <div>
@@ -15,3 +16,24 @@
 </div>
 </div>
 {% endblock %}
+=======
+   <div id="containerHome" class="hidden fade-in-down">
+    <h1 class="letras4">Gestión de ordenes</h1>
+        <p class="letras4">¡Listo! Muchas gracias por tu participación.</p>
+    <a href="{% url 'login' %}">Volver</a>
+   </div>
+  
+    {% csrf_token %}
+    
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
+{% endblock javascript %}
+>>>>>>> main

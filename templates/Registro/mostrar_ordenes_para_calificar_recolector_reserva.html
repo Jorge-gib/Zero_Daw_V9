@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<<<<<<< HEAD
 <div class="titulo_presentacion fade-in-down">
     <div class="blue-background">
+=======
+<div id="containerHome" class="hidden fade-in-down">
+>>>>>>> main
 <div>
     <h1 class="letras">Reservas conluidas para calificar</h1>
     <p class="letras">Seleccione la orden que desee para calificar al recolector</p>
 </div>
-
 {% if ordenes %}
     {% with hay_ordenes_concluidas=False %}
         <ul>
@@ -46,8 +49,22 @@
 {% else %}
     <h2 class="letras">No hay más registros de órdenes</h2>
 {% endif %}
+<<<<<<< HEAD
 
 <a href="{% url 'home' %}">Volver</a>
     </div>
+=======
+<a href="{% url 'login' %}">Volver</a>
+>>>>>>> main
 </div>
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalleOrden.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
 {% endblock %}

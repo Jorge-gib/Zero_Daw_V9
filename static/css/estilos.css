@@ -1,56 +1,96 @@
 body {
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;
     background-position: center;
 }
 /*estilos de navbar */
+
+/* Variables */
+:root {
+    --anim-speed: 0.3s;
+    --bg-color: none(135, 239, 195, 0.5);
+    --hover-bg-color: #87efc3;
+    --hover-border-color: black;
+    --hover-text-color: #000000;
+}
+
+/* Navbar Styles */
 #navbar {
-    background-color: rgba(135, 239, 195, 0.5);
-}
-
-.content {
-    width: 100%;
-    flex: 1;
-}
-
-#nav {
-    background-color: rgba(135, 239, 195, 0.5);
-}
-
-#navbar {
-    background-color: rgba(135, 239, 195, 0.5);
-    padding: 1em 1em;
+    background-color: rgba(135, 239, 195, 0.5); /* 50% de transparencia */
+    padding-bottom: 25px ;
     display: flex;
     align-content: center;
     width: 100%;
+    position: fixed; /* Para que la navbar se mantenga fija en la parte superior */
+    top: 0;
+    z-index: 1000; /* Para asegurarte de que la navbar esté siempre en la parte superior */
 }
 
-#navbar li, #contact li {
-    background-color: #3f3d31;
-    list-style-type: none;
-    text-decoration: none;
-    text-align: center;
-    display: inline-flex;
-    border-radius: 20px;
-    transition-duration: 0.2s;
+
+#navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+#navbar li {
+    display: inline-block; /* Asegura que los elementos de la lista se muestren en línea */
+    margin: 10px;
+    text-align: left;
+    opacity: .99;
+    overflow: hidden;
+    position: relative;
+    border-radius: 3px;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.05);
+    transition: background-color var(--anim-speed), border var(--anim-speed); /* Transiciones para hover */
 }
 
 #navbar li a {
     text-decoration: none;
     text-align: center;
-    color: #ebf3e4;
-    padding-top: 6.5px;
-    padding-bottom: 24px;
-    padding-left: 6px;
-    padding-right: 6px;
+    color: #000000; /* Color blanco */
+    padding: 6.5px 6px 24px 6px;
+    display: block; /* Asegura que el enlace ocupe todo el espacio del li */
+    position: relative;
+    transition: color var(--anim-speed); /* Transición para el color del texto */
+}
 
-   
+#navbar li a:hover {
+    color: var(--hover-text-color); /* Cambia el color a negro al pasar el ratón */
+}
+
+#navbar li a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #000; /* Color de la línea */
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width var(--anim-speed);
+    opacity: 0;
 }
 
 #navbar li:hover {
-    background-color: rgba(135, 239, 195, 0.5);
+    background-color: var(--hover-bg-color); /* Color fijo al pasar el ratón */
+    border: 0px solid var(--hover-border-color); /* Borde sólido negro */
     border-radius: 3px;
 }
+
+#navbar li a:hover::after {
+    width: 100%;
+    opacity: 1;
+}
+
+/* Margin to avoid overlapping */
+.content {
+    margin-top: 100px; /* Ajusta este valor según la altura de tu navbar */
+}
+
+
 /*fin elementos nav bar*/
 #contact {
     background-color: rgba(135, 239, 195, 0.5);
@@ -274,90 +314,7 @@ div.gallery img {
     text-shadow: 3px 2px 3px black;
 }
 
-/* Media Query */
 
-@media (max-width: 767px) {
-    .col-md-2 {
-        width: 40%;
-        max-width: 40%;
-    }
-
-    #navbar {
-        display: inline-block;
-        text-align: center;
-        padding: 0;
-    }
-
-    #navbar-logo {
-        margin: 6px 0;
-    }
-
-    #navbar li, #contact li {
-        display: block;
-        margin: 0;
-        padding: auto;
-    }
-
-    #navbar li a {
-        background-color: rgba(135, 239, 195, 0.5);
-        width: 100%;
-        margin: 0;
-        margin-top: 2px;
-        margin-bottom: 2px;
-        padding: 1em 0;
-    }
-
-    ul {
-        margin: 0;
-        padding: 0;
-    }
-
-    #contact {
-        display: inline-block;
-        text-align: center;
-        padding: 0;
-        width: 100%;
-    }
-
-    #contact #p1, #contact #p2 {
-        display: none;
-    }
-
-    #contact #p3 {
-        display: block;
-        text-align: center;
-        width: 100%;
-        padding-top: 1em;
-        padding-bottom: 1em;
-    }
-
-    #contact li {
-        display: inline-block;
-    }
-
-    #main {
-        display: block;
-    }
-
-    #main #rescate {
-        width: 100%;
-        margin-right: 1em;
-        margin-bottom: 3em;
-    }
-
-    #main #crowd {
-        width: 100%;
-        margin-left: 1em;
-    }
-
-    .carousel-inner img {
-        height: 50%;
-    }
-
-    .caption {
-        display: none;
-    }
-}
 
 footer {
     position: fixed;
@@ -408,4 +365,13 @@ footer {
     border-radius: 10px;
     box-shadow: 0 0 10px black;
     text-align: left;
+}
+
+#mensajePass{
+    display: block;
+    border: inset #4ECCA0;
+    border-radius: 40px 40px 40px 40px;
+    background-color: #b3a29c;
+    width: 200px;
+    box-shadow: 0 0 0 0;
 }

@@ -1,7 +1,104 @@
 {% extends 'base.html' %}
 {% load static %}
+<<<<<<< HEAD
 {% block title %}
 Registro
+=======
+{% block content %}
+<br>
+<div class="contenedorRegistro hidden fade-in-down" id="registroForm">
+    <br>
+    <h1 class="titulo" style="color:white; text-shadow: 2px 2px 2px #000000;">Registro</h1>
+    <div class="content container card-container">
+        <div class="card" style="border:none; background-color: #bac2ac;">
+            <div class="card-front" style="box-shadow:5px 5px 15px 5px #000000; padding: 20px;">
+                <form class="formReg" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h6>Ingrese sus datos:</h6>
+                    <div id="form-part1">
+                        <div class="row">
+                            <!-- Primera columna -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.first_name.id_for_label }}">Nombre:</label>
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ form.last_name.id_for_label }}">Apellido:</label>
+                                    {{ form.last_name }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ form.username.id_for_label }}">Usuario:</label>
+                                    {{ form.username }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ form.password1.id_for_label }}">Contraseña:</label>
+                                    {{ form.password1 }}
+                                </div>
+                            </div>
+                            <!-- Segunda columna -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.password2.id_for_label }}">Repita su contraseña:</label>
+                                    {{ form.password2 }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ form.rut.id_for_label }}">Rut:</label>
+                                    {{ form.rut }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ form.dv.id_for_label }}">DV:</label>
+                                    {{ form.dv }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ form.edad.id_for_label }}">Edad:</label>
+                                    {{ form.edad }}
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="nextBtn" class="btn btn-primary" style="box-shadow: 2px 2px 2px #000000;">Siguiente</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-back" style="box-shadow:5px 5px 15px 5px #000000; padding: 20px;">
+                <form class="formReg" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div id="form-part2">
+                        <div class="form-group">
+                            <label for="{{ form.direccion.id_for_label }}">Dirección:</label>
+                            {{ form.direccion }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.codigo_postal.id_for_label }}">Código postal:</label>
+                            {{ form.codigo_postal }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.telefono.id_for_label }}">Teléfono:</label>
+                            {{ form.telefono }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.licencia_automotriz.id_for_label }}">Licencia automotriz:</label>
+                            {{ form.licencia_automotriz }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.segundo_nombre_madre.id_for_label }}">Segundo nombre madre:</label>
+                            {{ form.segundo_nombre_madre }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.tipo_usuario.id_for_label }}">Tipo usuario:</label>
+                            {{ form.tipo_usuario }}
+                        </div>
+                        <button type="button" id="prevBtn" class="btn btn-secondary" style="box-shadow: 2px 2px 2px #000000;">Anterior</button>
+                        <button type="submit" class="btn btn-success" style="color: white; box-shadow: 2px 2px 2px #000000; text-shadow:1px 1px 1px #000000;">Crear usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'home' %}">Volver</a>
+</div>
+{{ block.super }}
+>>>>>>> main
 {% endblock %}
 {% block content %}
 <style>

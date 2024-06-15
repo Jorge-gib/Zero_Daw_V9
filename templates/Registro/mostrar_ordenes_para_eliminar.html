@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<<<<<<< HEAD
 <div class="titulo_presentacion fade-in-down">
     <div class="blue-background">
 <div>
     <h1 class="letras">Ordenes vigentes</h1>
     <p class="letras">Seleccione la orden que desee concluir</p>
 </div>
+=======
+<div id="containerHome" class="hidden fade-in-down">
+    <h1 class="text-center letras">Órdenes vigentes</h1>
+    <p class="text-center letras">Seleccione la orden que desee concluir</p>
+>>>>>>> main
 
-{% if ordenes %}
-    {% with hay_ordenes_disponibles=False %}
-        <ul>
+    {% if ordenes %}
+        {% with hay_ordenes_disponibles=False %}
+        <div class="order-list">
             {% for orden in ordenes %}
+<<<<<<< HEAD
                 {% if orden.estado != "Concluido" and orden.estado != "Calificado" and orden.estado != "Expirado" and orden.estado != "Iniciado" %}
                     {% if not hay_ordenes_disponibles %}
                         {% with hay_ordenes_disponibles=True %}
@@ -39,25 +46,33 @@
                     {% else %}
                         <li>
                             <p class="letras">ID de orden: {{ orden.id_orden }}</p>
+=======
+                {% if orden.estado != "Concluido" and orden.estado != "Calificado" %}
+                    {% with hay_ordenes_disponibles=True %}
+                    <div class="order-item card">
+                        <div class="card-body">
+                            <p class="letras card-title">ID de orden: {{ orden.id_orden }}</p>
+>>>>>>> main
                             <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                        
-                            <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+                            <p class="letras">Tipo material: {{ orden.tipo_material }}</p>
+                            <p class="letras">Cantidad plástico: {{ orden.cantidad_plastico }}</p>
                             <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-                            <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
+                            <p class="letras">Cantidad cartón: {{ orden.cantidad_carton }}</p>
                             <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-                            <p class="letras">Estado: {{ orden.estado }} </p>
-
+                            <p class="letras">Estado: {{ orden.estado }}</p>
 
                             <!-- Enviar el ID de la orden al hacer clic en el botón -->
                             <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
-                                <button type="submit">Seleccionar</button>
+                                <button type="submit" class="btn btn-primary">Seleccionar</button>
                             </form>
-                        </li>
-                    {% endif %}
+                        </div>
+                    </div>
+                    {% endwith %}
                 {% endif %}
             {% endfor %}
+<<<<<<< HEAD
         </ul>
         {% if not hay_ordenes_disponibles %}
             <p class="letras">No hay mas órdenes disponibles</p>
@@ -68,6 +83,92 @@
 {% endif %}
 
 <a href="{% url 'home' %}">Volver</a>
+=======
+        </div>
+        {% if not hay_ordenes_disponibles %}
+        <p class="text-center letras">No hay más órdenes disponibles</p>
+        {% endif %}
+        {% endwith %}
+    {% else %}
+        <h1 class="text-center letras">No hay más registros de órdenes</h1>
+    {% endif %}
+    <div class="text-center mt-3">
+        <a href="{% url 'login' %}" class="btn btn-link">Volver</a>
+>>>>>>> main
     </div>
 </div>
 {% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<style>
+   
+
+    .order-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0;
+    }
+
+    .order-item {
+        background-color: rgba(255, 255, 255, 0.3);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        width: calc(33.333% - 20px);
+        box-sizing: border-box;
+    }
+
+    .order-item .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .order-item .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .order-item form {
+        margin-top: 10px;
+    }
+
+    .order-item .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .letras {
+        font-size: 1rem;
+        margin: 5px 0;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .mt-3 {
+        margin-top: 1rem;
+    }
+
+    .btn-link {
+        text-decoration: none;
+        font-size: 1rem;
+        color: #007bff;
+    }
+
+    .btn-link:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock stylesheet %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
+{% endblock javascript %}

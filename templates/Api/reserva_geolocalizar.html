@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<<<<<<< HEAD
 <div class="titulo_presentacion fade-in-down">
     <div class="blue-background">
 <div>
     <h1 class="letras">Ordenes de reserva para buscar ubicacion del ciudadano</h1>
     <p class="letras">Seleccione la orden para buscar la ubicacion del ciudadano</p>
 </div>
+=======
+<div id="containerHome" class="hidden fade-in-down">
+    <h1 class="letras4">Ordenes de reserva para buscar ubicacion del ciudadano</h1>
+    <p class="letras4">Seleccione la orden para buscar la ubicacion del ciudadano</p>
+
+>>>>>>> main
 
 {% if ordenes %}
     {% with hay_ordenes_concluidas=False %}
-        <ul>
+        <ul >
             {% for orden in ordenes %}
             {% if orden.estado == "Orden tomada"%}
                     {% with hay_ordenes_concluidas=True %}
                        
                     <li>
+<<<<<<< HEAD
                         <p class="letras">ID de orden: {{ orden.id_orden }}</p>
                         <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
                         <p class="letras">hora inicio: {{ orden.hora_inicio}}</p>
@@ -27,6 +35,17 @@
                         <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
                         <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
                          <p class="letras">Estado: {{ orden.estado }} </p>
+=======
+                        <p class="letras4">ID de orden: {{ orden.id_orden }}</p>
+                        <p class="letras4">Fecha de orden: {{ orden.fecha_orden }}</p>
+                        <p class="letras4">hora inicio: {{ orden.hora_inicio}}</p>
+                        <p class="letras4">hora fin: {{ orden.hora_fin}}</p>
+                        <p class="letras4">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+                        <p class="letras4">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
+                        <p class="letras4">Cantidad carton: {{ orden.cantidad_carton }}</p>
+                        <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+                         <p class="letras4">Estado: {{ orden.estado }} </p>
+>>>>>>> main
 
 
                             <!-- Enviar el ID de la orden al hacer clic en el botón -->
@@ -41,14 +60,28 @@
             {% endfor %}
         </ul>
         {% if not hay_ordenes_disponibles %}
-        <p class="letras">No hay más órdenes disponibles</p>
+        <p class="letras4">No hay más órdenes disponibles</p>
     {% endif %}
     {% endwith %}
 {% else %}
-    <para class="letras">No hay más registros de órdenes</para>
+    <para class="letras4">No hay más registros de órdenes</para>
 {% endif %}
 
+<<<<<<< HEAD
 <a href="{% url 'home' %}">Volver</a>
     </div>
+=======
+<a href="{% url 'login' %}">Volver</a>
+>>>>>>> main
 </div>
 {% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
+{% endblock javascript %}

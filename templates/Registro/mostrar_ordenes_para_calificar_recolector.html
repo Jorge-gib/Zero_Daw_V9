@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<<<<<<< HEAD
 <div class="titulo_presentacion fade-in-down">
     <div class="blue-background">
+=======
+<div id="containerHome" class="hidden fade-in-down">
+>>>>>>> main
 <div>
-    <h1 class="letras">Ordenes vigentes</h1>
-    <p class="letras">Seleccione la orden que desee para calificar al recolector</p>
+    <h1 class="letras"style="text-align:center;">Órdenes vigentes</h1>
+    <p class="letras"style="text-align:center;">Seleccione la orden que desee para calificar al recolector</p>
 </div>
 
 {% if ordenes %}
@@ -38,14 +42,29 @@
             {% endfor %}
         </ul>
         {% if not hay_ordenes_disponibles %}
-        <p class="letras">No hay más órdenes disponibles</p>
+        <p class="letras"style="text-align:center;">No hay más órdenes disponibles</p>
     {% endif %}
     {% endwith %}
 {% else %}
-    <h1 class="letras">No hay más registros de órdenes</h1>
+    <p style="text-align:center;">No hay más registros de órdenes</p>
 {% endif %}
 
+<<<<<<< HEAD
 <a href="{% url 'home' %}">Volver</a>
     </div>
 </div>
+=======
+<a href="{% url 'login' %}">Volver</a>
+
+>>>>>>> main
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalleOrden.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
 {% endblock %}
