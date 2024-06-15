@@ -31,8 +31,8 @@
             {% if user.tipo_usuario == "Recolector" %}
             <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes' %}'">Buscar ordenes de servicio</button></ul>
             <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_reserva' %}'">Buscar ordenes de reserva</button></ul>
-            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes_eliminar' %}'">Concluir un servico</button></ul>
-            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes_eliminar_reserva' %}'">Concluir un servico de reserva</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes_eliminar' %}'">Concluir un servicio</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes_eliminar_reserva' %}'">Concluir un servicio de reserva</button></ul>
             <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'list_user' %}'">Ver mi perfil</button></ul>
             <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'ReservaListGeolocalizar' %}'">Buscar ubicacion ordenes de reserva</button></ul>
             <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'OrdenListGeolocalizar_para_ubicar_ciudadano' %}'">Buscar ubicacion ordenes</button></ul>
@@ -66,7 +66,6 @@
 {% endblock footer %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos2.css' %}">
     {{ block.super }}
 {% endblock stylesheets %}
 

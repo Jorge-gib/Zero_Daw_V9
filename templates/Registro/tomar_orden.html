@@ -1,62 +1,118 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Lista de ordenes{% endblock %}
+{% block title %}Lista de órdenes{% endblock %}
 
 {% block content %}
-  <h1 class="letras">Toma una orden</h1>
+<div id="containerHome" class="container">
+  <h1 class="text-center">Tomar una orden</h1>
   {% if orden_reciclaje %}
-    <form method="POST" action="{% url 'tomar_orden' orden_reciclaje.id_orden %}">
+    <form method="POST" action="{% url 'tomar_orden' orden_reciclaje.id_orden %}" class="form-container">
       {% csrf_token %}
-      <div class="letras">
-        <p>ID orden: {{ orden_reciclaje.id_orden }}</p>
+      <div class="form-group text-center">
+        <p class="letras">ID orden: {{ orden_reciclaje.id_orden }}</p>
       </div>
-      <div>
-        <label class="letras" for="latitud_posicion_recolector">Latitud:</label>
-        <input type="number" name="latitud_posicion_recolector" value="{{ orden_reciclaje.latitud_posicion_recolector }}" step="0.000001" placeholder="Latitud" required>
+      <div class="form-group">
+        <label for="latitud_posicion_recolector" class="letras">Latitud:</label>
+        <input type="number" name="latitud_posicion_recolector" class="form-control" value="{{ orden_reciclaje.latitud_posicion_recolector }}" step="0.000001" placeholder="Latitud" required>
       </div>
-      <div>
-        <label class="letras" for="longitud_posicion_recolector">Longitud:</label>
-        <input type="number" name="longitud_posicion_recolector" value="{{ orden_reciclaje.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
+      <div class="form-group">
+        <label for="longitud_posicion_recolector" class="letras">Longitud:</label>
+        <input type="number" name="longitud_posicion_recolector" class="form-control" value="{{ orden_reciclaje.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
       </div>
-      <button type="submit">Actualizar Orden</button>
-      <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-primary">Actualizar Orden</button>
+        <button type="button" class="btn btn-secondary" onclick="capturarUbicacion()">Capturar Ubicación</button>
+      </div>
     </form>
   {% else %}
-    <p class="letras">No hay órdenes disponibles.</p>
+    <p class="letras text-center">No hay órdenes disponibles.</p>
   {% endif %}
 
-  <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
-
-  <script>
-    function showSuccessMessage() {
-      document.getElementById("success-message").style.display = "block";
-    }
-
-    function capturarUbicacion() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var latitud = position.coords.latitude.toFixed(6);
-          var longitud = position.coords.longitude.toFixed(6);
-
-          document.querySelector('input[name="latitud_posicion_recolector"]').value = latitud;
-          document.querySelector('input[name="longitud_posicion_recolector"]').value = longitud;
-        });
-      } else {
-        alert("Tu navegador no admite la geolocalización.");
-      }
-    }
-  </script>
-
-  <div>
-    <a href="{% url 'mostrar_ordenes' %}">Volver</a>
+  <div id="success-message" style="display: none;" class="alert alert-success mt-3">
+    El objeto Orden_reciclaje se registró con éxito.
   </div>
-  <footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-    
-</footer>
+
+  <div class="text-center mt-3">
+    <a href="{% url 'mostrar_ordenes' %}" class="btn btn-link">Volver</a>
+  </div>
+</div>
+
+<script>
+  function showSuccessMessage() {
+    document.getElementById("success-message").style.display = "block";
+  }
+
+  function capturarUbicacion() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var latitud = position.coords.latitude.toFixed(6);
+        var longitud = position.coords.longitude.toFixed(6);
+
+        document.querySelector('input[name="latitud_posicion_recolector"]').value = latitud;
+        document.querySelector('input[name="longitud_posicion_recolector"]').value = longitud;
+      });
+    } else {
+      alert("Tu navegador no admite la geolocalización.");
+    }
+  }
+</script>
 {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<style>
+  #containerHome {
+    background-color: #bac2aca8;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container {
+    margin: auto;
+    max-width: 600px;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  .letras {
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .btn-link {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #007bff;
+  }
+
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .mt-3 {
+    margin-top: 1rem;
+  }
+</style>
+{% endblock stylesheets %}

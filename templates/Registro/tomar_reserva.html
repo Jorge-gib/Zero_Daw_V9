@@ -1,63 +1,125 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Lista de ordenes{% endblock %}
+{% block title %}Lista de órdenes{% endblock %}
 
 {% block content %}
-  <h1 class="letras">Toma una orden de reserva</h1>
+<div id="containerHome" class="hidden fade-in-down">
+  <h1 class="text-center letras4">Toma una orden de reserva</h1>
   {% if reserva_orden %}
-    <form method="POST" action="{% url 'tomar_reserva' reserva_orden.id_orden %}">
+    <form method="POST" action="{% url 'tomar_reserva' reserva_orden.id_orden %}" class="form-container">
       {% csrf_token %}
-      <div class="letras">
-        <p>ID orden: {{ reserva_orden.id_orden }}</p>
+      <div class="form-group">
+        <p class="letras4">ID orden: {{ reserva_orden.id_orden }}</p>
       </div>
-      <div>
-        <label class="letras" for="latitud_posicion_recolector">Latitud:</label>
-        <input type="number" name="latitud_posicion_recolector" value="{{ reserva_orden.latitud_posicion_recolector }}" step="0.000001" placeholder="Latitud" required>
+      <div class="form-group">
+        <label class="letras4" for="latitud_posicion_recolector">Latitud:</label>
+        <input type="number" class="form-control" name="latitud_posicion_recolector" value="{{ reserva_orden.latitud_posicion_recolector }}" step="0.000001" placeholder="Latitud" required>
       </div>
-      <div>
-        <label class="letras" for="longitud_posicion_recolector">Longitud:</label>
-        <input type="number" name="longitud_posicion_recolector" value="{{ reserva_orden.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
+      <div class="form-group">
+        <label class="letras4" for="longitud_posicion_recolector">Longitud:</label>
+        <input type="number" class="form-control" name="longitud_posicion_recolector" value="{{ reserva_orden.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
       </div>
       <input type="hidden" name="estado" value="Orden tomada">
-      <button type="submit">Actualizar Orden</button>
-      <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-primary">Actualizar Orden</button>
+        <button type="button" class="btn btn-secondary" onclick="capturarUbicacion()">Capturar Ubicación</button>
+      </div>
     </form>
   {% else %}
-    <p class="letras">No hay órdenes disponibles.</p>
+    <p class="text-center letras4">No hay órdenes disponibles.</p>
   {% endif %}
 
-  <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
+  <div id="success-message" class="alert alert-success" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
 
-  <script>
-    function showSuccessMessage() {
-      document.getElementById("success-message").style.display = "block";
-    }
-
-    function capturarUbicacion() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var latitud = position.coords.latitude.toFixed(6);
-          var longitud = position.coords.longitude.toFixed(6);
-
-          document.querySelector('input[name="latitud_posicion_recolector"]').value = latitud;
-          document.querySelector('input[name="longitud_posicion_recolector"]').value = longitud;
-        });
-      } else {
-        alert("Tu navegador no admite la geolocalización.");
-      }
-    }
-  </script>
-
-  <div>
-    <a href="{% url 'login' %}">Volver</a>
+  <div class="text-center mt-3">
+    <a href="{% url 'login' %}" class="btn btn-link">Volver</a>
   </div>
-  <footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-    
-</footer>
+</div>
+
+<script>
+  function showSuccessMessage() {
+    document.getElementById("success-message").style.display = "block";
+  }
+
+  function capturarUbicacion() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var latitud = position.coords.latitude.toFixed(6);
+        var longitud = position.coords.longitude.toFixed(6);
+
+        document.querySelector('input[name="latitud_posicion_recolector"]').value = latitud;
+        document.querySelector('input[name="longitud_posicion_recolector"]').value = longitud;
+      });
+    } else {
+      alert("Tu navegador no admite la geolocalización.");
+    }
+  }
+</script>
+
 {% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<style>
+  #containerHome {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Reduce el ancho máximo del contenedor */
+    margin: auto; /* Centra el contenedor horizontalmente */
+  }
+
+  .form-container {
+    max-width: 500px; /* Reduce el ancho máximo del formulario */
+    margin: auto;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-control {
+    width: 100%; /* Asegura que los inputs ocupen el 100% del ancho del contenedor */
+    max-width: 400px; /* Ajusta el ancho máximo de los inputs */
+    margin: auto; /* Centra los inputs horizontalmente */
+  }
+
+  .form-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center; /* Centra los botones horizontalmente */
+  }
+
+  .letras4 {
+    font-size: 1rem;
+    margin: 5px 0;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .mt-3 {
+    margin-top: 1rem;
+  }
+
+  .btn-link {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #007bff;
+  }
+
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+
+  .alert-success {
+    margin-top: 1rem;
+  }
+</style>
+{% endblock %}
+
+
