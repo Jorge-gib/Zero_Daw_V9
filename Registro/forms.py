@@ -58,8 +58,8 @@ class RegistroForm(UserCreationForm):
     direccion = forms.CharField(max_length=50)
     codigo_postal = forms.IntegerField()
     telefono = forms.IntegerField()
-    licencia_automotriz = models.CharField(max_length=200, null=True)
-    segundo_nombre_madre = models.CharField(max_length=100)
+    licencia_automotriz = forms.FileField(required=False)  # Cambiado a FileField
+    segundo_nombre_madre = forms.CharField(max_length=100)
     tipo_usuario = forms.ChoiceField(choices=UserModelo.TIPO_USUARIO)
 
     class Meta:
@@ -115,10 +115,6 @@ class RegistroForm(UserCreationForm):
             'segundo_nombre_madre': forms.TextInput(attrs={'class': 'form-control'}),
             'tipo_usuario': forms.Select(attrs={'class': 'form-control'}),
         }
-             
-             
-             
-        
 
 
 

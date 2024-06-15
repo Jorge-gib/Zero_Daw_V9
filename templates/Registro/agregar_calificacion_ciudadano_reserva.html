@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <h1 class="letras">Agrege una calificacion al Ciudadano</h1>
+<div id="containerHome" class="hidden fade-in-down">
+  <h1 class="letras4">Agrege una calificación al Ciudadano</h1>
 
   <form method="POST" action="{% url 'agregar_calificacion_ciudadano_reserva' orden.id_orden %}">
     {% csrf_token %}
     <input type="hidden" name="id_calificacion" value="{{ id_calificacion }}">
     <div>
-      <label class="letras" for="calificacion_estrellas_ciudadano">Calificación Estrellas Ciudadano:</label>
+      <label class="letras4" for="calificacion_estrellas_ciudadano">Calificación Estrellas Ciudadano:</label>
       <div class="rateyo" id="calificacion_estrellas_ciudadano"></div>
       <input type="hidden" name="calificacion_estrellas_ciudadano" id="calificacion_estrellas_ciudadano_input" step="0.1" required>
     </div>
    
     <div>
-      <label class="letras" for="opinion_servicio_ciudadano">Opinión Servicio Ciudadano:</label>
+      <label class="letras4" for="opinion_servicio_ciudadano">Opinión Servicio Ciudadano:</label>
       <div>
         <textarea name="opinion_servicio_ciudadano" id="opinion_servicio_ciudadano" rows="4" style="width: 100mm;" required></textarea>
       </div>
@@ -21,7 +22,7 @@
     
     <input type="submit" value="Agregar">
   </form>
-
+</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
   <script>
@@ -36,19 +37,19 @@
           $("#calificacion_estrellas_ciudadano_input").val(rating);
         }
       });
-
       // Añadir estilo para mostrar las estrellas en una fila horizontal
       $(".rateyo").css("display", "flex");
       $(".rateyo").css("justify-content", "center");
     });
   </script>
-  <footer>
-    <div id="navbar" class="video2">
-        <div class="video">
-        <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-        </div>
-        <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-    </div>
-    
-</footer>
 {% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
+{% endblock javascript %}

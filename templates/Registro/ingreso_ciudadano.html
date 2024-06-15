@@ -1,21 +1,19 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
+<div id="containerHome" class="hidden fade-in-down">
     <h1 class="letras">Gestion de registro</h1>
-    
-    <div class="content container">
-        <p class="letras">Informacion registrada con exito</p>
-   
-    </div>
+    <p class="letras">Informacion registrada con exito</p>   
     <a href="{% url 'login' %}">Volver</a>
-    <footer>
-        <div id="navbar" class="video2">
-            <div class="video">
-            <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-            </div>
-            <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-        </div>
-        
-    </footer>
-
+</div>
 {% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
+{% endblock javascript %}

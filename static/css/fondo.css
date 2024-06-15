@@ -1,8 +1,16 @@
 /* Colores de base */
-body {
+/* Colores de base */
+html {
+  overflow-y: scroll;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
   background-color: #ebf3e4;
-  background-image: url('../images/fondomin4.jpg');
+  background-image: url('../images/fondo2.jpg');
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
   background-position: center;
 }
@@ -54,7 +62,7 @@ body {
 }
 
 /* Botones */
-button {
+#btnHome {
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #7f8772;
@@ -69,29 +77,9 @@ button:hover {
   background-color: #8397b6;
 }
 
-a {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-  color: #007bff;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 /* Ajusta este valor según la altura de tu cabecera */
 body.fixed-header {
   padding-top: 80px;
-}
-
-/* Opcional: Añade un efecto de sombra o borde para resaltar la cabecera fija */
-#navbar {
-  background-color: #5f6a51;
-}
-
-.link {
-  color: black;
 }
 
 #i {
@@ -140,6 +128,14 @@ body.fixed-header {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.letras3 {
+  color: #333333;
+  text-shadow: 2px 2px 0px #ffffff3f, 5px 4px 0px rgba(0, 0, 0, 0.15);
+}
+.letras4 {
+  color: #333333;
+  text-shadow: 2px 2px 0px #ffffff17, 5px 4px 0px rgba(0, 0, 0, 0.15);
+}
 
 /* Estilo para footer */
 .letrasFoot {
@@ -153,4 +149,164 @@ body.fixed-header {
   border-radius: 20px;
 }
 
+/* Estilo para el contenedor principal del formulario */
+#containerHome {
+  background-color: #bac2aca8;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 50px;
+  padding-bottom: 20px;
+  border: 5px outset #bac2ac;
+  border-radius: 40px 40px 40px 40px;
+  max-width: 800px;
+  margin: auto;
+}
+#containerHome2 {
+  background-color: #bac2aca8;
+  padding: auto;
+  border: 5px outset #bac2ac;
+  border-radius: 40px 40px 40px 40px;
+  max-width: 700px;
+  margin: auto;
+}
 
+/* Estilo para las filas del formulario */
+.form-row {
+  display: flex;
+  justify-content: space-between; /* Espacio entre las columnas */
+  flex-wrap: wrap;
+}
+
+/* Estilo para las columnas del formulario */
+.form-column {
+  flex: 1;
+  min-width: 300px; /* Ancho mínimo para columnas */
+  padding: 10px;
+}
+
+/* Estilo para los grupos de formulario */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 8px;
+  max-width: 400px; /* Ancho máximo del input */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo para los botones */
+.button-group {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.button-group .btn {
+  padding: 10px 20px;
+  margin: 0 10px;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-success:hover, .btn-danger:hover {
+  opacity: 0.8;
+}
+
+/* Estilo para los enlaces */
+.links {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.links a {
+  display: block;
+  margin: 10px 0;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+/* Estilo para contenedor de ordenes */
+#container2 {
+  border: 5px outset #bac2ac;
+  border-radius: 40px 40px 40px 40px;
+}
+
+/* Estilo para los botones */
+#btnHome:hover {
+  box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
+}
+
+/* Texto registro */
+.text-over-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+  padding: 5px;
+  z-index: 1;
+}
+
+.btn-link {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #007bff;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+
+.btn-success {
+  align-self: center;
+  height: 50px;
+  width: 40%;
+  border-radius: 10px 10px 10px 10px;
+}
+
+button.btn-danger {
+  align-self: center;
+  height: 50px;
+  width: 40%;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.order-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.order-item {
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex: 1 1 calc(33.333% - 3rem);
+  box-sizing: border-box;
+  margin: 1rem 0;
+}

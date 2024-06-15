@@ -1,20 +1,20 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
-    <h1 class="letras">Gestion de servicio</h1>
-    
-    <div class="letras">
-        <p>Usted ya ha tomado la orden de servicio</p>
-   
-    </div>
+<div id="containerHome">
+    <h1 class="letras4" style="text-align:center;">Gestión de servicio</h1>
+    <p class="letras4" style="text-align:center;">Usted ya ha tomado la orden de servicio.</p>   
     <a href="{% url 'login' %}">Volver</a>
-    <footer>
-        <div id="navbar" class="video2">
-            <div class="video">
-            <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
-            </div>
-            <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
-        </div>
-        
-    </footer>
+
+</div>
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalleOrden.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
 {% endblock %}

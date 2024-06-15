@@ -2,66 +2,74 @@
 
 {% load static %}
 
-{% block title %}Pagina de inicio{% endblock title %}
-
 {% block content %} 
 
-    {% if user.is_authenticated  %}
-    <div id="animatedDiv" class="hidden fade-in-down">
-        <br>
-        <h1 class="letras1">Bienvenido</h1>
-        <img src="{% static 'images/logo_31.png' %}" alt="home" style="width: 500px; height: 350px;">
-        <div class="usuarioTipo">
-        <p class="hola">Hola - {{user.first_name}} {{user.last_name}}</p>
-        <p class="tipousuarioText">Tu tipo de usuario es - {{user.tipo_usuario}}</p>
+    {% if user.is_authenticated %}
+        <div id="animatedDiv" class="hidden fade-in-down" >
+            <br>
+            <h1 class="letras1">Bienvenido</h1>
+            <img src="{% static 'images/logo_31.png' %}" alt="home" style="width: 500px; height: 350px;">
+            <div class="usuarioTipo">
+                <p class="hola">Hola - {{ user.first_name }} {{ user.last_name }}</p>
+                <p class="tipousuarioText">Tu tipo de usuario es - {{ user.tipo_usuario }}</p>
+            </div>
+            <br><br>
         </div>
-        <br><br>
-    </div>
-    {% endif %}
-    {% if user.tipo_usuario == "Ciudadano" %}
-    <div>
-        <li class="nav-item"><a class="link" href="{% url 'orden_reciclaje' %}">Ordenar servicio</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'orden_reserva' %}">Reservar servicio</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'list_user' %}">Ver mi perfil</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'editar_user' user.id %}">Actualizar mi perfil</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'borrar_user' user.id %}">Eliminar mi cuenta</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'OrdenListGeolocalizar' user.id  %}">Seguimiento de orden</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'OrdenListGeolocalizar_para_ubicar_recolector' user.id %}">Seguimiento de reserva</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes_calificar_recolector'  %}">Calificacion a recolector</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes_calificar_recolector_reserva'  %}">Calificacion a recolector por la reserva</a></li>
-    </div>
-    {% endif %}
-    {% if user.tipo_usuario == "Recolector" %}
-    <div>
-        <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes' %}">Buscar ordenes de servicio</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'mostrar_reserva' %}">Buscar ordenes de reserva</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes_eliminar' %}">Concluir un servico</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'mostrar_ordenes_eliminar_reserva' %}">Concluir un servico de reserva</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'list_user' %}">Ver mi perfil</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'ReservaListGeolocalizar' %}">Buscar ubicacion ordenes de reserva</a></li>
-        <li class="nav-item"><a class="link" href="{% url 'OrdenListGeolocalizar_para_ubicar_ciudadano' %}">Buscar ubicacion ordenes</a></li>
-    </div>
-    {% endif %}
-    {% if user.tipo_usuario == "Operario_municipalidad" %}
-    <div>
-        <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
-    </div>
-    {% endif %}
-    {% if user.tipo_usuario == "Reciclador" %}
-    <div>
-        <li class="nav-item"><a href="{% url 'list_user' %}">Ver mi perfil</a></li>
-    </div>
-    {% endif %}
+        <div id="containerHome" class="hidden fade-in-down scroll-container">
+            {% if user.tipo_usuario == "Ciudadano" %}
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'orden_reciclaje' %}'">Ordenar servicio</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'orden_reserva' %}'">Reservar servicio</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'list_user' %}'">Ver mi perfil</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'editar_user' user.id %}'">Actualizar mi perfil</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'borrar_user' user.id %}'">Eliminar mi cuenta</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'OrdenListGeolocalizar' user.id %}'">Seguimiento de orden</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'OrdenListGeolocalizar_para_ubicar_recolector' user.id %}'">Seguimiento de reserva</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes_calificar_recolector' %}'">Calificar recolector</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes_calificar_recolector_reserva' %}'">Calificar recolector por la reserva</button></ul>
+            {% endif %}
     
-    {{block.super}}
+            {% if user.tipo_usuario == "Recolector" %}
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes' %}'">Buscar ordenes de servicio</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_reserva' %}'">Buscar ordenes de reserva</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes_eliminar' %}'">Concluir un servicio</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'mostrar_ordenes_eliminar_reserva' %}'">Concluir un servicio de reserva</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'list_user' %}'">Ver mi perfil</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'ReservaListGeolocalizar' %}'">Buscar ubicacion ordenes de reserva</button></ul>
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'OrdenListGeolocalizar_para_ubicar_ciudadano' %}'">Buscar ubicacion ordenes</button></ul>
+            {% endif %}
+    
+            {% if user.tipo_usuario == "Operario_municipalidad" %}
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'list_user' %}'">Ver mi perfil</button></ul>
+            {% endif %}
+    
+            {% if user.tipo_usuario == "Reciclador" %}
+            <ul class="nav-item"><button id="btnHome" class="link" onclick="location.href='{% url 'list_user' %}'">Ver mi perfil</button></ul>
+            {% endif %}
+        </div>
+    
+        <br>
+        {% else %}
+        <div id="notAuthenticatedDiv" class="hidden fade-in-down">
+            <div id="containerHome">
+            <h1 style="text-align:center;">¡Bienvenido!</h1>
+            <p style="text-align:center;">Para acceder a esta página, por favor <a href="{% url 'login' %}" >inicia sesión</a>.</p>
+            </div>
+        </div>
+    {% endif %}
+
+    
+    {{ block.super }}
 
 {% endblock content %}
+{% block footer %}
+
+{% endblock footer %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    {{ block.super }}
+{% endblock stylesheets %}
+
 {% block javascript %}
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var animatedDiv = document.getElementById("animatedDiv");
-        animatedDiv.classList.remove("hidden");
-        animatedDiv.classList.add("fade-in-down");
-    });
-</script>
-{% endblock javascript %}
+    <script src="{% static 'js/animations.js' %}"></script>
+    {{ block.super }}
+{% endblock %}

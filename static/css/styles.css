@@ -1,0 +1,181 @@
+/* Colores de base */
+html {
+  overflow-y: scroll;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #ebf3e4;
+  background-image: url('../images/fondo2.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Contenedores reutilizables */
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.container-blue {
+  background-color: #bac2ac;
+  border: 5px solid #b1bd9f;
+}
+
+/* Flexbox container for form and map */
+.form-map-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Adjust form to take less space */
+form#container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+/* Hidden map container until location is captured */
+#map-container {
+  flex: 1;
+  animation: fadeIn 1s ease-in-out;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  background-color: #f0f0f0; /* Añadido para verificar visibilidad */
+}
+
+/* Animación de fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Estilos para títulos */
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Estilos para formularios */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-column {
+  flex: 0 0 48%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%; 
+}
+
+/* Estilos para botones */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #7f8772;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #8397b6;
+}
+
+/* Estilo para links */
+.links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.links a {
+  display: block;
+  margin-bottom: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos adicionales */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.p-10 {
+  padding: 10px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.rounded {
+  border-radius: 5px;
+}
+
+.shadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
