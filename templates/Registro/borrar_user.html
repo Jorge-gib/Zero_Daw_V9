@@ -1,36 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div id="containerHome">
-    <h1 class="letras">Borrar Usuario</h1>
+<div id="containerHome" class="hidden fade-in-down">
+    <h1 class="letras4">Borrar Usuario</h1>
     <form method="POST" action="{% url 'borrar_user' user.id %}">
         {% csrf_token %}
         <div class="form-group">
-            <label class="letras">¿Estás seguro de que deseas borrar este usuario?</label>
+            <label class="letras4">¿Estás seguro de que deseas borrar este usuario?</label>
         </div>
         <div class="form-group">
-            <label class="letras">ID del Usuario:</label>
-            <input style=""type="text" value="{{ user.id }}" readonly>
+            <label class="letras4">ID del Usuario:</label>
+            <input type="text" value="{{ user.id }}" readonly>
         </div>
         <div class="form-group">
-            <label class="letras">Nombre usuario:</label>
+            <label class="letras4">Nombre usuario:</label>
             <input type="text" value="{{ user.username }}" readonly>
         </div>
         <div class="form-group">
-            <label class="letras">Nombre:</label>
+            <label class="letras4">Nombre:</label>
             <input type="text" value="{{ user.first_name }}" readonly>
         </div>
         <div class="form-group">
-            <label class="letras">Apellido:</label>
+            <label class="letras4">Apellido:</label>
             <input type="text" value="{{ user.last_name }}" readonly>
         </div>
         <div class="form-group">
-            <label class="letras">Rut:</label>
+            <label class="letras4">Rut:</label>
             <input type="text" value="{{ user.rut }}-{{ user.dv }}" readonly>
         </div>
         <input type="hidden" name="user_id" value="{{ user.id }}">
-        <div class="form-buttons">
-            <button type="submit">Borrar</button>
+        <div class="button-group">
+            <button type="submit" class="btn-danger">Borrar</button>
         </div>
     </form>
     <div class="links">
@@ -39,6 +39,13 @@
 </div>
 {% endblock %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
 {% endblock %}

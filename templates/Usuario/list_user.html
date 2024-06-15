@@ -10,7 +10,7 @@
 <br>
 {% if object_list %}
 {% for user in object_list %}
-<div class="detalleUsuario hidden fade-in-down">
+<div class="blue-background detalleUsuario hidden fade-in-down">
     <p class="letras4">Nombre usuario: {{ user.username }}</p>
     <p class="letras4">Nombre: {{ user.first_name }}</p>
     <p class="letras4">Apellido: {{ user.last_name }}</p> 
@@ -21,8 +21,9 @@
     <p class="letras4">Telefono: {{ user.telefono }}</p> 
     <p class="letras4">Rol en el sistema: {{ user.tipo_usuario}}</p>                 
     
+    <div class="links">
         <a href="{% url 'login' %}">Volver</a>
-    
+    </div>
 </div>
 
 {% endfor %}

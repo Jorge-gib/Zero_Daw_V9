@@ -1,54 +1,48 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<style>
-    #container2{
-        background-color: #bac2ac2f;
-        padding-top: 20px;
-        padding-left:10px;
-        padding-right:50px;
-        padding-bottom:20px;
-        border: 5px outset #bac2ac;
-        border-radius: 40px 40px 40px 40px;
-      
-      }
-</style>
-<div id="containerHome">
+
+<div id="containerHome" class="hidden fade-in-down">
     <h1 class="letras4">Órdenes realizadas</h1>
     <p class="letras4">Seleccione la orden para buscar la ubicación del recolector</p>
     {% if ordenes %}
-    <ul>
+    <div class="order-container">
         {% for orden in ordenes %}
-        <div>
-            <ul id="container2">
-                <p class="letras4">ID de orden: {{ orden.id_orden }}</p>
-                <p class="letras4">Fecha de orden: {{ orden.fecha_orden }}</p>
-                <p class="letras4">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-                <p class="letras4">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-                <p class="letras4">Cantidad carton: {{ orden.cantidad_carton }}</p>
-                <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-                <p class="letras4">Estado: {{ orden.estado }}</p>
+        <div class="order-item">
+            <p class="letras4">ID de orden: {{ orden.id_orden }}</p>
+            <p class="letras4">Fecha de orden: {{ orden.fecha_orden }}</p>
+            <p class="letras4">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
+            <p class="letras4">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
+            <p class="letras4">Cantidad carton: {{ orden.cantidad_carton }}</p>
+            <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
+            <p class="letras4">Estado: {{ orden.estado }}</p>
 
-                <!-- Enviar el ID de la orden al hacer clic en el botón -->
-                <form method="POST" action="{% url 'OrdenListGeolocalizar' user.id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="orden_id" value="{{ orden.id_user_id }}">
-                    <button type="submit">Seleccionar</button>
-                </form>
-            </ul>
+            <!-- Enviar el ID de la orden al hacer clic en el botón -->
+            <form method="POST" action="{% url 'OrdenListGeolocalizar' user.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="orden_id" value="{{ orden.id_user_id }}">
+                <button type="submit" class="btn-primary">Seleccionar</button>
+            </form>
         </div>
+
         {% endfor %}
-    </ul>
-{% else %}
-    <p style="text-align:center;">No hay órdenes registradas para este usuario</p>
-{% endif %}
+    </div>
+    <a href="{% url 'login' %}">Volver</a>
 
-<a href="{% url 'login' %}">Volver</a>
+    {% else %}
+    <p class="letras4" style="text-align:center;">No hay órdenes registradas para este usuario</p>
+    {% endif %}
+    <a href="{% url 'login' %}">Volver</a>
 </div>
-
-
 
 {% endblock %}
 {% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
 {% endblock %}
