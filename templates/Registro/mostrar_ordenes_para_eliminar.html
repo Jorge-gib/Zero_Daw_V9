@@ -33,6 +33,8 @@
                     {% endwith %}
                 {% endif %}
             {% endfor %}
+            <a href="{% url 'login' %}" class="btn btn-link">Volver</a>
+
         </div>
         {% if not hay_ordenes_disponibles %}
         <p class="text-center letras">No hay más órdenes disponibles</p>
@@ -41,9 +43,6 @@
     {% else %}
         <h1 class="text-center letras">No hay más registros de órdenes</h1>
     {% endif %}
-    <div class="text-center mt-3">
-        <a href="{% url 'login' %}" class="btn btn-link">Volver</a>
-    </div>
 </div>
 {% endblock %}
 

@@ -37,6 +37,7 @@ class OrdenListGeolocalizar(LoginRequiredMixin, ListView):
         # Agrega las órdenes filtradas al contexto con el nombre 'ordenes'
         context['ordenes'] = self.get_queryset()
         return context
+
     def post(self, request, *args, **kwargs):
         orden_id = request.POST.get('orden_id')
         return redirect(reverse_lazy('geolocalizacion', kwargs={'id_orden': orden_id}))

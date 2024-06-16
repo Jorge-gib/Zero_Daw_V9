@@ -19,8 +19,6 @@ class UserModelo(AbstractUser):
     licencia_automotriz = models.ImageField(upload_to='licencias/', blank=True, null=True)
     segundo_nombre_madre = models.CharField(max_length=100,null=True,blank=True)
     tipo_usuario = models.CharField(max_length=200, blank=False, null=True, choices=TIPO_USUARIO)
-    new_password1 = models.CharField(max_length=50, null=True)
-    new_password2 = models.CharField(max_length=50, null=True)
     groups = models.ManyToManyField(Group, related_name='usuarios')
     user_permissions = models.ManyToManyField(Permission, related_name='usuarios')
 
