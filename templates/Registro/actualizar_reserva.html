@@ -3,31 +3,10 @@
 {% block title %}Concluir orden{% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-  <div class="blue-background">
-  <h1 class="letras">Confirme el término de orden</h1>
-
-=======
   <h1 class="letras4">Confirme el término de orden</h1>
->>>>>>> main
   {% if orden %}
   <form id="containerHome"method="POST" action="{% url 'actualizar_reserva' orden.id_orden %}">
     {% csrf_token %}
-<<<<<<< HEAD
-    <div class="letras">
-        <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-        <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-        <p class="letras">hora inicio: {{ orden.hora_inicio}}</p>
-        <p class="letras">hora fin: {{ orden.hora_fin}}</p>
-        <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-        <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-        <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
-        <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-        <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
-        <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
-        <p class="letras">Estado: {{ orden.estado }} </p>
-=======
     <div class="hidden fade-in-down">
         <p class="letras4">ID de orden: {{ orden.id_orden }}</p>
         <p class="letras4">Fecha de orden: {{ orden.fecha_orden }}</p>
@@ -38,7 +17,6 @@
         <p class="letras4">Cantidad carton: {{ orden.cantidad_carton }}</p>
         <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
         <p class="letras4">Estado: {{ orden.estado }} </p>
->>>>>>> main
 
     </div>
   
@@ -46,7 +24,7 @@
     <input type="hidden" name="estado" value="Concluido">
   
     <button type="submit" class="btn-success">Concluir orden</button>
-    <a href="{% url 'login' %}">Volver</a>
+
 
   </form>
   {% else %}
@@ -55,14 +33,6 @@
 
   <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
 
-<<<<<<< HEAD
-  <div>
-    <a href="{% url 'home' %}">Volver</a>
-  </div>
-</div>
-</div>
-=======
->>>>>>> main
 {% endblock %}
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/fondo.css' %}">

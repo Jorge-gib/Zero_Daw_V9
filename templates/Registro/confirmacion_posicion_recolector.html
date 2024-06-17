@@ -1,24 +1,10 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
-    <h1 class="letras">Gestion de servicio</h1>
-    
-    <div class="letras">
-        <p>Usted ya ha tomado la orden de servicio</p>
-   
-    </div>
-    <a href="{% url 'home' %}">Volver</a>
-</div>
-</div>
-   
-=======
 <div id="containerHome">
     <h1 class="letras4" style="text-align:center;">Gestión de servicio</h1>
     <p class="letras4" style="text-align:center;">Usted ya ha tomado la orden de servicio.</p>   
-    <a href="{% url 'login' %}">Volver</a>
+
 
 </div>
 {% endblock %}
@@ -31,5 +17,4 @@
 {% block javascript %}
 <script src="{% static 'js/animations.js' %}"></script>
 {{ block.super }}
->>>>>>> main
 {% endblock %}

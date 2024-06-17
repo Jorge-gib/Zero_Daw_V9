@@ -1,17 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
-<div>
-    <h1 class="letras">Ordenes por reserva vigentes</h1>
-    <p class="letras">Seleccione la orden que desee concluir</p>
-=======
 <div id="containerHome" class="hidden fade-in-down">
     <h1 class="text-center letras4">Órdenes por reserva vigentes</h1>
     <p class="text-center letras4">Seleccione la orden que desee concluir</p>
->>>>>>> main
 </div>
 
     {% if ordenes %}
@@ -19,45 +11,7 @@
         <br>
         <div class="order-list" >
             {% for orden in ordenes %}
-<<<<<<< HEAD
-                {% if orden.estado == "Orden tomada"%}
-                    {% if not hay_ordenes_disponibles %}
-                        {% with hay_ordenes_disponibles=True %}
-                            <li>
-                                <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-                                <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                                <p class="letras">hora inicio: {{ orden.hora_inicio}}</p>
-                                <p class="letras">hora fin: {{ orden.hora_fin}}</p>
-                                <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-                                <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-                                <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
-                                <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-                                <p class="letras">Estado: {{ orden.estado }} </p>
-
-                                <!-- Enviar el ID de la orden al hacer clic en el botón -->
-                                <form method="POST" action="{% url 'actualizar_reserva' orden.id_orden %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
-                                    <button type="submit">Seleccionar</button>
-                                </form>
-                            </li>
-                        {% endwith %}
-                    {% else %}
-                        <li>
-                                <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-                                <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                                <p class="letras">hora inicio: {{ orden.hora_inicio}}</p>
-                                <p class="letras">hora fin: {{ orden.hora_fin}}</p>
-                                <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-                                <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-                                <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
-                                <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-                                <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
-                                <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
-                                <p class="letras">Estado: {{ orden.estado }} </p>
-
-=======
-                {% if orden.estado != "Concluido" and orden.estado != "Calificado"%}
+                {% if orden.estado != "Concluido" and orden.estado != "Calificado" and orden.estado != "Expirado"%}
                     {% with hay_ordenes_disponibles=True %}
                     <div class="order-item card" >
                         <div class="card-body" style="background-color:none;">
@@ -70,7 +24,6 @@
                             <p class="letras4">Cantidad cartón: {{ orden.cantidad_carton }}</p>
                             <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
                             <p class="letras4">Estado: {{ orden.estado }}</p>
->>>>>>> main
 
                             <!-- Enviar el ID de la orden al hacer clic en el botón -->
                             <form method="POST" action="{% url 'actualizar_reserva' orden.id_orden %}">
@@ -78,26 +31,13 @@
                                 <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
                                 <button type="submit" class="btn-primary">Seleccionar</button>
 
-                                <a href="{% url 'login' %}" class="btn-link">Volver</a>
+                         
                             </form>
                         </div>
                     </div>
                     {% endwith %}
                 {% endif %}
             {% endfor %}
-<<<<<<< HEAD
-        </ul>
-        {% if not hay_ordenes_disponibles %}
-            <p class="letras">No hay mas órdenes disponibles</p>
-        {% endif %}
-    {% endwith %}
-{% else %}
-    <h1 class="letras">No hay mas registros de órdenes</h1>
-{% endif %}
-
-<a href="{% url 'home' %}">Volver</a>
-    </div>
-=======
         </div>
         <br>
         {% if not hay_ordenes_disponibles %}
@@ -113,7 +53,6 @@
     </div>
     {% endif %}
     
->>>>>>> main
 </div>
 {% endblock %}
 {% block stylesheet %}

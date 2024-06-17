@@ -3,19 +3,10 @@
 {% block title %}Lista de órdenes{% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-  <div class="blue-background">
-  <h1 class="letras">Toma una orden</h1>
-  <p class="letras">Complete la información necesaria para tomar una orden.</p>
-  {% if orden_reciclaje %}
-    <form method="POST" action="{% url 'tomar_orden' orden_reciclaje.id_orden %}" onsubmit="return validarFormulario()">
-=======
 <div id="containerHome" class="container">
   <h1 class="text-center">Tomar una orden</h1>
   {% if orden_reciclaje %}
     <form method="POST" action="{% url 'tomar_orden' orden_reciclaje.id_orden %}" class="form-container">
->>>>>>> main
       {% csrf_token %}
       <div class="form-group text-center">
         <p class="letras">ID orden: {{ orden_reciclaje.id_orden }}</p>
@@ -28,56 +19,17 @@
         <label for="longitud_posicion_recolector" class="letras">Longitud:</label>
         <input type="number" name="longitud_posicion_recolector" class="form-control" value="{{ orden_reciclaje.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
       </div>
+      <input type="hidden" name="estado" value="Orden tomada">
+
       <div class="form-buttons">
         <button type="submit" class="btn btn-primary">Actualizar Orden</button>
         <button type="button" class="btn btn-secondary" onclick="capturarUbicacion()">Capturar Ubicación</button>
       </div>
-<<<<<<< HEAD
-      
-      <input type="hidden" name="estado" value="Orden tomada">
-      <button type="submit">Actualizar Orden</button>
-      <button type="button" onclick="capturarUbicacion()">Capturar Ubicación</button>
-=======
->>>>>>> main
     </form>
   {% else %}
     <p class="letras text-center">No hay órdenes disponibles.</p>
   {% endif %}
 
-<<<<<<< HEAD
-  <div id="success-message" style="display: none;">El objeto Orden_reciclaje se registró con éxito.</div>
-
-  <script>
-    function showSuccessMessage() {
-      document.getElementById("success-message").style.display = "block";
-    }
-
-    function capturarUbicacion() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var latitud = position.coords.latitude.toFixed(6);
-          var longitud = position.coords.longitude.toFixed(6);
-
-          document.querySelector('input[name="latitud_posicion_recolector"]').value = latitud;
-          document.querySelector('input[name="longitud_posicion_recolector"]').value = longitud;
-        });
-      } else {
-        alert("Tu navegador no admite la geolocalización.");
-      }
-    }
-
-    function validarFormulario() {
-      // Aquí puedes agregar validaciones adicionales si es necesario
-      return true;
-    }
-  </script>
-
-  <div>
-    <a href="{% url 'mostrar_ordenes' %}">Volver</a>
-  </div>
-</div>
-</div>
-=======
   <div id="success-message" style="display: none;" class="alert alert-success mt-3">
     El objeto Orden_reciclaje se registró con éxito.
   </div>
@@ -106,7 +58,6 @@
     }
   }
 </script>
->>>>>>> main
 {% endblock %}
 
 {% block stylesheets %}

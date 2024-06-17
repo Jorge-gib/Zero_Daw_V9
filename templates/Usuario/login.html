@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Login
+Registro
 {% endblock %}
 
 {% block head %}
@@ -52,16 +52,11 @@ Login
     
       <a class="link" href="{% url 'enviar_c' %}">Si no recuerda su clave, haga clic aquí</a>
     </div>
-    <div>
-      <a class="link" href="{% url 'home' %}">Volver</a>
-    </div>
+    
 </div>
    
   
 </div>
-
-
-
 {{block.super}}
 {% endblock %}
 {% block stylesheets %}
@@ -72,5 +67,4 @@ Login
 {% block javascript %}
     <script src="{% static 'js/animations.js' %}"></script>
     {{ block.super }}
-
 {% endblock %}

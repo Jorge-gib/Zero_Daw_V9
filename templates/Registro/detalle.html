@@ -1,8 +1,6 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
 <div>
     <h1 class="letras4 hidden fade-in-down">Detalle de orden</h1>
 </div>
@@ -29,38 +27,6 @@
 
 {% endblock %}
 
-<<<<<<< HEAD
-    {% for orden in object_list %}
-    <div class="margen">
-        <div class="blue-background">
-         <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-         <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-           <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-         <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-         <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
-         <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-         <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
-         <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
-         <p class="letras">Estado: {{ orden.estado }} </p>
-
-        </div>
-    </div> 
-        <br>
-    
-   
-    {% endfor %}
-    
-{% else %}
-    <h1 class="letras">No hay registros de ordenes</h1>
-{% endif %}
-<a href="{% url 'orden_reciclaje' %}">Volver</a>
-
-</div>
-</div>
-  
-
-{% endblock %}
-=======
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/fondo.css' %}">
 <link rel="stylesheet" href="{% static 'css/animations.css' %}">
@@ -71,4 +37,3 @@
 <script src="{% static 'js/animations.js' %}"></script>
 {{ block.super }}
 {% endblock %}
->>>>>>> main

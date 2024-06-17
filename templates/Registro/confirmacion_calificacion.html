@@ -1,26 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
-   <div>
-    <h1 class="letras">Gestion de ordenes</h1>
-   </div>
-  
-    {% csrf_token %}
-    <div class="content container">
-        <p class="letras">Listo!!!, gracias por tu participacion</p>
-    </div>
-    <a href="{% url 'home' %}">Volver</a>
-</div>
-</div>
-{% endblock %}
-=======
    <div id="containerHome" class="hidden fade-in-down">
     <h1 class="letras4">Gestión de ordenes</h1>
         <p class="letras4">¡Listo! Muchas gracias por tu participación.</p>
-    <a href="{% url 'login' %}">Volver</a>
+   
    </div>
   
     {% csrf_token %}
@@ -36,4 +20,3 @@
 <script src="{% static 'js/animations.js' %}"></script>
 {{ block.super }}
 {% endblock javascript %}
->>>>>>> main

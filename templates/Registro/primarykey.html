@@ -1,16 +1,20 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
     <h1 class="letras">Gestion de registro</h1>
     
     <div class="content container">
         <p class="letras">El rut que escribio ya existe</p>
    
     </div>
-    <a href="{% url 'registrar' %}">Volver</a>
-    
-</div>
-</div>
+    <footer>
+        <div id="navbar" class="video2">
+            <div class="video">
+            <p class="letras2">Sistema de reciclaje sin fines de lucro</p>
+            </div>
+            <img  src="{% static 'images/logo_4.png' %}" alt="logo" style="width: 60px; height: 60px;">
+        </div>
+        
+    </footer>
+
 {% endblock %}

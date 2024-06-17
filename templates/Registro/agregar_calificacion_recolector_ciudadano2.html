@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="titulo_presentacion fade-in-down">
-  <div class="blue-background">
+<div id="containerHome" class="hidden fade-in-down">
   <h1 class="letras">Agregar una calificación al Recolector</h1>
 
   <form method="POST" action="{% url 'agregar_calificacion_recolector_ciudadano2' orden.id_orden %}">
@@ -25,19 +24,17 @@
     <input type="submit" value="Calificar">
   </form>
 </div>
-</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css"/>
   <script>
     $(function() {
       $("#calificacion_estrellas_recolector").rateYo({
-        rating: {{ calificacion.calificacion_estrellas_recolector|default:0 }},
+        rating: "{{ calificacion.calificacion_estrellas_recolector }}",
         numStars: 5,
         precision: 1,
         minValue: 0,
         maxValue: 5,
-        onSet: function(rating, rateYoInstance) {
+        onChange: function(rating, rateYoInstance) {
           $("#calificacion_estrellas_recolector_input").val(rating);
         }
       });
@@ -47,8 +44,14 @@
       $(".rateyo").css("justify-content", "center");
     });
   </script>
-<<<<<<< HEAD
-  
-=======
->>>>>>> main
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/fondo.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
+{{ block.super }}
 {% endblock %}

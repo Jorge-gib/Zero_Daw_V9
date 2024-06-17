@@ -1,16 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
-<div>
-    <h1 class="letras">Ordenes vigentes</h1>
-</div>
-<div>
-    <p class="letras">Escoja una orden a tomar</p>
-</div>
-=======
 <style>
     #containerHome {
         display: flex;
@@ -21,7 +11,6 @@
         border-radius: 8px;
         background-color: #bac2aca8;
     }
->>>>>>> main
 
     .order-list {
         display: flex;
@@ -80,28 +69,8 @@
     {% with hay_ordenes_disponibles=False %}
     <ul class="order-list">
         {% for orden in ordenes %}
-            {% if orden.estado != "Concluido" and orden.latitud_posicion_recolector is null and orden.estado != "Calificado" and orden.estado != "Expirado" %}
+            {% if orden.estado != "Concluido" and orden.estado != "Calificado" and orden.estado != "Expirado" and orden.estado != "Orden tomada" %}
                 {% with hay_ordenes_disponibles=True %}
-<<<<<<< HEAD
-                    <li>
-                        <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-                        <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                        <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-                        <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-                        <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
-                        <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-                        <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
-                        <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
-                        <p class="letras">Estado: {{ orden.estado }} </p>
-
-                        <!-- Enviar el ID de la orden al hacer clic en el botón -->
-                        <form method="POST" action="{% url 'tomar_orden' orden.id_orden %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
-                            <button type="submit">Seleccionar</button>
-                        </form>
-                    </li>
-=======
                 <li class="order-item">
                     <p class="letras">ID de orden: {{ orden.id_orden }}</p>
                     <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
@@ -117,7 +86,6 @@
                         <button type="submit" class="btn btn-primary">Seleccionar</button>
                     </form>
                 </li>
->>>>>>> main
                 {% endwith %}
             {% endif %}
         {% endfor %}
@@ -130,13 +98,7 @@
 {% else %}
     <h1 class="letras">No hay más registros de órdenes</h1>
 {% endif %}
-<<<<<<< HEAD
 
-<a href="{% url 'home' %}">Volver</a>
-</div>
-</div>
-=======
-<a href="{% url 'login' %}">Volver</a>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -148,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </body>
->>>>>>> main
 {% endblock %}
 
 {% block stylesheet %}

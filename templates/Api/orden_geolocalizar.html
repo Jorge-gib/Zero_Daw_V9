@@ -1,54 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
-        <div>
-            <h1 class="letras">Órdenes realizadas</h1>
-            <p class="letras">Seleccione la orden para buscar la ubicación del recolector</p>
-        </div>
-
-        {% if ordenes %}
-            <ul>
-                {% with total=0 %}
-                {% for orden in ordenes %}
-                    {% if orden.estado == "Orden tomada" %}
-                        {% with total=total|add:1 %}
-                        <li>
-                            <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-                            <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                            <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-                            <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-                            <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
-                            <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-                            <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
-                            <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
-                            <p class="letras">Estado: {{ orden.estado }}</p>
-
-                            <!-- Enviar el ID de la orden al hacer clic en el botón -->
-                            <form method="POST" action="{% url 'OrdenListGeolocalizar' user.id %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="orden_id" value="{{ orden.id_user_id }}">
-                                <button type="submit">Seleccionar</button>
-                            </form>
-                        </li>
-                        {% endwith %}
-                    {% endif %}
-                {% endfor %}
-                {% if total == 0 %}
-                    <p class="letras">No hay más órdenes vigentes</p>
-                {% endif %}
-                {% endwith %}
-            </ul>
-        {% else %}
-            <p class="letras">No hay órdenes registradas para este usuario</p>
-        {% endif %}
-
-        <a href="{% url 'home' %}">Volver</a>
-    </div>
-</div>
-=======
 
 <div id="containerHome" class="hidden fade-in-down">
     <h1 class="letras4">Órdenes realizadas</h1>
@@ -56,6 +8,7 @@
     {% if ordenes %}
     <div class="order-container">
         {% for orden in ordenes %}
+        {% if orden.estado != "Concluido" and orden.estado != "Calificado" and orden.estado != "Expirado"%}
         <div class="order-item">
             <p class="letras4">ID de orden: {{ orden.id_orden }}</p>
             <p class="letras4">Fecha de orden: {{ orden.fecha_orden }}</p>
@@ -66,21 +19,21 @@
             <p class="letras4">Estado: {{ orden.estado }}</p>
 
             <!-- Enviar el ID de la orden al hacer clic en el botón -->
-            <form method="POST" action="{% url 'OrdenListGeolocalizar' user.id %}">
+            <form method="POST" action="{% url 'OrdenListGeolocalizar' orden.id_orden %}">
                 {% csrf_token %}
-                <input type="hidden" name="orden_id" value="{{ orden.id_user_id }}">
+                <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
                 <button type="submit" class="btn-primary">Seleccionar</button>
             </form>
         </div>
-
+        {% endif %}
         {% endfor %}
     </div>
-    <a href="{% url 'login' %}">Volver</a>
+    
 
     {% else %}
     <p class="letras4" style="text-align:center;">No hay órdenes registradas para este usuario</p>
     {% endif %}
-    <a href="{% url 'login' %}">Volver</a>
+ 
 </div>
 
 {% endblock %}
@@ -93,5 +46,4 @@
 {% block javascript %}
 <script src="{% static 'js/animations.js' %}"></script>
 {{ block.super }}
->>>>>>> main
 {% endblock %}

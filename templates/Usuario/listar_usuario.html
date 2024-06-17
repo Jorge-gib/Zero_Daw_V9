@@ -2,8 +2,7 @@
 {% load static %}
 {% block content %}
 {% block titulo_principal %} Lista de Usuarios Registrados {% endblock %}
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
+
    {% if object_list %}
 
         {% for user in object_list %}
@@ -15,9 +14,4 @@
     {% else %}
         <h1>No hay registros de user</h1>
     {% endif %}
-<<<<<<< HEAD
-    </div>
-</div>
-=======
->>>>>>> main
 {% endblock %}

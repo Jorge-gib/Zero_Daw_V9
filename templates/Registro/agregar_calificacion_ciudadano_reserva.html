@@ -1,14 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-  <div class="blue-background">
-  <h1 class="letras">Agrega una calificación al Ciudadano</h1>
-=======
 <div id="containerHome" class="hidden fade-in-down">
   <h1 class="letras4">Agrege una calificación al Ciudadano</h1>
->>>>>>> main
 
   <form method="POST" action="{% url 'agregar_calificacion_ciudadano_reserva' orden.id_orden %}">
     {% csrf_token %}
@@ -29,13 +23,8 @@
     <input type="submit" value="Agregar">
   </form>
 </div>
-<<<<<<< HEAD
-</div>
-=======
->>>>>>> main
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css"/>
   <script>
     $(function() {
       $("#calificacion_estrellas_ciudadano").rateYo({
@@ -44,25 +33,15 @@
         precision: 1,
         minValue: 0,
         maxValue: 5,
-        fullStar: true, // Solo mostrar estrellas llenas
-        onSet: function(rating, rateYoInstance) {
+        onChange: function(rating, rateYoInstance) {
           $("#calificacion_estrellas_ciudadano_input").val(rating);
         }
       });
-<<<<<<< HEAD
-
-      // Aplicamos estilos para mostrar las estrellas horizontalmente
-=======
       // Añadir estilo para mostrar las estrellas en una fila horizontal
->>>>>>> main
       $(".rateyo").css("display", "flex");
       $(".rateyo").css("justify-content", "center");
     });
   </script>
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 {% endblock %}
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'css/fondo.css' %}">

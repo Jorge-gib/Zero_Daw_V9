@@ -1,33 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
-<div>
-    <h1 class="letras">Reservas conluidas para calificar</h1>
-    <p class="letras">Seleccione la orden que desee para calificar al recolector</p>
-</div>
-
-{% if ordenes %}
-    {% with hay_ordenes_concluidas=False %}
-        <ul>
-            {% for orden in ordenes %}
-                {% if orden.estado == "Concluido" %}
-                    {% with hay_ordenes_concluidas=True %}
-                        <li>
-                            <p class="letras">ID de orden: {{ orden.id_orden }}</p>
-                            <p class="letras">Fecha de orden: {{ orden.fecha_orden }}</p>
-                            <p class="letras">hora inicio: {{ orden.hora_inicio}}</p>
-                            <p class="letras">hora fin: {{ orden.hora_fin}}</p>
-                            <p class="letras">Cantidad plastico: {{ orden.cantidad_plastico }}</p>
-                            <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
-                            <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
-                            <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-                            <p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
-                            <p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
-                             <p class="letras">Estado: {{ orden.estado }} </p>
-=======
 <div id="containerHome" class="hidden fade-in-down">
     <div>
         <h1 class="letras4" style="text-align:center;">Calificar al Recolector</h1>
@@ -49,7 +22,6 @@
             <p class="letras4">Cantidad cartón: {{ orden.cantidad_carton }}</p>
             <p class="letras4">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
             <p class="letras4">Estado: {{ orden.estado }}</p>
->>>>>>> main
 
             <!-- Enviar el ID de la orden al hacer clic en el botón -->
             <form method="POST" action="{% url 'mostrar_ordenes_calificar_recolector_reserva' %}">
@@ -70,12 +42,7 @@
     <h1 class="letras4" style="text-align:center;">No hay más registros de órdenes</h1>
     {% endif %}
 
-<<<<<<< HEAD
-<a href="{% url 'home' %}">Volver</a>
-    </div>
-</div>
-=======
-    <a href="{% url 'login' %}">Volver</a>
+
 </div>
 {% endblock %}
 {% block stylesheet %}
@@ -87,5 +54,4 @@
 {% block javascript %}
 <script src="{% static 'js/animations.js' %}"></script>
 {{ block.super }}
->>>>>>> main
 {% endblock %}

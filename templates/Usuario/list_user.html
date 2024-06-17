@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 {% load static %}
 {% block titulo_principal %} CRUD: Select * {% endblock %}
 
@@ -10,23 +10,6 @@
 <br>
 {% if object_list %}
 {% for user in object_list %}
-<<<<<<< HEAD
-<div class="detalleUsuario hidden fade-in-down">
-    <p class="letras">Nombre usuario: {{ user.username }}</p>
-    <p class="letras">Nombre: {{ user.first_name }}</p>
-    <p class="letras">Apellido: {{ user.last_name }}</p> 
-    <p class="letras">Rut: {{ user.rut }}-{{ user.dv }}</p>
-    <p class="letras">Edad: {{ user.edad }}</p>
-    <p class="letras">Direccion: {{ user.direccion }}</p>
-    <p class="letras">Comuna: {{ user.comuna }}</p>
-    <p class="letras">Telefono: {{ user.telefono }}</p> 
-
-    <p class="letras">Rol en el sistema: {{ user.tipo_usuario }}</p>                 
-    <br>
-
-             
-    
-=======
 <div class="blue-background detalleUsuario hidden fade-in-down">
     <p class="letras4">Nombre usuario: {{ user.username }}</p>
     <p class="letras4">Nombre: {{ user.first_name }}</p>
@@ -39,27 +22,16 @@
     <p class="letras4">Rol en el sistema: {{ user.tipo_usuario}}</p>                 
     
     <div class="links">
-        <a href="{% url 'login' %}">Volver</a>
+        <a href="{% url 'home' %}">Volver</a>
     </div>
 </div>
->>>>>>> main
 
 {% endfor %}
 
 {% else %}
 <h1 class="letras">No hay registros de user</h1>
 {% endif %}
-<<<<<<< HEAD
-
-<a href="{% url 'home' %}">Volver</a>
-</div>
-
-
-
-=======
->>>>>>> main
 {% endblock content %}
-
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">

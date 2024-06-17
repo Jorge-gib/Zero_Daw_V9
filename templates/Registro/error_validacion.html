@@ -1,24 +1,12 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
-<<<<<<< HEAD
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
-    <h1 class="letras">Gestion de usuario</h1>
-=======
->>>>>>> main
     
     <div id="containerHome"class="content container hidden fade-in-down">
         <h1 class="letras">Gestión de usuario</h1>
         <p class="letras">¡Ups! Algo salió mal, la clave o el rut que ingresaste no son válidos.</p>
         <a href="{% url 'validacion_pass' %}">Volver</a>
     </div>
-<<<<<<< HEAD
-    <a href="{% url 'validacion_pass' %}">Volver</a>
-   
-</div>
-</div>
-=======
 
 {% endblock %}
 {% block stylesheet %}
@@ -29,5 +17,4 @@
 {% block javascript %}
 <script src="{% static 'js/animations.js' %}"></script>
 {{ block.super }}
->>>>>>> main
 {% endblock %}

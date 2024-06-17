@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="titulo_presentacion fade-in-down">
-    <div class="blue-background">
 <div>
     <h1 class="letras">Detalle de reserva de orden</h1>
 </div>
@@ -20,8 +18,6 @@
 <p class="letras">Cantidad vidrio: {{ orden.cantidad_vidrio }}</p>
 <p class="letras">Cantidad carton: {{ orden.cantidad_carton }}</p>
 <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
-<p class="letras">Cantidad metal: {{ orden.cantidad_metal }}</p>
-<p class="letras">Cantidad electro domesticos: {{ orden.cantidad_electrodomesticos }}</p>
 <p class="letras">Estado: {{ orden.estado }} </p>
 </div>
 </div>
@@ -32,10 +28,4 @@
     <p class="letras">No hay registros de ordenes</p>
 {% endif %}
 <a href="{% url 'orden_reserva' %}">Volver</a>
-<<<<<<< HEAD
-</div>
-</div>
-
-=======
->>>>>>> main
 {% endblock %}
