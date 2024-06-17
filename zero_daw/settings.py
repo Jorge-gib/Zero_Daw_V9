@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 
 
-# Construye rutas dentro del proyecto de esta manera: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuración de Django para archivos adjuntos
