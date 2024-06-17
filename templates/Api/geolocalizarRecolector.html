@@ -22,9 +22,9 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        const latitud = parseFloat('{{ latitud }}');
-        const longitud = parseFloat('{{ longitud }}');
-        console.log('geolocalizarRecolector');
+        const latitud = {{ latitud }}.replace(',', '.');
+        const longitud = {{ longitud }}.replace(',', '.');
+        console.log('geolocalizarR');
 
         const map = L.map('map').setView([latitud, longitud], 12);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

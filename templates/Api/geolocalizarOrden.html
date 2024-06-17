@@ -24,8 +24,8 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         // Obtener las coordenadas del contexto Django
-        const latitud = parseFloat('{{ latitud }}');
-        const longitud = parseFloat('{{ longitud }}');
+        const latitud = parseFloat('{{ latitud }}'.replace(',', '.'));
+        const longitud = parseFloat('{{ longitud }}'.replace(',', '.'));
         console.log('geolocalizarOrden');
         // Inicializar el mapa centrado en las coordenadas proporcionadas
         const map = L.map('map').setView([latitud, longitud], 12);

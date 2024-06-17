@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def geolocalizacion(request, id_orden):
     # Obtener la orden de reciclaje por su ID
     orden_reciclaje = Orden_reciclaje.objects.filter(id_orden=id_orden).first()
+    reserva_lat = Reserva_orden.latitud_posicion_ciudadano
+    reserva_lon = Reserva_orden.longitud_posicion_ciudadano
 
     # Verificar si la orden existe
     if orden_reciclaje is None:
@@ -18,7 +20,7 @@ def geolocalizacion(request, id_orden):
     longitud = orden_reciclaje.longitud_posicion_recolector
     print(f"Latitud: {latitud}, Longitud: {longitud},""geolocalizando1...")
 
-    return render(request, 'Api/geolocalizarOrden.html', {'latitud': latitud, 'longitud': longitud})
+    return render(request, 'Api/geolocalizarOrden.html', {'latitud': latitud, 'longitud': longitud, 'latC': reserva_lat,'lonC':reserva_lon})
 
 # Vista basada en clase para listar órdenes de reciclaje y su geolocalización
 class OrdenListGeolocalizar(LoginRequiredMixin, ListView):
@@ -114,7 +116,7 @@ def geolocalizacion_ciudadano(request, id_orden):
     longitud = float(orden_reciclaje.longitud_posicion_ciudadano)
     
     print(f"Latitud: {orden_reciclaje.latitud_posicion_ciudadano}, Longitud: {orden_reciclaje.longitud_posicion_ciudadano}")
-    
+    print("enviando a la vista..")
     return render(request, 'Api/geolocalizarReserva.html', {'latitud': latitud, 'longitud': longitud})
 
 # Vista basada en clase para listar órdenes de reciclaje y su geolocalización del ciudadano

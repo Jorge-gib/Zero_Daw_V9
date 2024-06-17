@@ -20,21 +20,21 @@
 </head>
 <body>
     <div>
-        <p>Latitud: {{ latitud }}</p>
-        <p>Longitud: {{ longitud }}</p>
     </div>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         // Obtener las coordenadas del contexto Django
-        const latitudStr = '{{ latitud }}';
-        const longitudStr = '{{ longitud }}';
+        const latitudStr = parseFloat("{{ latitud }}".replace(',', '.'));
+        const longitudStr = parseFloat("{{ longitud }}".replace(',','.'));
         console.log('Coordenadas (cadena):', latitudStr, longitudStr);
 
         // Convertir las coordenadas a números flotantes
-        const latitud = parseFloat(latitudStr);
-        const longitud = parseFloat(longitudStr);
+        const latitud = latitudStr;
+        const longitud = longitudStr;
+        console.log(typeof(latitudStr), latitudStr);
+        console.log(typeof(longitudStr), longitudStr);
         console.log('Coordenadas (flotante):', latitud, longitud);
 
         if (!isNaN(latitud) && !isNaN(longitud)) {

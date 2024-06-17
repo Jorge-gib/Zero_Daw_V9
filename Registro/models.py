@@ -34,10 +34,10 @@ class Orden_reciclaje(models.Model):
     cantidad_vidrio = models.IntegerField(default=0)
     cantidad_carton = models.IntegerField(default=0)
     cantidad_aluminio = models.IntegerField(default=0)
-    latitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
-    longitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6, null=True)
-    latitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
-    longitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    latitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6)
+    longitud_posicion_ciudadano = models.DecimalField(max_digits=9, decimal_places=6)
+    latitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6)
+    longitud_posicion_recolector = models.DecimalField(max_digits=9, decimal_places=6)
     estado = models.CharField(max_length=200, null=True)
 
     def __str__(self):
