@@ -16,8 +16,9 @@ def geolocalizacion(request, id_orden):
     # Obtener la latitud y longitud de la posición del recolector
     latitud = orden_reciclaje.latitud_posicion_recolector
     longitud = orden_reciclaje.longitud_posicion_recolector
+    print(f"Latitud: {latitud}, Longitud: {longitud},""geolocalizando1...")
 
-    return render(request, 'Api/geolocalizacion.html', {'latitud': latitud, 'longitud': longitud})
+    return render(request, 'Api/geolocalizarOrden.html', {'latitud': latitud, 'longitud': longitud})
 
 # Vista basada en clase para listar órdenes de reciclaje y su geolocalización
 class OrdenListGeolocalizar(LoginRequiredMixin, ListView):
@@ -54,8 +55,9 @@ def geolocalizacion_ciudadano_orden_normal(request, id_orden):
     # Obtener la latitud y longitud de la posición del ciudadano
     latitud = orden_reciclaje.latitud_posicion_ciudadano
     longitud = orden_reciclaje.longitud_posicion_ciudadano
+    print(f"Latitud: {latitud}, Longitud: {longitud},""geolocalizando2...")
 
-    return render(request, 'Api/geolocalizacion_3.html', {'latitud': latitud, 'longitud': longitud})
+    return render(request, 'Api/geolocalizarCiudadano.html', {'latitud': latitud, 'longitud': longitud})
 
 # Función para mostrar la geolocalización de un recolector
 def geolocalizacion_recolector(request, id_orden):
@@ -69,8 +71,9 @@ def geolocalizacion_recolector(request, id_orden):
     # Obtener la latitud y longitud de la posición del recolector
     latitud = orden_reciclaje.latitud_posicion_recolector
     longitud = orden_reciclaje.longitud_posicion_recolector
+    print(f"Latitud: {latitud}, Longitud: {longitud},""geolocalizando3...")
 
-    return render(request, 'Api/geolocalizacion_4.html', {'latitud': latitud, 'longitud': longitud})
+    return render(request, 'Api/geolocalizarRecolector.html', {'latitud': latitud, 'longitud': longitud})
 
 # Vista basada en clase para listar órdenes de reserva y su geolocalización del recolector
 class ReservaListGeolocalizar_recolector(LoginRequiredMixin, ListView):
@@ -98,6 +101,8 @@ class ReservaListGeolocalizar_recolector(LoginRequiredMixin, ListView):
 # Función para mostrar la geolocalización de un ciudadano
 def geolocalizacion_ciudadano(request, id_orden):
     # Obtener la orden de reserva por su ID
+    print("Entrando a geolocalizacion_ciudadano...")
+
     orden_reciclaje = Reserva_orden.objects.filter(id_orden=id_orden).first()
 
     # Verificar si la orden existe
@@ -105,10 +110,12 @@ def geolocalizacion_ciudadano(request, id_orden):
         return render(request, 'Api/error_api.html')
 
     # Obtener la latitud y longitud de la posición del ciudadano
-    latitud = orden_reciclaje.latitud_posicion_ciudadano
-    longitud = orden_reciclaje.longitud_posicion_ciudadano
-
-    return render(request, 'Api/geolocalizacion_2.html', {'latitud': latitud, 'longitud': longitud})
+    latitud = float(orden_reciclaje.latitud_posicion_ciudadano)
+    longitud = float(orden_reciclaje.longitud_posicion_ciudadano)
+    
+    print(f"Latitud: {orden_reciclaje.latitud_posicion_ciudadano}, Longitud: {orden_reciclaje.longitud_posicion_ciudadano}")
+    
+    return render(request, 'Api/geolocalizarReserva.html', {'latitud': latitud, 'longitud': longitud})
 
 # Vista basada en clase para listar órdenes de reciclaje y su geolocalización del ciudadano
 class OrdenListGeolocalizar_para_ubicar_ciudadano(ListView):

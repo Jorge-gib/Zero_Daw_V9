@@ -21,27 +21,25 @@
                             <p class="letras">Cantidad cartón: {{ orden.cantidad_carton }}</p>
                             <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
                             <p class="letras">Estado: {{ orden.estado }}</p>
-
                             <!-- Enviar el ID de la orden al hacer clic en el botón -->
+                             {% if orden === true %}
                             <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
                                 <button type="submit" class="btn btn-primary">Seleccionar</button>
                             </form>
+                            {% endif %}
                         </div>
                     </div>
                     {% endwith %}
                 {% endif %}
             {% endfor %}
-            <a href="{% url 'login' %}" class="btn btn-link">Volver</a>
-
         </div>
         {% if not hay_ordenes_disponibles %}
-        <p class="text-center letras">No hay más órdenes disponibles</p>
+        <h1 class="text-center letras">No hay más registros de órdenes</h1>
         {% endif %}
         {% endwith %}
-    {% else %}
-        <h1 class="text-center letras">No hay más registros de órdenes</h1>
+        {% endif %}
     {% endif %}
 </div>
 {% endblock %}

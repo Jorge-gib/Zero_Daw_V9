@@ -4,7 +4,7 @@
 
 {% block content %}
 <div id="containerHome" class="hidden fade-in-down">
-  <h1 class="text-center letras4">Toma una orden de reserva</h1>
+  <h1 class="text-center letras4">Toma una orden de reserva!</h1>
   {% if reserva_orden %}
     <form method="POST" action="{% url 'tomar_reserva' reserva_orden.id_orden %}" class="form-container">
       {% csrf_token %}
@@ -20,7 +20,7 @@
         <input type="number" class="form-control" name="longitud_posicion_recolector" value="{{ reserva_orden.longitud_posicion_recolector }}" step="0.000001" placeholder="Longitud" required>
       </div>
       <input type="hidden" name="estado" value="Orden tomada">
-      <div class="form-buttons">
+      <div class="form-buttons" style="align-items:right;">
         <button type="submit" class="btn btn-primary">Actualizar Orden</button>
         <button type="button" class="btn btn-secondary" onclick="capturarUbicacion()">Capturar Ubicación</button>
       </div>
@@ -88,9 +88,7 @@
   }
 
   .form-buttons {
-    display: flex;
     gap: 1rem;
-    justify-content: center; /* Centra los botones horizontalmente */
   }
 
   .letras4 {
@@ -120,6 +118,9 @@
     margin-top: 1rem;
   }
 </style>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/animations.js' %}"></script>
 {% endblock %}
 
 

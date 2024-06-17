@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mapa localizar reserva</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p>Latitud: {{ latitud }}</p>
+        <p>Longitud: {{ longitud }}</p>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Obtener las coordenadas del contexto Django
+        const latitudStr = '{{ latitud }}';
+        const longitudStr = '{{ longitud }}';
+        console.log('Coordenadas (cadena):', latitudStr, longitudStr);
+
+        // Convertir las coordenadas a números flotantes
+        const latitud = parseFloat(latitudStr);
+        const longitud = parseFloat(longitudStr);
+        console.log('Coordenadas (flotante):', latitud, longitud);
+
+        if (!isNaN(latitud) && !isNaN(longitud)) {
+            // Inicializar el mapa centrado en las coordenadas proporcionadas
+            const map = L.map('map').setView([latitud, longitud], 12);
+
+            // Añadir la capa base del mapa desde OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Añadir un marcador en la posición especificada
+            L.marker([latitud, longitud]).addTo(map)
+                .bindPopup('Ubicación del ciudadano.')
+                .openPopup();
+        } else {
+            console.error("Las coordenadas no son válidas.");
+        }
+    </script>
+</body>
+</html>
