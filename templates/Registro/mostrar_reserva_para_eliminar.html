@@ -9,7 +9,7 @@
     {% if ordenes %}
         {% with hay_ordenes_disponibles=False %}
         <br>
-        <div class="order-list" >
+        <div id="containerHome"class="order-list hidden fade-in-down" style="padding-left:50px;">
             {% for orden in ordenes %}
                 {% if orden.estado != "Concluido" and orden.estado != "Calificado"%}
                     {% with hay_ordenes_disponibles=True %}
@@ -30,18 +30,16 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
                                 <button type="submit" class="btn-primary">Seleccionar</button>
-
-                                <a href="{% url 'login' %}" class="btn-link">Volver</a>
                             </form>
                         </div>
+
                     </div>
+
                     {% endwith %}
                 {% endif %}
             {% endfor %}
         </div>
-        <br>
         {% if not hay_ordenes_disponibles %}
-        <BR></BR>
         <div id="containerHome">
             <h6 class="text-center letras4">No hay más registros de órdenes</h6>
         </div>

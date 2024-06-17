@@ -1,4 +1,5 @@
 from django.urls import path
+from Registro import views
 from . import views
 
 # URLs para la geolocalización de órdenes

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div id="containerHome" class="hidden fade-in-down">
+<div id="containerHome" class="hidden fade-in-down" style="padding-left:45px;">
     <h1 class="text-center letras">Órdenes vigentes</h1>
     <p class="text-center letras">Seleccione la orden que desee concluir</p>
 
@@ -21,29 +21,26 @@
                             <p class="letras">Cantidad cartón: {{ orden.cantidad_carton }}</p>
                             <p class="letras">Cantidad aluminio: {{ orden.cantidad_aluminio }}</p>
                             <p class="letras">Estado: {{ orden.estado }}</p>
-
                             <!-- Enviar el ID de la orden al hacer clic en el botón -->
+                             {% if orden == true %}
                             <form method="POST" action="{% url 'actualizar_orden' orden.id_orden %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="orden_id" value="{{ orden.id_orden }}">
                                 <button type="submit" class="btn btn-primary">Seleccionar</button>
                             </form>
+                            {% endif %}
+                                {% if hay_ordenes_disponibles == False %}
+                                    <h1 class="text-center letras">No hay más registros de órdenes</h1>
+                                {% endif %}
                         </div>
                     </div>
                     {% endwith %}
                 {% endif %}
             {% endfor %}
         </div>
-        {% if not hay_ordenes_disponibles %}
-        <p class="text-center letras">No hay más órdenes disponibles</p>
-        {% endif %}
+        
         {% endwith %}
-    {% else %}
-        <h1 class="text-center letras">No hay más registros de órdenes</h1>
     {% endif %}
-    <div class="text-center mt-3">
-        <a href="{% url 'login' %}" class="btn btn-link">Volver</a>
-    </div>
 </div>
 {% endblock %}
 
